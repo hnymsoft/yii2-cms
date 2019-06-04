@@ -7,8 +7,8 @@ $this->title = $name;
     <h1>:(</h1>
     <p class="error"><?= Html::encode($this->title) ?></p>
     <p class="detail"><?= nl2br(Html::encode($message)) ?></p>
-    <p class="jump">
-        页面自动 <a id="href" href="<?=Yii::$app->request->referrer?>">跳转</a> 等待时间： <b id="wait">10</b>
+    <p class="jump" style="display: none;">
+        页面自动 <a id="href" href="<?= Yii::$app->request->referrer?>">跳转</a> 等待时间： <b id="wait">5</b>
     </p>
 </div>
 
@@ -26,16 +26,16 @@ body{ background: #fff; font-family: "Microsoft Yahei","Helvetica Neue",Helvetic
 CSS;
 $this->registerCss($css);
 
-$js = <<<JS
-    var wait = document.getElementById('wait'),
-    href = document.getElementById('href').href;
-    var interval = setInterval(function(){
-        var time = --wait.innerHTML;
-        if(time <= 0) {
-            location.href = href;
-            clearInterval(interval);
-        };
-    }, 1000);
-JS;
-$this->registerJs($js);
+//$js = <<<JS
+//    var wait = document.getElementById('wait'),
+//    href = document.getElementById('href').href;
+//    var interval = setInterval(function(){
+//        var time = --wait.innerHTML;
+//        if(time <= 0) {
+//            location.href = href;
+//            clearInterval(interval);
+//        };
+//    }, 1000);
+//JS;
+//$this->registerJs($js);
 ?>
