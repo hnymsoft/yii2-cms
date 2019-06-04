@@ -1,0 +1,69 @@
+.layui-card-header{height: auto;}
+.layui-layout-admin .layui-side-menu,.layui-layout-admin .layui-header,.layui-layout-admin .layui-logo{background: #393D49!important;}
+.layui-layout-admin .layui-logo{border-bottom:2px solid #282b33;box-shadow: 0 0 0 0 #fff;font-size: 20px;font-weight: bold;}
+.layui-layout-admin .layui-logo, .layui-layout-admin .layui-logo a{color: rgba(255,255,255,1)}
+
+.layui-header .layui-nav-item .layui-icon,.layui-layout-admin .layui-header a, .layui-layout-admin .layui-header a cite{color: #fff}
+
+.layui-layout-admin .layui-footer{padding: 0;z-index: 1000;}
+
+.select-role-list{width:100%;height:300px;border:1px solid #e6e6e6;padding:15px;line-height: 30px;}
+
+/*.form-box-dialog .layui-form-label{width: auto;}*/
+.form-box-dialog .help-block{color: red;float: left;line-height: 35px;}
+
+/**/
+.pos-abs-right{position: absolute;right: 0;top:0}
+
+/*搜索框样式重构*/
+.search-box{padding: 10px 0;}
+.search-box .layui-form-item,.search-box .layui-form-item .layui-inline{margin-bottom: 0;}
+.search-box .layui-form-item .layui-inline{margin-right: 0;}
+.search-box .layui-form-label{width: auto!important;}
+
+/*grid-view*/
+.grid-view .summary{padding: 10px 0;}
+.grid-view .layuipage{display: inline-block;padding-left: 0;margin: 10px auto 0;border-radius: 0;}
+.grid-view .layuipage>li {display: inline;}
+.grid-view .layuipage>li>a, .grid-view .layuipage>li>span {position: relative;float: left;padding: 6px 9pt;margin-left: -1px;line-height: 1.42857143;color: #666;text-decoration: none;background-color: #fff;border: 1px solid #ddd;}
+.grid-view .layuipage>.disabled>a, .grid-view .layuipage>.disabled>a:focus, .grid-view .layuipage>.disabled>a:hover, .grid-view .layuipage>.disabled>span, .grid-view .layuipage>.disabled>span:focus, .grid-view .layuipage>.disabled>span:hover {color: #777;cursor: not-allowed;background-color: #f0f0f0;border-color: #ddd;}
+.grid-view .layuipage>li:first-child>a, .grid-view .layuipage>li:first-child>span {margin-left: 0;}
+.grid-view .layuipage>.active>a, .grid-view .layuipage>.active>a:focus, .grid-view .layuipage>.active>a:hover, .grid-view .layuipage>.active>span, .grid-view .layuipage>.active>span:focus, .grid-view .layuipage>.active>span:hover {z-index: 3;color: #fff;cursor: default;background-color: #009688;border-color: #009688;}
+.grid-view .layuipage>li>a:focus, .grid-view .layuipage>li>a:hover, .grid-view .layuipage>li>span:focus, .grid-view .layuipage>li>span:hover {z-index: 2;color: #666;background-color: #FBFBFB;border-color: #e6e6e6;}
+
+/*welcome*/
+.layadmin-shortcut li .layui-icon {
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 30px;
+    background-color: #F8F8F8;
+    color: #333;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.layadmin-shortcut li cite {
+    position: relative;
+    top: 2px;
+    display: block;
+    color: #666;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 14px;
+}
+.layadmin-backlog .layadmin-backlog-body {
+    display: block;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    color: #999;
+    border-radius: 2px;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.layadmin-wait{padding-bottom: 1px;}
+.layadmin-wait li{line-height: 29px;}
