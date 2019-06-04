@@ -441,16 +441,6 @@ layui.define('view', function(exports){
       }
     }
 
-    //弹出关于面板
-    ,about: function(){
-      admin.popupRight({
-        id: 'LAY_adminPopupAbout'
-        ,success: function(){
-          view(this.id).render('system/about');
-        }
-      });
-    }
-    
     //弹出更多面板
     ,more: function(){
       admin.popupRight({

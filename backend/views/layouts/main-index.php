@@ -65,11 +65,6 @@ LayuiAsset::register($this);
                             <span class="layui-badge-dot"></span>
                         </a>
                     </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect title="换肤">
-                        <a href="javascript:;" layadmin-event="theme">
-                            <i class="layui-icon layui-icon-theme"></i>
-                        </a>
-                    </li>
                     <li class="layui-nav-item layui-hide-xs" lay-unselect title="全屏">
                         <a href="javascript:;" layadmin-event="fullscreen">
                             <i class="layui-icon layui-icon-screen-full"></i>
