@@ -37,7 +37,7 @@ use yii\grid\GridView;
                             if($model->media_type == 0){
                                 return '图片';
                             }elseif ($model->media_type == 1){
-                                return '文案';
+                                return '文字';
                             }elseif ($model->media_type == 2){
                                 return '代码';
                             }else{

@@ -27,7 +27,7 @@ $columns[] =[
         'template' =>'{view}',
         'buttons' => [
             'view' => function ($url){
-                return Html::a('分配权限', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                return Html::a('授权', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
             },
         ]
     ];

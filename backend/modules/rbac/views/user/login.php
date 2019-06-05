@@ -21,7 +21,7 @@ $fieldOptions3 = [
 ?>
 
 <div class="login">
-    <div class="message">WeAdmin 1.0-管理登录</div>
+    <div class="message">后台管理系统 登录</div>
     <div id="darkbannerwrap"></div>
     <?php $form = ActiveForm::begin(['id' => 'login-form','options'=>['class' => 'layui-form'], 'enableClientValidation' => false]); ?>
         <?= $form
@@ -41,7 +41,7 @@ $fieldOptions3 = [
                 <?= $form->field($model, 'rememberMe',$fieldOptions3)->label(false)->checkbox(['class' => 'layui-input','lay-skin' => 'primary','title'=>'记住密码']) ?>
             </div>
             <div class="layui-col-md6" align="right">
-                <?= Html::a('忘记密码', ['/rbac/user/request-password-reset'], ['class' => 'layui-text','style'=>'line-height:60px']) ?>
+                <?= Html::a('忘记密码', ['/rbac/user/request-password-reset'], ['class' => 'layui-text','style'=>'line-height:40px']) ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>

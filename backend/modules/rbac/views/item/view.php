@@ -38,7 +38,7 @@ $animateIcon = ' <i class="layui-icon"></i>';
         </div>
     </div>
 
-    <div class="layui-card">
+    <div class="layui-card" style="display: <?=Yii::$app->controller->id == 'permission'?'none':'block'?>">
         <div class="layui-card-body">
             <div class="layui-row">
                 <div class="layui-col-md5">

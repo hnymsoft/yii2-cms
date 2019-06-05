@@ -50,13 +50,14 @@ $this->registerJs($this->render('js/index.js'));
                     'class' => 'yii\grid\ActionColumn',
                     'contentOptions' => ['class'=>'text-center'],
                     'headerOptions' => [
-                        'width' => '10%',
+                        'width' => '12%',
                         'style'=> 'text-align: center;'
                     ],
                     'template' =>'{view} {update} {delete}',
                     'buttons' => [
                         'view' => function ($url){
-                            return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                            $name = Yii::$app->controller->id == 'permission' ? '查看' : '分配权限';
+                            return Html::a($name, $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                         },
                         'update' => function ($url) {
                             return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
