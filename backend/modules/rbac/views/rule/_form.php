@@ -20,6 +20,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'className')->textInput(['class'=>'layui-input']) ?>
 
     <div class='layui-form-item'>
+        <div class="layui-form-label"></div>
         <div class="layui-input-block">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', '添加') : Yii::t('rbac-admin', '编辑'), ['class' => $model->isNewRecord ? 'layui-btn' : 'layui-btn layui-btn-normal'])?>
         </div>

@@ -41,6 +41,7 @@ $this->registerJs($js);
 
 	<?= $form->field($model, 'data')->textarea(['rows' => 6,'class'=>'layui-textarea']) ?>			
     <div class='layui-form-item'>
+        <div class="layui-form-label"></div>
         <div class="layui-input-block">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', '添加') : Yii::t('rbac-admin', '编辑'), ['class' => $model->isNewRecord ? 'layui-btn' : 'layui-btn layui-btn-normal','name' => 'submit-button'])?>
         </div>

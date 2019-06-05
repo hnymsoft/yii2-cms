@@ -1,6 +1,6 @@
 .layui-card-header{height: auto;}
 .layui-layout-admin .layui-side-menu,.layui-layout-admin .layui-header,.layui-layout-admin .layui-logo{background: #393D49!important;}
-.layui-layout-admin .layui-logo{border-bottom:2px solid #282b33;box-shadow: 0 0 0 0 #fff;font-size: 20px;font-weight: bold;}
+.layui-layout-admin .layui-logo{border-bottom:1px solid #282b33;box-shadow: 0 0 0 0 #fff;font-size: 20px;font-weight: bold;}
 .layui-layout-admin .layui-logo, .layui-layout-admin .layui-logo a{color: rgba(255,255,255,1)}
 
 .layui-header .layui-nav-item .layui-icon,.layui-layout-admin .layui-header a, .layui-layout-admin .layui-header a cite{color: #fff}
@@ -8,6 +8,8 @@
 .layui-layout-admin .layui-footer{padding: 0;z-index: 1000;}
 
 .select-role-list{width:100%;height:300px;border:1px solid #e6e6e6;padding:15px;line-height: 30px;}
+
+.layui-input-inline .cus{position: absolute;right: 10px;top:10px;font-size: 18px;}
 
 /*.form-box-dialog .layui-form-label{width: auto;}*/
 .form-box-dialog .help-block{color: red;float: left;line-height: 35px;}

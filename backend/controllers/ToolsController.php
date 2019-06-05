@@ -29,10 +29,30 @@ class ToolsController extends Controller
         move_uploaded_file($file_tmp_path, $dir.'/'.$file_save_name);
         echo Config::findOne(['name'=>'WEB_SITE_RESOURCES_URL'])->value . date('Ymd').'/'.$file_save_name;
     }
+
+    /**
+     * 图片上传
+     * @return string
+     */
     public function actionUpload()
     {
+        $type = \Yii::$app->request->post('type');
+        switch ($type){
+            case 'ad':
+                $path = "uploads/ad/{rand:10}";
+                break;
+            case 'avatar':
+                $path = "uploads/avatar/{rand:10}";
+                break;
+            case 'logo':
+                $path = "uploads/logo/{rand:10}";
+                break;
+            default:
+                $path = "uploads/images/{rand:10}";
+                break;
+        }
         $config = array(
-            "pathFormat" => "uploads/{rand:10}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+            "pathFormat" => $path, /* 上传保存路径,可以自定义保存路径和文件名格式 */
             "maxSize" => 5120000 * 4, /* 20M 上传大小限制，单位B */
             "allowFiles" => [".jpg",".jpeg",".png",".bmp",".gif"] /* 上传图片格式显示 */
         );

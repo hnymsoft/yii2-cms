@@ -28,4 +28,9 @@ layui.use(['form','layer','jquery','laydate'], function(){
         })
         return false;
     });
+
+    //返回上一步
+    $("#prev").click(function () {
+        history.go(-1);
+    })
 });
