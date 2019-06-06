@@ -1,6 +1,7 @@
 <?php
 namespace system\controllers;
 
+use common\models\AdPosition;
 use Yii;
 use common\models\Ad;
 use yii\filters\VerbFilter;
@@ -72,7 +73,7 @@ class AdController extends Controller
             $post_data['Ad']['end_time'] = strtotime($post_data['Ad']['end_time'] . ' 23:59:59');
 
             if($post_data['Ad']['media_type'] == 0){
-                $post_data['Ad']['ad_code'] = isset($post_data['Ad']['img_upload']) ? $post_data['Ad']['img_upload'] : $post_data['Ad']['img_link'];
+                $post_data['Ad']['ad_code'] = isset($post_data['Ad']['img_link']) ? $post_data['Ad']['img_link'] : '';
             }elseif ($post_data['Ad']['media_type'] == 1){
                 $post_data['Ad']['ad_code'] = isset($post_data['Ad']['font_content']) ? $post_data['Ad']['font_content'] : '';
             }elseif ($post_data['Ad']['media_type'] == 2){
@@ -80,9 +81,15 @@ class AdController extends Controller
             }else{
 
             }
-
             if ($model->load($post_data) && $model->save(false)) {
-                return $this->redirect(['view', 'id' => $model->ad_id]);
+                //除当前广告其它状态全部设置为关闭
+                Ad::updateAll(['enabled' => 0],['<>','ad_id',$model->ad_id]);
+
+                //生成广告位调用代码（启用生成）
+                if($model->enabled == 1) {
+                    AdPosition::genAdvertCode($model->ad_id,$model->position_id);
+                }
+                return $this->redirect(['index']);
             }
         }
 
@@ -108,7 +115,7 @@ class AdController extends Controller
             $post_data['Ad']['end_time'] = strtotime($post_data['Ad']['end_time'] . ' 23:59:59');
 
             if($post_data['Ad']['media_type'] == 0){
-                $post_data['Ad']['ad_code'] = isset($post_data['Ad']['img_upload']) ? $post_data['Ad']['img_upload'] : $post_data['Ad']['img_link'];
+                $post_data['Ad']['ad_code'] = isset($post_data['Ad']['img_link']) ? $post_data['Ad']['img_link'] : '';
             }elseif ($post_data['Ad']['media_type'] == 1){
                 $post_data['Ad']['ad_code'] = isset($post_data['Ad']['font_content']) ? $post_data['Ad']['font_content'] : '';
             }elseif ($post_data['Ad']['media_type'] == 2){
@@ -116,19 +123,26 @@ class AdController extends Controller
             }else{
 
             }
-
             if ($model->load($post_data) && $model->save(false)) {
-                return $this->redirect(['view', 'id' => $model->ad_id]);
+                //除当前广告其它状态全部设置为关闭
+                Ad::updateAll(['enabled' => 0],['<>','ad_id',$model->ad_id]);
+
+                //生成广告位调用代码（启用生成）
+                if($model->enabled == 1) {
+                    AdPosition::genAdvertCode($model->ad_id,$model->position_id);
+                }else{
+                    //当前广告位所属广告全部关闭 - 删除广告模版
+                    $count = Ad::find()->where(['position_id' => $model->position_id])->count();
+                    $path = Yii::getAlias('@frontend')."/web/plus/ad_{$model->position_id}.js";
+                    if($count == 0 && is_file($path)) @unlink($path);
+                }
+                return $this->redirect(['index']);
             }
         }
-
+        //广告媒体类型
         switch ($model->media_type){
             case 0:
-                if(preg_match("/^http(s)?:\\/\\/.+/",$model->ad_code)){
-                    $model->img_link = $model->ad_code;
-                }else{
-                    $model->img_upload = $model->ad_code;
-                }
+                $model->img_link = $model->ad_code;
                 break;
             case 1:
                 $model->font_content = $model->ad_code;

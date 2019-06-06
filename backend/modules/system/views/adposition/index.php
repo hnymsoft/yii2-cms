@@ -33,14 +33,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     'position_id',
                     'position_name',
-                    'ad_width',
-                    'ad_height',
+                    [
+                        'label' => '规格(px)',
+                        'value' => function($model){
+                            return $model->ad_width.' x '.$model->ad_height;
+                        }
+                    ],
                     'position_desc',
                     [
                         'attribute' => 'position_style',
-                        'headerOptions' => ['width'=>'20%'],
+                        'headerOptions' => ['width'=>'27%'],
+                        'contentOptions' => ['align'=>'center'],
                         'value' => function($model){
-                            return $model->position_style;
+                            return !empty($model->position_style) ? $model->position_style : '未生成（添加广告启用后生成）';
                         }
                     ],
                     [
@@ -48,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'contentOptions' => ['align'=>'center'],
                         'headerOptions' => [
-                            'width' => '10%',
+                            'width' => '12%',
                             'style'=> 'text-align: center;'
                         ],
                         'template' =>'{view} {update} {delete}',

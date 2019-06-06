@@ -17,13 +17,12 @@ layui.config({
 
     //上传
     upload.render({
-        elem: '#test3',
+        elem: '#upload',
         url: "<?=yii\helpers\Url::to(['/tools/upload'])?>",
         data: {type:'ad'},
         done: function(res){
             if(res.status==1){
-                $('#thumb_box').show().find('img').attr({'src':res.data});
-                $('#ad-img_upload').val(res.data);
+                $('#ad-img_link').val(res.data);
                 layer.msg("上传成功~~");
             }else{
                 layer.msg("上传失败~~");
@@ -45,4 +44,17 @@ layui.config({
             $(".media_img,.media_url").show();
         }
     });
+
+    //图片预览
+    $('body').on('click','#view_photo',function () {
+        var url = $('#ad-img_link').val();
+        if(url == ''){
+            layer.msg('请上传图片或使用网络图片地址');
+            return false;
+        }
+        var index = layer.open({
+            content: '<img src="'+url+'" />'
+        });
+        layer.full(index);
+    })
 });

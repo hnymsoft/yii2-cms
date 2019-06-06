@@ -24,7 +24,7 @@ use yii\grid\GridView;
                     'maxButtonCount'=>5,
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    'ad_id',
                     [
                         'label' => '广告位置',
                         'value' => function($model){

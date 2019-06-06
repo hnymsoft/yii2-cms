@@ -12,7 +12,9 @@
 .layui-input-inline .cus{position: absolute;right: 10px;top:10px;font-size: 18px;}
 
 /*.form-box-dialog .layui-form-label{width: auto;}*/
-.form-box-dialog .help-block{color: red;float: left;line-height: 35px;}
+.form-box-dialog .hint-block{float: left;line-height: 38px;margin-right: 15px;display: inline}
+.form-box-dialog .has-error .hint-block{display: none}
+.form-box-dialog .help-block{color: red;float: left;line-height: 38px;margin-right: 15px;display: inline}
 
 /**/
 .pos-abs-right{position: absolute;right: 0;top:0}

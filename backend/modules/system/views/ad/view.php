@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-header">
-            <a href="" class="layui-btn layui-btn-primary layui-btn-sm" id="prev">返回上一页</a>
+            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
         </div>
         <div class="layui-card-body">
             <?= DetailView::widget([

@@ -70,7 +70,7 @@ class AdpositionController extends Controller
         $model = new AdPosition();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->position_id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -89,7 +89,7 @@ class AdpositionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->position_id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

@@ -42,26 +42,28 @@ $this->registerJs($this->render('js/_script.js'));
             echo ($model->media_type == 0) ? 'block' : 'none';
         }
     ?>">
-        <div id="thumb_box" style="display: <?php
-            if($model->isNewRecord){
-                echo 'none';
-            }else{
-                isset($model->media_type) ? 'block' : 'none';
-            }
-            ?>">
-            <?= Html::img(@$model->ad_code, ['id'=>'thumb','style'=>'margin:0 0 15px 130px;','width'=>'115','height'=>'80'])?>
-        </div>
-        <?= $form->field($model, 'img_upload',[
-            'template' => '{label}{input}<div class="layui-input-inline" style="width: 50px;"><button type="button" class="layui-btn layui-btn-primary upload_button" id="test3"><i class="layui-icon"></i>上传文件</button>{hint}</div>'
-        ])->hiddenInput(['maxlength' => true,'class'=>'layui-input upload_input']) ?>
-        <?= $form->field($model, 'img_link')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
+        <?= $form->field($model, 'img_link',[
+            'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div><div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn layui-btn-primary upload_button" id="upload"><i class="layui-icon"></i>上传文件</button><a href="javascript:;" class="layui-btn layui-btn-primary" id="view_photo">查看图片</a></div>'
+        ])->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     </div>
 
-    <div class="media_font" style="display: <?=$model->media_type == 1 ? 'block': 'none' ?>">
+    <div class="media_font" style="display: <?php
+    if($model->isNewRecord){
+        echo 'none';
+    }else{
+        echo ($model->media_type == 1) ? 'block' : 'none';
+    }
+    ?>">
         <?= $form->field($model, 'font_content')->textInput(['rows' => 6,'class'=>'layui-input']) ?>
     </div>
 
-    <div class="media_code" style="display: <?=$model->media_type == 2 ? 'block': 'none' ?>">
+    <div class="media_code" style="display: <?php
+    if($model->isNewRecord){
+        echo 'none';
+    }else{
+        echo ($model->media_type == 2) ? 'block' : 'none';
+    }
+    ?>">
         <?= $form->field($model,'code_content')->textarea(['class'=>'layui-textarea'])?>
     </div>
 
@@ -92,9 +94,8 @@ $this->registerJs($this->render('js/_script.js'));
     <div class='layui-form-item'>
         <div class="layui-form-label"></div>
         <div class="layui-input-block">
-            <?= Html::submitButton($model->isNewRecord ? '添加' : '编辑', ['class' => $model->isNewRecord ? 'layui-btn' : 'layui-btn']) ?>
+            <?= Html::submitButton($model->isNewRecord ? '添加' : '编辑', ['class' => 'layui-btn']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-
 </div>

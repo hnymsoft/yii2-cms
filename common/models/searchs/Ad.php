@@ -2,7 +2,6 @@
 
 namespace common\models\searchs;
 
-use common\models\AdPosition;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Ad as AdModel;
@@ -41,7 +40,7 @@ class Ad extends AdModel
      */
     public function search($params)
     {
-        $query = AdModel::find();
+        $query = AdModel::find()->orderBy('ad_id desc');
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
