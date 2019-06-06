@@ -58,8 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'template' =>'{view} {update} {delete}',
                         'buttons' => [
-                            'view' => function ($url){
-                                return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                            'view' => function ($url,$model){
+                                return Html::a('查看广告', \yii\helpers\Url::to(['ad/index','Ad[position_id]'=>$model->position_id]), ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                             },
                             'update' => function ($url) {
                                 return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);

@@ -4,12 +4,12 @@ namespace common\models\searchs;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Ad as AdModel;
+use common\models\AdPosition as AdPositionModel;
 
 /**
- * Ad represents the model behind the search form of `common\models\Ad`.
+ * AdPosition represents the model behind the search form of `common\models\AdPosition`.
  */
-class Ad extends AdModel
+class AdPosition extends AdPositionModel
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class Ad extends AdModel
     public function rules()
     {
         return [
-            [['ad_id', 'position_id', 'media_type', 'start_time', 'end_time', 'click_count', 'enabled'], 'integer'],
-            [['ad_name', 'ad_link', 'ad_code', 'link_man', 'link_email', 'link_phone'], 'safe'],
+            [['position_id', 'ad_width', 'ad_height'], 'integer'],
+            [['position_name', 'position_desc', 'position_style'], 'safe'],
         ];
     }
 
@@ -40,9 +40,10 @@ class Ad extends AdModel
      */
     public function search($params)
     {
-        $query = AdModel::find()->orderBy('ad_id desc');
+        $query = AdPositionModel::find();
 
         // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -56,8 +57,15 @@ class Ad extends AdModel
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(['position_id' => $this->position_id]);
-        $query->andFilterWhere(['like', 'ad_name', $this->ad_name]);
+        $query->andFilterWhere([
+            'position_id' => $this->position_id,
+            'ad_width' => $this->ad_width,
+            'ad_height' => $this->ad_height,
+        ]);
+
+        $query->andFilterWhere(['like', 'position_name', $this->position_name])
+            ->andFilterWhere(['like', 'position_desc', $this->position_desc])
+            ->andFilterWhere(['like', 'position_style', $this->position_style]);
 
         return $dataProvider;
     }
