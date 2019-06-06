@@ -82,9 +82,6 @@ class AdController extends Controller
 
             }
             if ($model->load($post_data) && $model->save(false)) {
-                //除当前广告其它状态全部设置为关闭
-                Ad::updateAll(['enabled' => 0],['<>','ad_id',$model->ad_id]);
-
                 //生成广告位调用代码（启用生成）
                 if($model->enabled == 1) {
                     AdPosition::genAdvertCode($model->ad_id,$model->position_id);
@@ -124,15 +121,12 @@ class AdController extends Controller
 
             }
             if ($model->load($post_data) && $model->save(false)) {
-                //除当前广告其它状态全部设置为关闭
-                Ad::updateAll(['enabled' => 0],['<>','ad_id',$model->ad_id]);
-
                 //生成广告位调用代码（启用生成）
                 if($model->enabled == 1) {
                     AdPosition::genAdvertCode($model->ad_id,$model->position_id);
                 }else{
                     //当前广告位所属广告全部关闭 - 删除广告模版
-                    $count = Ad::find()->where(['position_id' => $model->position_id])->count();
+                    $count = Ad::find()->where(['position_id' => $model->position_id,'enabled' => 1])->count();
                     $path = Yii::getAlias('@frontend')."/web/plus/ad_{$model->position_id}.js";
                     if($count == 0 && is_file($path)) @unlink($path);
                 }
@@ -166,10 +160,15 @@ class AdController extends Controller
      */
     public function actionDelete($id)
     {
-        if(!$this->findModel($id)->delete()){
-            return ajaxReturnFailure('删除失败');
+        $model = $this->findModel($id);
+        $position_id = $model->position_id;
+        if($model->delete(false)){
+            $count = Ad::find()->where(['position_id' => $position_id,'enabled' => 1])->count();
+            $path = Yii::getAlias('@frontend')."/web/plus/ad_{$position_id}.js";
+            if($count == 0 && is_file($path)) @unlink($path);
+            return ajaxReturnFailure('删除成功');
         }
-        return ajaxReturnSuccess('删除成功');
+        return ajaxReturnSuccess('删除失败');
     }
 
     /**
