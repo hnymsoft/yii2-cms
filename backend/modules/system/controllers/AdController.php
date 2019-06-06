@@ -3,9 +3,9 @@ namespace system\controllers;
 
 use Yii;
 use common\models\Ad;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * 广告管理
@@ -14,8 +14,9 @@ use yii\filters\VerbFilter;
  */
 class AdController extends Controller
 {
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -23,7 +24,7 @@ class AdController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -151,9 +152,10 @@ class AdController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if(!$this->findModel($id)->delete()){
+            return ajaxReturnFailure('删除失败');
+        }
+        return ajaxReturnSuccess('删除成功');
     }
 
     /**
@@ -167,7 +169,6 @@ class AdController extends Controller
         if (($model = Ad::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

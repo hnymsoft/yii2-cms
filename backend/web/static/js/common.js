@@ -29,6 +29,35 @@ layui.use(['form','layer','jquery','laydate'], function(){
         return false;
     });
 
+    //删除
+    $("body").on("click",".layui-default-delete",function(){
+        var url = $(this).attr('href');
+        var id = $(this).data('id');
+        layer.confirm('确定要删除吗？',{icon:3, title:'提示信息'},function(index){
+            $.ajax( {
+                url: url,
+                method: 'POST',
+                data: {id:id},
+                dataType: 'json',
+                success: function(res) {
+                    layer.msg(res.message);
+                    layer.close(index);
+                    if(res.status){
+                        location.reload();
+                    }
+                },
+                error: function(res) {
+                    if(res.status==403){
+                        layer.msg('没有权限');
+                    }else{
+                        layer.msg('系统错误');
+                    }
+                }
+            });
+        });
+        return false;
+    })
+
     //返回上一步
     $("#prev").click(function () {
         history.go(-1);

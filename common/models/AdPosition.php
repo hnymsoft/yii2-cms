@@ -5,14 +5,9 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%am_ad_position}}".
- *
- * @property int $position_id
- * @property string $position_name
- * @property int $ad_width
- * @property int $ad_height
- * @property string $position_desc
- * @property string $position_style
+ * 广告位
+ * Class AdPosition
+ * @package common\models
  */
 class AdPosition extends \yii\db\ActiveRecord
 {
@@ -44,12 +39,12 @@ class AdPosition extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'position_id' => 'Position ID',
-            'position_name' => 'Position Name',
-            'ad_width' => 'Ad Width',
-            'ad_height' => 'Ad Height',
-            'position_desc' => 'Position Desc',
-            'position_style' => 'Position Style',
+            'position_id' => 'ID',
+            'position_name' => '广告位名称',
+            'ad_width' => '广告位宽度',
+            'ad_height' => '广告位高度',
+            'position_desc' => '广告位描述',
+            'position_style' => '广告位代码',
         ];
     }
 }

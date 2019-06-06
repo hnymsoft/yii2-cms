@@ -86,29 +86,4 @@ layui.config({
 		});
         return false;
 	});
-    //  删除用户操作
-	$("body").on("click",".layui-default-delete",function(){
-        var href = $(this).attr("href");
-		layer.confirm('确定删除此用户吗？',{icon:3, title:'提示信息'},function(index){
-            $.post(href,function(data){
-                if(data.status){
-                    layer.msg(data.message);
-                    layer.close(index);
-                    setTimeout(function(){
-                       location.reload();
-                    },500);
-                }else{
-                    layer.close(index);
-                    layer.msg(data.message);
-                }
-            },"json").fail(function(a,b,c){
-                if(a.status==403){
-                    layer.msg('没有权限');
-                }else{
-                    layer.msg('系统错误');
-                }
-            });
-		});
-        return false;
-	});
 });

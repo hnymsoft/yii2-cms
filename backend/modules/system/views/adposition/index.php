@@ -1,8 +1,15 @@
 <?php
+
 use yii\helpers\Html;
 use yii\grid\GridView;
-?>
 
+/* @var $this yii\web\View */
+/* @var $searchModel common\models\searchs\AdPosition */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Ad Positions';
+$this->params['breadcrumbs'][] = $this->title;
+?>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-header">
@@ -24,45 +31,16 @@ use yii\grid\GridView;
                     'maxButtonCount'=>5,
                 ],
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    'position_id',
+                    'position_name',
+                    'ad_width',
+                    'ad_height',
+                    'position_desc',
                     [
-                        'label' => '广告位置',
+                        'attribute' => 'position_style',
+                        'headerOptions' => ['width'=>'20%'],
                         'value' => function($model){
-                            return $model->adPosition->position_name;
-                        }
-                    ],
-                    'ad_name',
-                    [
-                        'attribute' => 'media_type',
-                        'value' => function($model){
-                            if($model->media_type == 0){
-                                return '图片';
-                            }elseif ($model->media_type == 1){
-                                return '文字';
-                            }elseif ($model->media_type == 2){
-                                return '代码';
-                            }else{
-                                return '未知';
-                            }
-                        }
-                    ],
-                    'start_time',
-                    'end_time',
-                    [
-                        'attribute' => 'click_count',
-                        'headerOptions' => ['style'=> 'text-align: center;'],
-                        'contentOptions' => ['align'=>'center'],
-                    ],
-                    [
-                        'attribute' => 'enabled',
-                        'headerOptions' => ['style'=> 'text-align: center;'],
-                        'contentOptions' => ['align'=>'center'],
-                        'value' => function($model){
-                            if($model->enabled == 1){
-                                return '开启';
-                            }else{
-                                return '关闭';
-                            }
+                            return $model->position_style;
                         }
                     ],
                     [

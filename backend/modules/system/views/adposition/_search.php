@@ -14,12 +14,11 @@ use yii\widgets\ActiveForm;
             'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div><span class="help-block" style="display: inline-block;">{hint}</span>',
         ]
     ]); ?>
-    <?= $form->field($model, 'ad_name')->textInput(['class'=>'layui-input search_input']) ?>
+    <?= $form->field($model, 'position_name')->textInput(['class'=>'layui-input search_input']) ?>
     <div class="layui-inline">
         <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加广告',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
-        <?= Html::a('广告位管理',\yii\helpers\Url::to(['adposition/index']), ['class' => "layui-btn layui-default-add"])?>
+        <?= Html::a('添加广告位',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
+        <?= Html::a('广告管理',\yii\helpers\Url::to(['ad/index']), ['class' => "layui-btn layui-default-add"])?>
     </div>
     <?php ActiveForm::end(); ?>
-
 </div>
