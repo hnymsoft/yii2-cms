@@ -33,4 +33,13 @@ class Setting extends BaseModel
             'info' => '简介'
         ];
     }
+
+    /**
+     * 获取配置信息
+     * @param string $label
+     * @return null|static
+     */
+    public static function getConfInfo($label = ''){
+        return static::findOne(['item' => $label]);
+    }
 }

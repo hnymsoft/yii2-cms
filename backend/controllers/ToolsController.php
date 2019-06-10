@@ -2,36 +2,14 @@
 namespace backend\controllers;
 
 use common\helpers\Uploader;
+use common\models\Setting;
 use yii\web\Controller;
 use common\models\Config;
 
 class ToolsController extends Controller
 {
-	/**
-	 * 富文本编辑器上传文件
-	 */
-    public function actionUploadEditor()
-    {
-        $file = $_FILES;
-        $file_name = $file['wangEditorH5File']['name'];
-        $file_tmp_path =$file['wangEditorH5File']['tmp_name'];
-        $dir = "../../uploads/".date("Ymd");
-        if (!is_dir($dir)){
-            mkdir($dir,0777);
-        }
-		$type = substr(strrchr($file_name, '.'), 1);
-		$mo = Config::findOne(['name'=>'WEB_SITE_ALLOW_UPLOAD_TYPE']);
-		$allow_type = explode(',', $mo->value);
-		if(!in_array($type, $allow_type)){
-			die("文件类型为允许的格式");
-		}
-        $file_save_name = date("YmdHis",time()) . mt_rand(1000, 9999) . '.' . $type;
-        move_uploaded_file($file_tmp_path, $dir.'/'.$file_save_name);
-        echo Config::findOne(['name'=>'WEB_SITE_RESOURCES_URL'])->value . date('Ymd').'/'.$file_save_name;
-    }
-
     /**
-     * 图片上传
+     * 文件上传
      * @return string
      */
     public function actionUpload()
@@ -47,14 +25,33 @@ class ToolsController extends Controller
             case 'logo':
                 $path = "uploads/logo/{rand:10}";
                 break;
+            case 'flink':
+                $path = "uploads/flink/{rand:10}";
+                break;
             default:
                 $path = "uploads/images/{rand:10}";
                 break;
         }
+
+        //读取允许上传大小配置
+        $size = 102400;
+        if($conf = Setting::getConfInfo('cfg_filesize')){
+            $size = $conf->value;
+        }
+
+        //读取允许上传格式配置
+        $ext = [];
+        if($cfg = Setting::getConfInfo('cfg_filetype')){
+            $filetype = explode('|',$cfg->value);
+            $ext = array_map(function ($v){
+                return '.'.$v;
+            },$filetype);
+        }
+
         $config = array(
             "pathFormat" => $path, /* 上传保存路径,可以自定义保存路径和文件名格式 */
-            "maxSize" => 5120000 * 4, /* 20M 上传大小限制，单位B */
-            "allowFiles" => [".jpg",".jpeg",".png",".bmp",".gif"] /* 上传图片格式显示 */
+            "maxSize" => $size,
+            "allowFiles" => $ext
         );
 
         if($_FILES){ //参数配置项图片上传

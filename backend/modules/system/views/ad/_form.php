@@ -43,7 +43,7 @@ $this->registerJs($this->render('js/_script.js'));
         }
     ?>">
         <?= $form->field($model, 'img_link',[
-            'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div><div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn layui-btn-primary upload_button" id="upload"><i class="layui-icon"></i>上传文件</button><a href="javascript:;" class="layui-btn layui-btn-primary" id="view_photo">查看图片</a></div>'
+            'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div><div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn layui-btn-primary upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn layui-btn-primary" id="view_photo">查看图片</a></div>'
         ])->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     </div>
 
@@ -54,7 +54,7 @@ $this->registerJs($this->render('js/_script.js'));
         echo ($model->media_type == 1) ? 'block' : 'none';
     }
     ?>">
-        <?= $form->field($model, 'font_content')->textInput(['rows' => 6,'class'=>'layui-input']) ?>
+        <?= $form->field($model, 'font_content')->textInput(['class'=>'layui-input']) ?>
     </div>
 
     <div class="media_code" style="display: <?php

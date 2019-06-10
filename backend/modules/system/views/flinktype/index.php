@@ -1,9 +1,8 @@
 <?php
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Ad Positions';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -26,36 +25,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     'maxButtonCount'=>5,
                 ],
                 'columns' => [
-                    'position_id',
-                    'position_name',
                     [
-                        'label' => '规格(px)',
-                        'value' => function($model){
-                            return $model->ad_width.' x '.$model->ad_height;
-                        }
-                    ],
-                    'position_desc',
-                    [
-                        'attribute' => 'position_style',
-                        'headerOptions' => ['width'=>'27%'],
+                        'attribute' => 'id',
+                        'headerOptions' => [
+                            'width' => '5%',
+                            'style'=> 'text-align: center;'
+                        ],
                         'contentOptions' => ['align'=>'center'],
-                        'value' => function($model){
-                            return !empty($model->position_style) ? $model->position_style : '未生成（添加广告启用后生成）';
-                        }
+                    ],
+                    'typename',
+                    [
+                        'attribute' => 'order',
+                        'headerOptions' => [
+                            'width' => '8%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'contentOptions' => ['align'=>'center'],
                     ],
                     [
                         'header' => '操作',
                         'class' => 'yii\grid\ActionColumn',
                         'contentOptions' => ['align'=>'center'],
                         'headerOptions' => [
-                            'width' => '12%',
+                            'width' => '8%',
                             'style'=> 'text-align: center;'
                         ],
                         'template' =>'{view} {update} {delete}',
                         'buttons' => [
-                            'view' => function ($url,$model){
-                                return Html::a('查看广告', \yii\helpers\Url::to(['ad/index','Ad[position_id]'=>$model->position_id]), ['class' => "layui-btn layui-btn-xs layui-default-view"]);
-                            },
                             'update' => function ($url) {
                                 return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                             },
