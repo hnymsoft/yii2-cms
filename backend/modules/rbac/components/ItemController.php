@@ -77,7 +77,7 @@ class ItemController extends Controller
         $model = new AuthItem(null);
         $model->type = $this->type;
         if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', ['model' => $model]);
         }
@@ -93,7 +93,7 @@ class ItemController extends Controller
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->getRequest()->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', ['model' => $model]);
