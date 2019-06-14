@@ -45,11 +45,11 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
     {
         $model = new VerifyEmailForm('4ch0qbfhvWwkcuWqjN8SWRq72SOw1KYT_1548675330');
         $user = $model->verifyEmail();
-        expect($user)->isInstanceOf('common\models\User');
+        expect($user)->isInstanceOf('common\models\Member');
 
         expect($user->username)->equals('test.test');
         expect($user->email)->equals('test@mail.com');
-        expect($user->status)->equals(\common\models\User::STATUS_ACTIVE);
+        expect($user->status)->equals(\common\models\Member::STATUS_ACTIVE);
         expect($user->validatePassword('Test1234'))->true();
     }
 }

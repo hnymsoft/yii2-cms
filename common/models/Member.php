@@ -8,21 +8,10 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $verification_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * Class Member
+ * @package common\models
  */
-class User extends ActiveRecord implements IdentityInterface
+class Member extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
@@ -34,7 +23,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%am_member}}';
     }
 
     /**
@@ -53,9 +42,44 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['username', 'nickname', 'auth_key', 'password_hash', 'r_id', 'created_at', 'updated_at'], 'required'],
+            [['status', 'r_id', 'created_at', 'last_login_date', 'integral', 'updated_at'], 'integer'],
+            [['balance'], 'number'],
+            [['username', 'nickname', 'auth_key'], 'string', 'max' => 32],
+            [['head_pic', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['access_token'], 'string', 'max' => 100],
+            [['mobile'], 'string', 'max' => 11],
+            [['created_address', 'last_login_address'], 'string', 'max' => 200],
+            [['created_ip', 'last_login_ip'], 'string', 'max' => 15],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => '用户名',
+            'nickname' => '昵称',
+            'head_pic' => '头像',
+            'mobile' => '手机号码',
+            'email' => '邮箱',
+            'status' => '状态',
+            'r_id' => '级别ID',
+            'created_at' => '添加时间',
+            'created_address' => '注册地址',
+            'created_ip' => '注册IP',
+            'last_login_date' => '登陆时间',
+            'last_login_ip' => '登陆IP',
+            'last_login_address' => '登陆地址',
+            'integral' => '积分',
+            'balance' => '余额',
+            'updated_at' => '更新时间',
+        ];
+    }
+
+    public function getMemberrank()
+    {
+        return $this->hasOne(MemberRank::className(), ['id' => 'r_id']);
     }
 
     /**
@@ -205,5 +229,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * afterFind 事件
+     */
+    public function afterFind(){
+        parent::afterFind();
+        $this->created_at = date('Y-m-d H:i:s',$this->created_at);
+        $this->updated_at = date('Y-m-d H:i:s',$this->updated_at);
     }
 }

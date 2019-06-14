@@ -39,7 +39,7 @@ class AdPosition extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'position_id' => 'ID',
+            'id' => 'ID',
             'position_name' => '广告位名称',
             'ad_width' => '广告位宽度',
             'ad_height' => '广告位高度',
@@ -55,7 +55,7 @@ class AdPosition extends \yii\db\ActiveRecord
      */
     public static function genAdvertCode($id,$pid){
         $modelAdpostion = static::findOne($pid);
-        $modelAd = Ad::findOne(['ad_id'=>$id,'position_id'=>$pid,'enabled'=>1]);
+        $modelAd = Ad::findOne(['id'=>$id,'position_id'=>$pid,'enabled'=>1]);
         if(!$modelAdpostion || !$modelAd){
             return false;
         }

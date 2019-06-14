@@ -28,7 +28,7 @@ class Log extends ActiveRecord
         parent::init();
         if ($this->userClassName === null) {
             $this->userClassName = Yii::$app->getUser()->identityClass;
-            $this->userClassName = $this->userClassName ? : 'common\models\User';
+            $this->userClassName = $this->userClassName ? : 'common\models\Member';
         }
     }
 

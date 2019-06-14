@@ -42,7 +42,7 @@ class Ad extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ad_id' => 'ID',
+            'id' => 'ID',
             'position_id' => '广告位置',
             'media_type' => '媒介类型',
             'ad_name' => '广告名称',
@@ -63,7 +63,7 @@ class Ad extends \yii\db\ActiveRecord
 
     public function getAdPosition()
     {
-        return $this->hasOne(AdPosition::className(), ['position_id' => 'position_id']);
+        return $this->hasOne(AdPosition::className(), ['id' => 'position_id']);
     }
 
     /**

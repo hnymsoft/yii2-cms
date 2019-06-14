@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use common\models\User;
+use common\models\Member;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
@@ -14,7 +14,7 @@ class VerifyEmailForm extends Model
     public $token;
 
     /**
-     * @var User
+     * @var Member
      */
     private $_user;
 
@@ -31,7 +31,7 @@ class VerifyEmailForm extends Model
         if (empty($token) || !is_string($token)) {
             throw new InvalidArgumentException('Verify email token cannot be blank.');
         }
-        $this->_user = User::findByVerificationToken($token);
+        $this->_user = Member::findByVerificationToken($token);
         if (!$this->_user) {
             throw new InvalidArgumentException('Wrong verify email token.');
         }
@@ -41,12 +41,12 @@ class VerifyEmailForm extends Model
     /**
      * Verify email
      *
-     * @return User|null the saved model or null if saving fails
+     * @return Member|null the saved model or null if saving fails
      */
     public function verifyEmail()
     {
         $user = $this->_user;
-        $user->status = User::STATUS_ACTIVE;
+        $user->status = Member::STATUS_ACTIVE;
         return $user->save(false) ? $user : null;
     }
 }

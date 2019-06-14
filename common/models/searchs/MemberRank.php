@@ -4,12 +4,12 @@ namespace common\models\searchs;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Ad as AdModel;
+use common\models\MemberRank as MemberRankModel;
 
 /**
- * Ad represents the model behind the search form of `common\models\Ad`.
+ * MemberRank represents the model behind the search form of `common\models\MemberRank`.
  */
-class Ad extends AdModel
+class MemberRank extends MemberRankModel
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class Ad extends AdModel
     public function rules()
     {
         return [
-            [['id', 'position_id', 'media_type', 'start_time', 'end_time', 'click_count', 'enabled'], 'integer'],
-            [['ad_name', 'ad_link', 'ad_code', 'link_man', 'link_email', 'link_phone'], 'safe'],
+            [['id', 'score', 'status'], 'integer'],
+            [['name'], 'safe'],
+            [['discount'], 'number'],
         ];
     }
 
@@ -40,9 +41,10 @@ class Ad extends AdModel
      */
     public function search($params)
     {
-        $query = AdModel::find()->orderBy('id desc');
+        $query = MemberRankModel::find();
 
         // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -56,8 +58,14 @@ class Ad extends AdModel
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(['position_id' => $this->position_id]);
-        $query->andFilterWhere(['like', 'ad_name', $this->ad_name]);
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'score' => $this->score,
+            'discount' => $this->discount,
+            'status' => 1,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }
