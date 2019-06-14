@@ -14,35 +14,6 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['login', 'error'],
-//                        'allow' => true,
-//                    ],
-//                    [
-//                        'actions' => ['logout', 'index'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
-
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -50,6 +21,18 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
                 'layout' => 'main-index2'
             ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'backColor'=>0x000000,//背景颜色
+                'width' => 100,
+                'height' => 40,
+                'padding' => 0,
+                'minLength' => 4,
+                'maxLength' => 4,
+                'foreColor'=>0xffffff,     //字体颜色
+                'offset'=>8,        //设置字符偏移量 有效果
+                'testLimit'=>999,
+            ]
         ];
     }
 

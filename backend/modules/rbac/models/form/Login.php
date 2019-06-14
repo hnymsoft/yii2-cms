@@ -2,6 +2,7 @@
 
 namespace rbac\models\form;
 
+use common\models\Setting;
 use Yii;
 use yii\base\Model;
 use rbac\models\User;
@@ -14,7 +15,7 @@ class Login extends Model
     public $username;
     public $password;
     public $rememberMe = true;
-    
+
     private $_user = false;
 
     /**
@@ -23,13 +24,29 @@ class Login extends Model
     public function rules()
     {
         return [
-            // username and password are both required
             [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
+            ['username','validateUsername'],
             ['password', 'validatePassword'],
         ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => '账号',
+            'password' => '密码',
+            'rememberMe' => '记住密码'
+        ];
+    }
+
+    public function validateUsername($attribute, $params){
+        if(!$this->hasErrors()){
+            $user = $this->getUser();
+            if(!$user){
+                $this->addError($attribute, '账号错误！');
+            }
+        }
     }
 
     /**
@@ -44,7 +61,7 @@ class Login extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '密码错误！');
             }
         }
     }

@@ -2,6 +2,7 @@
 
 namespace rbac\controllers;
 
+use common\models\Setting;
 use Yii;
 use rbac\models\form\Login;
 use rbac\models\form\PasswordResetRequest;
@@ -10,13 +11,12 @@ use rbac\models\form\Signup;
 use rbac\models\form\ChangePassword;
 use rbac\models\User;
 use rbac\models\searchs\User as UserSearch;
+use yii\base\DynamicModel;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use yii\base\UserException;
-use yii\mail\BaseMailer;
 use yii\web\ForbiddenHttpException;
 
 /**
@@ -135,18 +135,33 @@ class UserController extends Controller
      */
     public function actionLogin()
     {
-        //layout文件
-        $this->layout = '@backend/views/layouts/main-login';
-
         if (!Yii::$app->getUser()->isGuest) {
             return $this->goHome();
         }
+
+        //layout文件
+        $this->layout = '@backend/views/layouts/main-login';
+
         $model = new Login();
+        $dynamicModel = new DynamicModel(['captcha']);
+
+        $cfg = Setting::getConfInfo('cfg_admin_captcha');
+        if($cfg && $cfg->value == 1){
+            $dynamicModel->addRule('captcha','required')
+                         ->addRule('captcha','string',['max' => 4])
+                         ->addRule('captcha','captcha',['captchaAction' => 'site/captcha']);
+            if(!$dynamicModel->validate()){
+                $dynamicModel->addError('captcha',$dynamicModel->errors);
+            }
+        }
+
         if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
             return $this->goBack();
         } else {
             return $this->render('login', [
                 'model' => $model,
+                'dynamicModel' => $dynamicModel,
+                'is_verify' => (isset($cfg) && $cfg->value == 1) ? true : false
             ]);
         }
     }
