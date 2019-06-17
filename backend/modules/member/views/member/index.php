@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+$this->registerJs($this->render('js/_script.js'));
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -11,7 +13,7 @@ use yii\grid\GridView;
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             //'filterModel' => $searchModel,
-            'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
+            'options' => ['class' => 'grid-view layui-form','style'=>'overflow:auto', 'id' => 'grid-view'],
             'layout' => "{items}\n{pager}",
             'tableOptions'=> ['class'=>'layui-table'],
             'pager' => [
@@ -52,13 +54,25 @@ use yii\grid\GridView;
                 'email:email',
                 'integral',
                 'balance',
+                'created_at',
                 [
-                    'label' => '状态',
+                    'attribute' => 'status',
+                    'headerOptions' => [
+                        'width' => '7%',
+                        'style'=> 'text-align: center;'
+                    ],
+                    'contentOptions' => ['align'=>'center'],
+                    'format' => 'raw',
                     'value' => function($model){
-                        return $model->status == 10 ? '是' : '否';
+                        $status = $model->status == 10 ? true : false;
+                        return Html::checkbox('status',$status,[
+                            'lay-skin' => 'switch',
+                            'lay-filter' => 'status',
+                            'lay-text' => '启用|禁用',
+                            'data-url' => \yii\helpers\Url::toRoute(['ajaxstatus','id' => $model->id])
+                        ]);
                     }
                 ],
-                'created_at',
                 [
                     'header' => '操作',
                     'class' => 'yii\grid\ActionColumn',

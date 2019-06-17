@@ -19,10 +19,14 @@ return [
         'rbac' => [
             'class' => 'rbac\Module',
         ],
+        'member' => [
+            'class' => 'member\Module',
+        ],
     ],
     "aliases" => [
         '@rbac' => '@backend/modules/rbac',
         '@system' => '@backend/modules/system',
+        '@member' => '@backend/modules/member',
     ],
     'components' => [
         'request' => [
@@ -63,9 +67,9 @@ return [
             ]
         ],
         "urlManager" => [
-//            "enablePrettyUrl" => true,
-//            "enableStrictParsing" => false,
-//            "showScriptName" => true,
+            "enablePrettyUrl" => true,
+            "enableStrictParsing" => false,
+            "showScriptName" => true,
 //            "suffix" => "",
 //            "rules" => [
 //                "<controller:\w+>/<id:\d+>"=>"<controller>/view",
@@ -76,6 +80,8 @@ return [
     'as access' => [
         'class' => 'rbac\components\AccessControl',
         'allowActions' => [
+            'rbac/user/ajaxlogin',
+            'site/captcha',
             'rbac/user/logout',
             'rbac/user/request-password-reset',
             'rbac/user/reset-password',

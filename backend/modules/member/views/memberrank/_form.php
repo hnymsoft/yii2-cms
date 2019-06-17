@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
     <div class="layui-form-item">
         <label class="layui-form-label">是否启用</label>
         <div class="layui-input-block">
-            <input type="radio" name="Ad[status]" value="1" title="是" <?php
+            <input type="radio" name="MemberRank[status]" value="1" title="是" <?php
             if($model->isNewRecord){
                 echo 'checked';
             }else{
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
                 }
             }
             ?> />
-            <input type="radio" name="Ad[status]" value="0" title="否" <?php
+            <input type="radio" name="MemberRank[status]" value="0" title="否" <?php
             if(!$model->isNewRecord){
                 if($model->status == 0){
                     echo 'checked';

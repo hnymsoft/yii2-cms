@@ -110,6 +110,24 @@ class MemberController extends Controller
     }
 
     /**
+     * 状态修改
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAjaxstatus($id){
+        $status = Yii::$app->request->post();
+        if($status && in_array($status,[0,10])){
+            return ajaxReturnFailure('参数错误');
+        }
+        $model = $this->findModel($id);
+        if($model->load($status,'') && $model->save(false)){
+            return ajaxReturnSuccess('状态修改成功');
+        }
+        return ajaxReturnFailure('状态修改失败');
+    }
+
+    /**
      * 模型
      * @param $id
      * @return null|static

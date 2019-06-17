@@ -62,7 +62,6 @@ class MemberRank extends MemberRankModel
             'id' => $this->id,
             'score' => $this->score,
             'discount' => $this->discount,
-            'status' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
