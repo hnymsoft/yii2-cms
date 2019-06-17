@@ -42,7 +42,7 @@ class Member extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nickname', 'auth_key', 'password_hash', 'r_id', 'created_at', 'updated_at'], 'required'],
+            [['username', 'nickname', 'auth_key','r_id', 'created_at', 'updated_at'], 'required'],
             [['status', 'r_id', 'created_at', 'last_login_date', 'integral', 'updated_at'], 'integer'],
             [['balance'], 'number'],
             [['username', 'nickname', 'auth_key'], 'string', 'max' => 32],
@@ -59,6 +59,7 @@ class Member extends ActiveRecord implements IdentityInterface
         return [
             'id' => 'ID',
             'username' => '用户名',
+            'password_hash' => '密码',
             'nickname' => '昵称',
             'head_pic' => '头像',
             'mobile' => '手机号码',

@@ -61,13 +61,20 @@ class MemberController extends Controller
     /**
      * 添加
      * @return string|\yii\web\Response
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
         $model = new Member();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $postData = Yii::$app->request->post();
+        if(Yii::$app->request->isPost && isset($postData)){
+            $postData['Member']['password_hash'] = Yii::$app->security->generatePasswordHash($postData['Member']['password_hash']);
+            $postData['Member']['auth_key'] = Yii::$app->security->generateRandomString();
+        }
+
+        if ($model->load($postData) && $model->save(false)) {
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -80,13 +87,23 @@ class MemberController extends Controller
      * @param $id
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException
+     * @throws \yii\base\Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $postData = Yii::$app->request->post();
+        if ($model->load($postData) && $model->validate()) {
+            unset($model->password_hash);
+            if($postData['Member']['password_hash']){
+                $model->password_hash = Yii::$app->security->generatePasswordHash($postData['Member']['password_hash']);
+            }
+            $model->password_reset_token = null;
+            $model->updated_at = time();
+            if($model->save(false)){
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [

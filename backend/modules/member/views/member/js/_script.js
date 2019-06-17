@@ -1,6 +1,6 @@
 layui.config({
     base : "js/"
-}).use(['form','layer','jquery'],function(){
+}).use(['form','layer','jquery','upload'],function(){
     var form = layui.form
         ,layer = parent.layer === undefined ? layui.layer : parent.layer
         ,$ = layui.jquery;

@@ -36,7 +36,9 @@ $this->registerJs($this->render('js/_script.js'));
                     'format' => 'raw',
                     'value' => function($model){
                         if($model->head_pic){
-                            return Html::img($model->head_pic,['class'=>'layui-circle','width'=>'45px','height'=>'45px']);
+                            $conf = \common\models\Setting::getConfInfo('cfg_domain');
+                            $url = preg_match("/^http(s)?:\\/\\/.+/",$model->head_pic) ? $model->head_pic : $conf->value .'/'. $model->head_pic;
+                            return Html::img($url,['class'=>'layui-circle','width'=>'45px','height'=>'45px']);
                         }else{
                             return '--';
                         }

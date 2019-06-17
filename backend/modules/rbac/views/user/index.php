@@ -43,14 +43,16 @@ $this->registerJs($this->render('js/index.js'));
                         'attribute' => 'head_pic',
                         'contentOptions' => ['style'=> 'text-align: center;'],
                         'headerOptions' => ['width'=>'110','style'=> 'text-align: center;'],
-                        "format"=>[
-                            "image",
-                            [
-                                "class"=>"layui-circle",
-                                "width"=>"30px",
-                                "height"=>"30px",
-                            ],
-                        ],
+                        'format' => 'raw',
+                        'value' => function($model){
+                            if($model->head_pic){
+                                $conf = \common\models\Setting::getConfInfo('cfg_domain');
+                                $url = preg_match("/^http(s)?:\\/\\/.+/",$model->head_pic) ? $model->head_pic : $conf->value .'/'. $model->head_pic;
+                                return Html::img($url,['class'=>'layui-circle','width'=>'45px','height'=>'45px']);
+                            }else{
+                                return '--';
+                            }
+                        }
                     ],
                     [
                         'attribute' => 'username',
