@@ -71,6 +71,7 @@ class MemberController extends Controller
         if(Yii::$app->request->isPost && isset($postData)){
             $postData['Member']['password_hash'] = Yii::$app->security->generatePasswordHash($postData['Member']['password_hash']);
             $postData['Member']['auth_key'] = Yii::$app->security->generateRandomString();
+            $model->generatePasswordResetToken();
         }
 
         if ($model->load($postData) && $model->save(false)) {

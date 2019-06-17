@@ -60,9 +60,6 @@ $fieldOptions3 = [
             <div class="layui-col-md6">
                 <?= $form->field($model, 'rememberMe',$fieldOptions3)->label(false)->checkbox(['class' => 'layui-input','lay-skin' => 'primary','title'=>'记住密码']) ?>
             </div>
-            <div class="layui-col-md6" align="right">
-                <?= Html::a('忘记密码', ['/rbac/user/request-password-reset'], ['class' => 'layui-text','style'=>'line-height:40px']) ?>
-            </div>
         </div>
     <?php ActiveForm::end(); ?>
 </div>
