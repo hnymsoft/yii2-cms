@@ -18,6 +18,7 @@ $this->registerJs($this->render('js/upload.js'));
     ]); ?>
     <?= $form->field($model, 'username')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     <?= $form->field($model, 'password_hash')->passwordInput(['maxlength' => true,'value'=>'','class'=>'layui-input']) ?>
+    <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true,'value'=>'','class'=>'layui-input']) ?>
     <?= $form->field($model, 'nickname')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     <?= $form->field($model, 'head_pic',[
         'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div><div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn layui-btn-primary upload_button" id="upload"><i class="layui-icon"></i>上传头像</button><a href="javascript:;" class="layui-btn layui-btn-primary" id="view_photo">查看头像</a></div>'

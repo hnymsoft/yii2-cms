@@ -17,6 +17,7 @@ class Member extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $confirm_password;
 
     /**
      * {@inheritdoc}
@@ -42,15 +43,17 @@ class Member extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'nickname', 'auth_key','r_id', 'created_at', 'updated_at'], 'required'],
-            [['status', 'r_id', 'created_at', 'last_login_date', 'integral', 'updated_at'], 'integer'],
-            [['balance'], 'number'],
-            [['username', 'nickname', 'auth_key'], 'string', 'max' => 32],
-            [['head_pic', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
-            [['access_token'], 'string', 'max' => 100],
-            [['mobile'], 'string', 'max' => 11],
-            [['created_address', 'last_login_address'], 'string', 'max' => 200],
-            [['created_ip', 'last_login_ip'], 'string', 'max' => 15],
+            [['username','mobile','email','r_id','balance','integral'],'required', 'on' => ['create', 'update']],
+            [['password_hash','confirm_password'],'required', 'on' => ['create']],
+            ['confirm_password','compare','compareAttribute'=>'password_hash','message'=>'两次密码不一致', 'on' => ['create', 'update']]
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'create' => ['username','mobile','email','r_id','balance','integral','password_hash','confirm_password'],
+            'update' => ['username','mobile','email','r_id','balance','integral']
         ];
     }
 
@@ -60,6 +63,7 @@ class Member extends ActiveRecord implements IdentityInterface
             'id' => 'ID',
             'username' => '用户名',
             'password_hash' => '密码',
+            'confirm_password' => '确认密码',
             'nickname' => '昵称',
             'head_pic' => '头像',
             'mobile' => '手机号码',

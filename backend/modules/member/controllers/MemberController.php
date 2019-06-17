@@ -66,14 +66,13 @@ class MemberController extends Controller
     public function actionCreate()
     {
         $model = new Member();
-
+        $model->scenario = 'create';
         $postData = Yii::$app->request->post();
         if(Yii::$app->request->isPost && isset($postData)){
             $postData['Member']['password_hash'] = Yii::$app->security->generatePasswordHash($postData['Member']['password_hash']);
             $postData['Member']['auth_key'] = Yii::$app->security->generateRandomString();
             $model->generatePasswordResetToken();
         }
-
         if ($model->load($postData) && $model->save(false)) {
             return $this->redirect(['index']);
         }
@@ -93,8 +92,9 @@ class MemberController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->scenario = 'update';
         $postData = Yii::$app->request->post();
+
         if ($model->load($postData) && $model->validate()) {
             unset($model->password_hash);
             if($postData['Member']['password_hash']){
@@ -102,7 +102,7 @@ class MemberController extends Controller
             }
             $model->password_reset_token = null;
             $model->updated_at = time();
-            if($model->save(false)){
+            if($model->save()){
                 return $this->redirect(['index']);
             }
         }
