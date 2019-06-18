@@ -2,12 +2,12 @@
 
 namespace system\controllers;
 
+use backend\controllers\BaseController;
 use common\models\Ad;
 use Yii;
 use common\models\AdPosition;
 use common\models\searchs\AdPosition as AdPositionSearch;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -15,7 +15,7 @@ use yii\web\NotFoundHttpException;
  * Class AdpositionController
  * @package system\controllers
  */
-class AdpositionController extends Controller
+class AdpositionController extends BaseController
 {
 
     /**

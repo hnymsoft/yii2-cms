@@ -1,18 +1,18 @@
 <?php
+
 namespace system\controllers;
 
 use backend\controllers\BaseController;
 use Yii;
-use common\models\Guestbook;
-use common\models\searchs\Guestbook as GuestbookSearch;
+use common\models\ExtField;
+use common\models\searchs\ExtField as ExtFieldSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * Class GuestbookController
- * @package system\controllers
+ * ExtfieldController implements the CRUD actions for ExtField model.
  */
-class GuestbookController extends BaseController
+class ExtfieldController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class GuestbookController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new GuestbookSearch();
+        $searchModel = new ExtFieldSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -63,9 +63,9 @@ class GuestbookController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Guestbook();
+        $model = new ExtField();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['index']);
         }
 
@@ -115,7 +115,7 @@ class GuestbookController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Guestbook::findOne($id)) !== null) {
+        if (($model = ExtField::findOne($id)) !== null) {
             return $model;
         }
 

@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Guestbooks';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layui-fluid">
     <div class="layui-card">

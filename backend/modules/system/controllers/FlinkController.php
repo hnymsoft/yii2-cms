@@ -2,10 +2,10 @@
 
 namespace system\controllers;
 
+use backend\controllers\BaseController;
 use Yii;
 use common\models\Flink;
 use common\models\searchs\Flink as FlinkSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  * Class FlinkController
  * @package system\controllers
  */
-class FlinkController extends Controller
+class FlinkController extends BaseController
 {
     /**
      * {@inheritdoc}

@@ -1,9 +1,8 @@
 <?php
+
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Ad Positions';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -14,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 //'filterModel' => $searchModel,
-                'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
+                'options' => ['class' => 'grid-view layui-form','style'=>'overflow:auto', 'id' => 'grid-view'],
                 'layout' => "{items}\n{pager}",
                 'tableOptions'=> ['class'=>'layui-table'],
                 'pager' => [
@@ -38,22 +37,40 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->id;
                         }
                     ],
-                    'position_name',
                     [
-                        'label' => '规格(px)',
-                        'value' => function($model){
-                            return $model->ad_width.' x '.$model->ad_height;
-                        }
-                    ],
-                    'position_desc',
-                    [
-                        'attribute' => 'position_style',
-                        'headerOptions' => ['width'=>'27%'],
+                        'attribute' => 'm_id',
+                        'headerOptions' => [
+                            'width' => '15%',
+                            'style'=> 'text-align: center;'
+                        ],
                         'contentOptions' => ['align'=>'center'],
                         'value' => function($model){
-                            return !empty($model->position_style) ? $model->position_style : '未生成（添加广告启用后生成）';
+                            return $model->modules->name;
                         }
                     ],
+                    [
+                        'attribute' => 'f_type',
+                        'headerOptions' => [
+                            'width' => '15%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'contentOptions' => ['align'=>'center'],
+                        'value' => function($model){
+                            return \common\models\ExtField::$input_type[$model->f_type];
+                        }
+                    ],
+                    [
+                        'attribute' => 'item',
+                        'headerOptions' => [
+                            'width' => '15%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'contentOptions' => ['align'=>'center'],
+                        'value' => function($model){
+                            return $model->item;
+                        }
+                    ],
+                    'desc',
                     [
                         'header' => '操作',
                         'class' => 'yii\grid\ActionColumn',
@@ -62,15 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'width' => '12%',
                             'style'=> 'text-align: center;'
                         ],
-                        'template' =>'{view} {update} {delete}',
+                        'template' =>'{update} {delete}',
                         'buttons' => [
-                            'view' => function ($url,$model){
-                                return Html::a('查看广告', \yii\helpers\Url::to(['ad/index','Ad[position_id]'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-view"]);
-                            },
                             'update' => function ($url) {
-                                return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                             },
-                            'delete' => function ($url) {
+                            'delete' => function ($url,$model) {
                                 return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);
                             }
                         ]

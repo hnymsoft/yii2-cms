@@ -1,18 +1,19 @@
 <?php
+
 namespace system\controllers;
 
 use backend\controllers\BaseController;
+use common\models\BaseModel;
 use Yii;
-use common\models\Guestbook;
-use common\models\searchs\Guestbook as GuestbookSearch;
+use common\models\Module;
+use common\models\searchs\Module as ModuleSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * Class GuestbookController
- * @package system\controllers
+ * ModuleController implements the CRUD actions for Module model.
  */
-class GuestbookController extends BaseController
+class ModuleController extends BaseController
 {
     /**
      * {@inheritdoc}
@@ -35,12 +36,12 @@ class GuestbookController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new GuestbookSearch();
+        $searchModel = new ModuleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -63,9 +64,12 @@ class GuestbookController extends BaseController
      */
     public function actionCreate()
     {
-        $model = new Guestbook();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = new Module();
+        if(Yii::$app->request->isPost){
+            $model->create_user = Yii::$app->user->identity->username;
+            $model->create_addtime = GTIME;
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['index']);
         }
 
@@ -84,6 +88,11 @@ class GuestbookController extends BaseController
     {
         $model = $this->findModel($id);
 
+        if(Yii::$app->request->isPost){
+            $model->update_user = Yii::$app->user->identity->username;
+            $model->update_addtime = GTIME;
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['index']);
         }
@@ -96,7 +105,7 @@ class GuestbookController extends BaseController
     /**
      * 删除
      * @param $id
-     * @return string
+     * @return \yii\web\Response
      * @throws NotFoundHttpException
      */
     public function actionDelete($id)
@@ -108,6 +117,24 @@ class GuestbookController extends BaseController
     }
 
     /**
+     * 状态修改
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAjaxstatus($id){
+        $status = Yii::$app->request->post();
+        if($status && in_array($status,[0,1])){
+            return ajaxReturnFailure('参数错误');
+        }
+        $model = $this->findModel($id);
+        if($model->load($status,'') && $model->save(false)){
+            return ajaxReturnSuccess('状态修改成功');
+        }
+        return ajaxReturnFailure('状态修改失败');
+    }
+
+    /**
      * 模型
      * @param $id
      * @return null|static
@@ -115,7 +142,7 @@ class GuestbookController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Guestbook::findOne($id)) !== null) {
+        if (($model = Module::findOne($id)) !== null) {
             return $model;
         }
 

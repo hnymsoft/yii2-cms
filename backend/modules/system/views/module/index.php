@@ -1,9 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
-
-$this->title = 'Ad Positions';
-$this->params['breadcrumbs'][] = $this->title;
+$this->registerJs($this->render('js/_script.js'));
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -14,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 //'filterModel' => $searchModel,
-                'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
+                'options' => ['class' => 'grid-view layui-form','style'=>'overflow:auto', 'id' => 'grid-view'],
                 'layout' => "{items}\n{pager}",
                 'tableOptions'=> ['class'=>'layui-table'],
                 'pager' => [
@@ -38,20 +36,47 @@ $this->params['breadcrumbs'][] = $this->title;
                             return $model->id;
                         }
                     ],
-                    'position_name',
+                    'name',
                     [
-                        'label' => '规格(px)',
+                        'attribute' => 'type',
                         'value' => function($model){
-                            return $model->ad_width.' x '.$model->ad_height;
+                            $type = [
+                                1 => '列表',
+                                2 => '单页'
+                            ];
+                            return $type[$model->type];
                         }
                     ],
-                    'position_desc',
+                    'list_tpl',
+                    'content_tpl',
                     [
-                        'attribute' => 'position_style',
-                        'headerOptions' => ['width'=>'27%'],
+                        'attribute' => 'is_system',
                         'contentOptions' => ['align'=>'center'],
+                        'headerOptions' => [
+                            'width' => '8%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'format' => 'raw',
                         'value' => function($model){
-                            return !empty($model->position_style) ? $model->position_style : '未生成（添加广告启用后生成）';
+                            return $model->is_system == 1 ? '<font color="red">是</font>' : '<font color="green">否</font>';
+                        }
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'headerOptions' => [
+                            'width' => '8%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'contentOptions' => ['align'=>'center'],
+                        'format' => 'raw',
+                        'value' => function($model){
+                            $status = $model->status == 1 ? true : false;
+                            return Html::checkbox('status',$status,[
+                                'lay-skin' => 'switch',
+                                'lay-filter' => 'status',
+                                'lay-text' => '启用|禁用',
+                                'data-url' => \yii\helpers\Url::toRoute(['ajaxstatus','id' => $model->id])
+                            ]);
                         }
                     ],
                     [
@@ -64,14 +89,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'template' =>'{view} {update} {delete}',
                         'buttons' => [
-                            'view' => function ($url,$model){
-                                return Html::a('查看广告', \yii\helpers\Url::to(['ad/index','Ad[position_id]'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                            'view' => function ($url){
+                                return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                             },
                             'update' => function ($url) {
-                                return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                             },
-                            'delete' => function ($url) {
-                                return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);
+                            'delete' => function ($url,$model) {
+                                if($model->is_system != 1){
+                                    return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);
+                                }
                             }
                         ]
                     ],

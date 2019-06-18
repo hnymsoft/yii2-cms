@@ -2,13 +2,13 @@
 
 namespace system\controllers;
 
-use yii\web\Controller;
+use backend\controllers\BaseController;
 
 /**
  * Class IndexController
  * @package system\controllers
  */
-class IndexController extends Controller
+class IndexController extends BaseController
 {
     /**
      * Renders the index view for the module

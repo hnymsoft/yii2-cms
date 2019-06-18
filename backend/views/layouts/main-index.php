@@ -72,7 +72,7 @@ LayuiAsset::register($this);
                     </li>
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;">
-                            <cite><?=Yii::$app->user->identity->nickname?></cite>
+                            <cite><?=Yii::$app->user->identity->username?></cite>
                         </a>
                         <dl class="layui-nav-child">
                             <dd><a lay-href="<?= Url::to(['rbac/user/update-self','id'=>Yii::$app->user->identity->id])?>">基本资料</a></dd>

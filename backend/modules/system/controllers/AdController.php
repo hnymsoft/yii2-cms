@@ -1,11 +1,11 @@
 <?php
 namespace system\controllers;
 
+use backend\controllers\BaseController;
 use common\models\AdPosition;
 use Yii;
 use common\models\Ad;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
  * Class AdController
  * @package system\controllers
  */
-class AdController extends Controller
+class AdController extends BaseController
 {
 
     /**
