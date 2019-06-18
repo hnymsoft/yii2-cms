@@ -11,6 +11,7 @@ use yii\widgets\DetailView;
             <?= DetailView::widget([
                 'model' => $model,
                 'options' => ['class' => 'layui-table','style'=>'margin-top:0'],
+                'template' => '<tr><th width="90px;">{label}</th><td>{value}</td></tr>',
                 'attributes' => [
                     'ad_name',
                     [
@@ -61,7 +62,6 @@ use yii\widgets\DetailView;
                         }
                     ]
                 ],
-                'template' => '<tr><th width="90px;">{label}</th><td>{value}</td></tr>',
             ]) ?>
             </div>
         </div>

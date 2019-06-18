@@ -38,14 +38,22 @@ class Guestbook extends BaseModel
     {
         return [
             'id' => 'ID',
-            'subject' => 'Subject',
-            'content' => 'Content',
-            'name' => 'Name',
-            'mobile' => 'Mobile',
-            'reply' => 'Reply',
-            'info' => 'Info',
-            'addtime' => 'Addtime',
-            'status' => 'Status',
+            'subject' => '标题',
+            'content' => '留言内容',
+            'name' => '姓名',
+            'mobile' => '手机号码',
+            'reply' => '回复',
+            'info' => '设备信息',
+            'addtime' => '留言时间',
+            'status' => '状态',
         ];
+    }
+
+    /**
+     * afterFind 事件
+     */
+    public function afterFind(){
+        parent::afterFind();
+        $this->addtime = date('Y-m-d H:i:s',$this->addtime);
     }
 }
