@@ -98,16 +98,19 @@ $this->registerJs($this->render('js/index.js'));
                         'class' => 'yii\grid\ActionColumn',
                         'contentOptions' => ['align'=>'center'],
                         'headerOptions' => [
-                            'width' => '13%',
+                            'width' => '16%',
                             'style'=> 'text-align: center;'
                         ],
-                        'template' =>'{view} {update} {activate} {delete}',
+                        'template' =>'{view} {update} {auth} {activate} {delete}',
                         'buttons' => [
                             'view' => function ($url, $model, $key){
-                                return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                                return Html::a('查看', $url, ['class' => "layui-btn layui-btn-primary layui-btn-xs layui-default-view"]);
                             },
                             'update' => function ($url, $model, $key) {
                                 return Html::a('修改', Url::to(['update','id'=>$model->id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                            },
+                            'auth' => function ($url, $model, $key) {
+                                return Html::a('授权', Url::to(['assignment/view','id'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-update"]);
                             },
                             'activate' => function ($url, $model, $key) {
                                 if($model->status==0){

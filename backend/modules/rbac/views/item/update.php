@@ -5,7 +5,7 @@
         </div>
         <div class="layui-card-body">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>编辑权限</legend>
+                <legend>编辑角色（权限）</legend>
             </fieldset>
             <?= $this->render('_form', [
                 'model' => $model,
