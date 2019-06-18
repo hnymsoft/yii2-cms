@@ -9,7 +9,7 @@ use Yii;
  * Class AdPosition
  * @package common\models
  */
-class AdPosition extends \yii\db\ActiveRecord
+class AdPosition extends BaseModel
 {
     /**
      * {@inheritdoc}

@@ -9,7 +9,7 @@ use Yii;
  * Class Ad
  * @package common\models
  */
-class Ad extends \yii\db\ActiveRecord
+class Ad extends BaseModel
 {
     public $font_content,$img_link,$code_content;
 

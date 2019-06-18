@@ -9,7 +9,7 @@ use Yii;
  * Class UserRank
  * @package common\models
  */
-class MemberRank extends \yii\db\ActiveRecord
+class MemberRank extends BaseModel
 {
     /**
      * {@inheritdoc}

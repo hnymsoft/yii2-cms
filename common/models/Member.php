@@ -4,14 +4,13 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
  * Class Member
  * @package common\models
  */
-class Member extends ActiveRecord implements IdentityInterface
+class Member extends BaseModel implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;

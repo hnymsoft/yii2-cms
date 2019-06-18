@@ -9,7 +9,7 @@ use Yii;
  * Class Flink
  * @package common\models
  */
-class Flink extends \yii\db\ActiveRecord
+class Flink extends BaseModel
 {
     /**
      * {@inheritdoc}
