@@ -69,7 +69,7 @@ class Member extends ActiveRecord implements IdentityInterface
             'mobile' => '手机号码',
             'email' => '邮箱',
             'status' => '状态',
-            'r_id' => '级别ID',
+            'r_id' => '会员级别',
             'created_at' => '添加时间',
             'created_address' => '注册地址',
             'created_ip' => '注册IP',

@@ -40,6 +40,6 @@ class Setting extends BaseModel
      * @return null|static
      */
     public static function getConfInfo($label = ''){
-        return static::findOne(['item' => $label]);
+        return Setting::findOne(['item' => $label]);
     }
 }

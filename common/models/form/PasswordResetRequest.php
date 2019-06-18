@@ -1,6 +1,7 @@
 <?php
 namespace common\models\form;
 
+use common\models\Setting;
 use Yii;
 use common\models\Member as User;
 use yii\base\Model;
@@ -48,11 +49,24 @@ class PasswordResetRequest extends Model
             }
 
             if ($user->save(false)) {
-                return Yii::$app->mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
-                    ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-                    ->setTo($this->email)
-                    ->setSubject('Password reset for ' . Yii::$app->name)
-                    ->send();
+                //是否开启邮件发送功能
+                if(Setting::getConfInfo('cfg_smtp_open')->value){
+                    $mailer = \Yii::$app->mailer;
+                    $mailer->transport = [
+                        'host' => Setting::getConfInfo('cfg_smtp_server')->value,  //每种邮箱的host配置不一样
+                        'port' => Setting::getConfInfo('cfg_smtp_port')->value,
+                        'encryption' => Setting::getConfInfo('cfg_smtp_ssl')->value == 1 ? 'tls' : '',
+                        'username' => Setting::getConfInfo('cfg_smtp_username')->value,
+                        'password' => Setting::getConfInfo('cfg_smtp_password')->value,
+                    ];
+                    $mailer->compose(['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'], ['user' => $user])
+                        ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                        ->setTo($this->email)
+                        ->setSubject('Password reset for ' . Yii::$app->name)
+                        ->send();
+                }else{
+                    return false;
+                }
             }
         }
 

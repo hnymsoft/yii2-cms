@@ -17,7 +17,7 @@ class AdPosition extends AdPositionModel
     public function rules()
     {
         return [
-            [['position_id', 'ad_width', 'ad_height'], 'integer'],
+            [['id', 'ad_width', 'ad_height'], 'integer'],
             [['position_name', 'position_desc', 'position_style'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class AdPosition extends AdPositionModel
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'position_id' => $this->position_id,
+            'id' => $this->id,
             'ad_width' => $this->ad_width,
             'ad_height' => $this->ad_height,
         ]);

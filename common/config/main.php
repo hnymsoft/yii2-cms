@@ -23,11 +23,7 @@ return [
             'useFileTransport' => true, //false发送邮件，true只是生成邮件在runtime文件夹下，不发邮件
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.qq.com',  //每种邮箱的host配置不一样
-                'username' => 'xxxxx@qq.com',
-                'password' => 'xxxxx',
-                'port' => '465',
-                'encryption' => 'tls',
+                //发送邮件基础信息 动态读取数据库配置信息
             ],
         ]
     ],
