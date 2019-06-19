@@ -10,7 +10,7 @@ layui.config({
         ,treetable = layui.treetable;
 
     // 渲染表格
-    var renderTable = function () {//树桩表格参考文档：https://gitee.com/whvse/treetable-lay
+    var renderTable = function () {
         treetable.render({
             treeColIndex: 1,//树形图标显示在第几列
             treeSpid: 0,//最上级的父级id
@@ -29,18 +29,15 @@ layui.config({
                 {field: 'm_name',title:'模型', width:150,align: 'center'},
                 {field: 'list_tpl', title: '列表模版'},
                 {field: 'content_tpl', title: '内容模版'},
-                {field: 'order', title: '排序', width:150,align: 'center',
+                {field: 'order', title: '排序', width:120,align: 'center',
                     templet: function(data){
-                        return '<input type="text" name="order[]" value="'+data.order+'" lay-event="order" class="layui-input order" style="height: 28px;text-align:center;text-indent: 0;padding:0" />';
+                        return '<input type="text" name="order[]" value="'+data.order+'" lay-event="order" class="layui-input order" style="width:50px;height: 28px;text-align:center;text-indent: 0;padding:0" />';
                     }
                 },
-                {field: 'status', title: '状态', width:150,align: 'center',
+                {field: 'status', title: '状态', width:120,align: 'center',event:'status',
                     templet: function(data){
-                        if(data.status == 1){
-                            return '启用';
-                        }else{
-                            return '禁用';
-                        }
+                        var status = data.status == 1 ? 'checked' : '';
+                        return '<input type="checkbox" name="close" lay-skin="switch" lay-text="启用|禁用" '+status+'>';
                     }
                 },
                 {templet: btn, title: '操作',width:150,align: 'center'}
@@ -110,10 +107,27 @@ layui.config({
                     }
                 });
             });
+        }else if(layEvent == 'status'){
+            var status = data.status == 1 ? 0 : 1;
+            var url = '<?=\yii\helpers\Url::toRoute(["ajaxstatus"])?>'+'&id='+data.id+'&status='+status;
+            var _this = this;
+            $.get(url,function(data){
+                layer.msg(data.message);
+                if(data.status){
+                    renderTable();
+                }
+            },"json").fail(function(a,b,c){
+                if(a.status==403){
+                    layer.msg('没有权限');
+                }else{
+                    layer.msg('系统错误');
+                }
+            });
         }
     });
 
-    $('#btn-search').click(function () {
+    //搜索
+    $('body').on('click','#btn-search',function(){
         var keyword = $('.search_input').val();
         var searchCount = 0;
         $('#channel').next('.treeTable').find('.layui-table-body tbody tr td').each(function () {

@@ -149,7 +149,6 @@ class ChannelController extends Controller
                 ->alias('c')
                 ->select('c.*,m.name as m_name')
                 ->leftJoin(Module::tableName().' as m','m.id = c.m_id')
-                ->where(['c.status' => 1])
                 ->orderBy('c.p_id asc,c.order asc')
                 ->asArray()
                 ->all();
@@ -173,10 +172,30 @@ class ChannelController extends Controller
         if(!$model){
             return ajaxReturnFailure('栏目不存在');
         }
+        if(!is_numeric($order)) return ajaxReturnFailure('请输入正确的数字');
         $model->order = $order;
         if($model->save(false)){
-            return ajaxReturnSuccess('修改成功');
+            return ajaxReturnSuccess('排序修改成功');
         }
-        return ajaxReturnFailure('修改失败');
+        return ajaxReturnFailure('排序修改失败');
+    }
+
+    /**
+     * Ajax修改排序方式
+     * @param $id
+     * @param $order
+     * @return string
+     */
+    public function actionAjaxstatus($id,$status){
+        $model = Channel::findOne($id);
+        if(!$model){
+            return ajaxReturnFailure('栏目不存在');
+        }
+        if(!in_array($status,[0,1])) return ajaxReturnFailure('状态不正确');
+        $model->status = $status;
+        if($model->save(false)){
+            return ajaxReturnSuccess('状态修改成功');
+        }
+        return ajaxReturnFailure('状态修改失败');
     }
 }
