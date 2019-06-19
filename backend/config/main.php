@@ -67,7 +67,7 @@ return [
             ]
         ],
         "urlManager" => [
-            "enablePrettyUrl" => true,
+            "enablePrettyUrl" => false,
             "enableStrictParsing" => false,
             "showScriptName" => true,
 //            "suffix" => "",
