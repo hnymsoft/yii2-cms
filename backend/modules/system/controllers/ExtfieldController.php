@@ -60,12 +60,16 @@ class ExtfieldController extends BaseController
     /**
      * 添加
      * @return string|\yii\web\Response
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
         $model = new ExtField();
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            //处理自定义字段
+            $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,1);
+
             return $this->redirect(['index']);
         }
 
@@ -85,6 +89,9 @@ class ExtfieldController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            //处理自定义字段
+            $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,0);
+
             return $this->redirect(['index']);
         }
 
