@@ -1,5 +1,6 @@
 <?php
 namespace backend\widgets;
+use common\models\Module;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -59,6 +60,27 @@ class Menu extends \yii\widgets\Menu
         }
         $items = $this->normalizeItems($this->items, $hasActiveChild);
         if (!empty($items)) {
+            //模型数据动态追加
+            $modelModule = Module::find()->where(['status'=>1])->asArray()->all();
+            if($modelModule){
+                $list = [];
+                foreach ($modelModule AS $key => $val){
+                    $list[$key]['label'] = $val['name'].'内容';
+                    $list[$key]['url'][] = '/core/content/index?m_id='.$val['id'];
+                    $list[$key]['icon'] = 'icon fa fa fa-file-text-o';
+                    $list[$key]['active'] = '';
+                }
+                $channel[] = [
+                    'label' => '内容管理',
+                    'url' => [],
+                    'icon' => 'fa fa-file-text-o',
+                    'items' => $list,
+                    'active' => ''
+                ];
+                //栏目数组插入到指定位置
+                array_splice($items,1,0,$channel);
+            }
+
             $options = $this->options;
             $tag = ArrayHelper::remove($options, 'tag', 'ul');
             echo Html::tag($tag, $this->renderItems($items), $options);

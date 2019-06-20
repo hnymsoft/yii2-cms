@@ -6,7 +6,6 @@ use common\models\Module;
 use Yii;
 use common\models\Channel;
 use common\models\searchs\Channel as ChannelSearch;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

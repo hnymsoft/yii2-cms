@@ -24,7 +24,6 @@ $menu = Menu::widget([
         return $return;
     }),
 ]);
-
 LayuiAsset::register($this);
 ?>
 
