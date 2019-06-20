@@ -83,7 +83,7 @@ $this->registerJs($this->render('js/_script.js'));
                         'width' => '10%',
                         'style'=> 'text-align: center;'
                     ],
-                    'template' =>'{view} {update} {delete}',
+                    'template' =>'{update} {delete}',
                     'buttons' => [
                         'update' => function ($url) {
                             return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
