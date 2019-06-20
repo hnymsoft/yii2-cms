@@ -38,6 +38,26 @@ use yii\grid\GridView;
                         }
                     ],
                     [
+                        'attribute' => 'name',
+                        'headerOptions' => [
+                            'width' => '15%',
+                        ],
+                        'value' => function($model){
+                            return $model->name;
+                        }
+                    ],
+                    [
+                        'attribute' => 'item',
+                        'headerOptions' => [
+                            'width' => '15%',
+                            'style'=> 'text-align: center;'
+                        ],
+                        'contentOptions' => ['align'=>'center'],
+                        'value' => function($model){
+                            return $model->item;
+                        }
+                    ],
+                    [
                         'attribute' => 'm_id',
                         'headerOptions' => [
                             'width' => '15%',
@@ -57,17 +77,6 @@ use yii\grid\GridView;
                         'contentOptions' => ['align'=>'center'],
                         'value' => function($model){
                             return \common\models\ExtField::$input_type[$model->f_type];
-                        }
-                    ],
-                    [
-                        'attribute' => 'item',
-                        'headerOptions' => [
-                            'width' => '15%',
-                            'style'=> 'text-align: center;'
-                        ],
-                        'contentOptions' => ['align'=>'center'],
-                        'value' => function($model){
-                            return $model->item;
                         }
                     ],
                     'desc',

@@ -17,7 +17,7 @@ class Module extends ModuleModel
     public function rules()
     {
         return [
-            [['id', 'type', 'status', 'is_system', 'create_addtime', 'update_addtime'], 'integer'],
+            [['id', 'status', 'is_system', 'create_addtime', 'update_addtime'], 'integer'],
             [['name', 'list_tpl', 'content_tpl', 'create_user', 'update_user'], 'safe'],
         ];
     }
@@ -59,7 +59,6 @@ class Module extends ModuleModel
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'type' => $this->type,
             'status' => $this->status,
             'is_system' => $this->is_system,
             'create_addtime' => $this->create_addtime,

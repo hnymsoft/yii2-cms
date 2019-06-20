@@ -61,6 +61,7 @@ class ModuleController extends BaseController
     /**
      * 添加
      * @return string|\yii\web\Response
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
@@ -70,9 +71,11 @@ class ModuleController extends BaseController
             $model->create_addtime = GTIME;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            //创建附加表
+            $model->createModelsTable($model->attach_table);
+
             return $this->redirect(['index']);
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -87,16 +90,13 @@ class ModuleController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if(Yii::$app->request->isPost){
             $model->update_user = Yii::$app->user->identity->username;
             $model->update_addtime = GTIME;
         }
-
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['index']);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -110,7 +110,13 @@ class ModuleController extends BaseController
      */
     public function actionDelete($id)
     {
-        if($this->findModel($id)->delete()){
+        $model = $this->findModel($id);
+        if($model && $model->delete()){
+            //1、检查当前模型附加表是否存在文章
+
+            //2、删除附加表
+            $model->dropModelsTable($model->attach_table);
+
             return ajaxReturnSuccess('删除成功');
         }
         return ajaxReturnFailure('删除失败');
@@ -145,7 +151,12 @@ class ModuleController extends BaseController
         if (($model = Module::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionCheckTableUnique($id = null){
+        $model = new Module();
+        $model->load(Yii::$app->request->post());
+        return json_encode(\yii\widgets\ActiveForm::validate($model,'attach_table'));
     }
 }

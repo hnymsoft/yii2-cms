@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 <div class="form-box-dialog">
     <?php $form = ActiveForm::begin([
         'options' => ['class' => 'layui-form'],
+        'enableAjaxValidation' => $model->isNewRecord ? true : false,
+        'validationUrl' => \yii\helpers\Url::toRoute(['check-table-unique']),
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],
@@ -14,10 +16,11 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
-        <?= $form->field($model, 'type')->dropDownList([
-                1 => '列表',
-                2 => '单页'
-            ],['prompt'=>'请选择类型']) ?>
+        <?php if($model->isNewRecord):?>
+            <?= $form->field($model, 'attach_table')->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'必须由英文、数字、下划线组成  例：attach_extend1']) ?>
+        <?php else:?>
+            <?= $form->field($model, 'attach_table')->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'必须由英文、数字、下划线组成  例：attach_extend1','readonly'=>'']) ?>
+        <?php endif;?>
         <?= $form->field($model, 'list_tpl')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
         <?= $form->field($model, 'content_tpl')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
         <div class="layui-form-item">

@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
             'template' => '{label}<div class="layui-input-inline" style="width: 40%">{input}</div><span class="help-block">{error}</span>{hint}',
         ],
     ]); ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'class' => 'layui-input']) ?>
     <?= $form->field($model, 'item')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder' => '请输入字段名称,字母、下划线，如：price、am_price']) ?>
     <?= $form->field($model, 'desc')->textInput(['maxlength' => true,'class' => 'layui-input']) ?>
     <?= $form->field($model, 'm_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Module::find()->where([])->asArray()->all(),'id','name'),['prompt' => '请选择模型']) ?>

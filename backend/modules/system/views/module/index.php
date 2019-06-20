@@ -37,16 +37,7 @@ $this->registerJs($this->render('js/_script.js'));
                         }
                     ],
                     'name',
-                    [
-                        'attribute' => 'type',
-                        'value' => function($model){
-                            $type = [
-                                1 => '列表',
-                                2 => '单页'
-                            ];
-                            return $type[$model->type];
-                        }
-                    ],
+                    'attach_table',
                     'list_tpl',
                     'content_tpl',
                     [

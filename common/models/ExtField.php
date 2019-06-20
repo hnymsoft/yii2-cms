@@ -34,9 +34,9 @@ class ExtField extends BaseModel
     public function rules()
     {
         return [
-            [['id', 'm_id', 'f_type', 'item'], 'required'],
+            [['id', 'm_id', 'f_type', 'name', 'item'], 'required'],
             [['id', 'm_id', 'f_type', 'order'], 'integer'],
-            [['item'], 'string', 'max' => 50],
+            [['name','item'], 'string', 'max' => 50],
             [['value', 'desc'], 'string', 'max' => 100],
             [['id'], 'unique'],
             [['item'],'match','pattern' => '/^[a-zA-Z]([_a-zA-Z]{3,10})$/','message' => '字段名称必须为字母、下划线等']
@@ -52,6 +52,7 @@ class ExtField extends BaseModel
             'id' => 'ID',
             'm_id' => '模型类型',
             'f_type' => '字段类型',
+            'name' => '表单提示文字',
             'item' => '字段名称',
             'value' => '字段内容',
             'desc' => '字段描述',
