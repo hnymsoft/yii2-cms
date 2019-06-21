@@ -37,10 +37,12 @@ class ContentController extends Controller
      */
     public function actionIndex()
     {
+        $m_id = Yii::$app->request->get('m_id');
+
         $searchModel = new ContentSearch();
+        $searchModel->m_id = $m_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $m_id = Yii::$app->request->get('m_id');
         $channelModel = Channel::find()->where(['status' => 1,'m_id' => $m_id])->asArray()->all();
         $channelDropdown = Channel::getDropdownChannelList($channelModel);
 

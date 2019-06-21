@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
             'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div><span class="help-block" style="display: inline-block;">{hint}</span>',
         ]
     ]); ?>
+    <?= Html::activeHiddenInput($model,'m_id')?>
     <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name')) ?>
     <?= $form->field($model, 'title')->textInput(['class'=>'layui-input search_input']) ?>
     <div class="layui-inline">
