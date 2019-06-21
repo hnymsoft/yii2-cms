@@ -8,7 +8,7 @@ use Yii;
  * Class Channel
  * @package common\models
  */
-class Channel extends \yii\db\ActiveRecord
+class Channel extends BaseModel
 {
     /**
      * {@inheritdoc}

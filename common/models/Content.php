@@ -8,7 +8,7 @@ use Yii;
  * Class Content
  * @package common\models
  */
-class Content extends \yii\db\ActiveRecord
+class Content extends BaseModel
 {
     /**
      * {@inheritdoc}

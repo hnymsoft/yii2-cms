@@ -11,7 +11,7 @@ $this->registerJs($this->render('js/_script.js'));
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],
-            'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div>{hint}{error}',
+            'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}',
         ],
     ]); ?>
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
@@ -24,16 +24,9 @@ $this->registerJs($this->render('js/_script.js'));
             <div class="layui-tab-item layui-show">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">自定义属性</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="Content[flag]" value="t" lay-skin="primary" title="置顶"/>
-                        <input type="checkbox" name="Content[flag]" value="c" lay-skin="primary" title="推荐"/>
-                        <input type="checkbox" name="Content[flag]" value="h" lay-skin="primary" title="头条"/>
-                        <input type="checkbox" name="Content[flag]" value="r" lay-skin="primary" title="跳转"/>
-                    </div>
-                </div>
-
+                <?= $form->field($model, 'flag')->checkboxList(['t'=>'置顶','c'=>'推荐','h'=>'头条','r'=>'跳转'],['item'=>function($index, $label, $name, $checked, $value){
+                    return '<input type="checkbox" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" title="'.$label.'">';
+                }]) ?>
                 <div class="media_img" style="display: <?php
                 if($model->isNewRecord){
                     echo 'block';
@@ -42,30 +35,38 @@ $this->registerJs($this->render('js/_script.js'));
                 }
                 ?>">
                     <?= $form->field($model, 'thumb',[
-                        'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
+                        'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
                     ])->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'请上传缩略图或使用网络图片且必须以 http://（https://）开头']) ?>
                 </div>
                 <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name')) ?>
                 <?= $form->field($model, 'keywords')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'description')->textarea(['row' => 6,'class'=>'layui-textarea']) ?>
-                <!--扩展字段-->
-                <?= $this->render('_field',[
-                    'form' => $form,
-                    'extend_filed' => $extend_filed
+                <!--附加模型字段-->
+                    <?php if($model->m_id == 3): //产品?>
+                        <?= $form->field($attachTableModel, 'price')->textInput(['type' => 'number','class'=>'layui-input'])->label('价格') ?>
+                        <?= $form->field($attachTableModel, 'cost_price')->textInput(['type' => 'number','class'=>'layui-input'])->label('原价') ?>
+                        <?= $form->field($attachTableModel, 'brand')->textInput(['maxlength' => true,'class'=>'layui-input'])->label('品牌') ?>
+                        <?= $form->field($attachTableModel, 'brand')->textInput(['units' => true,'class'=>'layui-input'])->label('单位') ?>
+                    <?php elseif ($model->m_id == 2): //图片?>
+                        <!---->
+                    <?php endif;?>
 
-                ]) ?>
-                <!--模型字段-->
-                <?= $this->render('model/_common',['form' => $form,'extend_filed' => $extend_filed]) ?>
+                    <!--附加模型扩展字段-->
+                    <?= $this->render('_field',[
+                        'form' => $form,
+                        'extend_filed' => $extend_filed,
+                        'attachTableModel' => $attachTableModel
+                    ]) ?>
+                    <!--附加模型扩展字段-->
 
-                <div class='layui-form-item'>
-                    <div class="layui-form-label">内容</div>
-                    <div class="layui-input-block" style="margin-left: 130px;">
-                        <div type="text/plain" id="editor" name="content"></div>
-                        <?= $this->render('_editor') ?>
+                    <div class='layui-form-item'>
+                        <div class="layui-form-label">内容</div>
+                        <div class="layui-input-block" style="margin-left: 130px;">
+                            <div type="text/plain" id="editor" name="AttachTable[body]"></div>
+                            <?= $this->render('_editor') ?>
+                        </div>
                     </div>
-                </div>
-
-
+                <!--附加模型字段-->
                 <?= $form->field($model, 'tags')->textInput(['maxlength' => true,'class'=>'layui-input'])->hint('文章tag，英文逗号隔开') ?>
                 <?php if($model->m_id == 3):?>
                     <?= $form->field($model, 'money')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
@@ -86,29 +87,13 @@ $this->registerJs($this->render('js/_script.js'));
             <div class="layui-tab-item">
                 <?= $form->field($model, 'color')->textInput(['id'=>'test-form-input','maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'pubdate_addtime',[
-                    'template' => '{label}<div class="layui-input-inline cal" style="width: 30%">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
+                    'template' => '{label}<div class="layui-input-inline cal" style="width: 35%">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
                 ])->textInput(['class'=>'layui-input','id'=>'pubdate_addtime'])->hint('设置未来时间可定时发布！') ?>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">阅读权限</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="Content[status]" value="1" title="通过" <?php
-                        if($model->isNewRecord){
-                            echo 'checked';
-                        }else{
-                            if($model->status == 10){
-                                echo 'checked';
-                            }
-                        }
-                        ?> />
-                        <input type="radio" name="Content[status]" value="0" title="待审核" <?php
-                        if(!$model->isNewRecord){
-                            if($model->status == 0){
-                                echo 'checked';
-                            }
-                        }
-                        ?> />
-                    </div>
-                </div>
+
+                <?= $form->field($attachTableModel, 'templet')->textInput(['maxlength' => true,'class'=>'layui-input'])->label('自定义路径名') ?>
+                <?= $form->field($model, 'status')->radioList(['待审核','通过'],['item'=>function($index, $label, $name, $checked, $value){
+                    return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' title="'.$label.'">';
+                }]) ?>
 
                 <div class='layui-form-item'>
                     <div class="layui-form-label"></div>
