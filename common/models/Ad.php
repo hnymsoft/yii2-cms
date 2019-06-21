@@ -32,7 +32,7 @@ class Ad extends BaseModel
             [['ad_code'], 'string'],
             [['ad_name', 'link_man', 'link_email', 'link_phone'], 'string', 'max' => 60],
             [['ad_link'], 'string', 'max' => 255],
-            [['ad_link'],'url']
+            //[['ad_link'],'url']
         ];
     }
 

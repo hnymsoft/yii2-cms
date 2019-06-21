@@ -2,8 +2,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-$this->title = 'Ad Positions';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layui-fluid">
     <div class="layui-card">

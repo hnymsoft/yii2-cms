@@ -28,6 +28,8 @@ class ToolsController extends Controller
             case 'flink':
                 $path = "uploads/flink/{rand:10}";
                 break;
+            case 'article':
+                $path = "uploads/article/{rand:10}";
             default:
                 $path = "uploads/images/{rand:10}";
                 break;

@@ -3,6 +3,8 @@
 namespace core\controllers;
 
 use common\models\Channel;
+use common\models\ExtField;
+use common\models\Module;
 use Yii;
 use common\models\Content;
 use common\models\searchs\Content as ContentSearch;
@@ -70,16 +72,25 @@ class ContentController extends Controller
      * 添加
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($m_id)
     {
         $model = new Content();
+        $model->m_id = $m_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
+        //模型扩展字段
+        $extend_filed = ExtField::find()->where(['m_id' => $m_id])->asArray()->all();
+
+        //栏目名称
+        $channelModel = Channel::find()->where(['status' => 1,'m_id' => $m_id])->asArray()->all();
+        $channelDropdown = Channel::getDropdownChannelList($channelModel);
         return $this->render('create', [
             'model' => $model,
+            'extend_filed' => $extend_filed,
+            'channelDropdown' => $channelDropdown
         ]);
     }
 

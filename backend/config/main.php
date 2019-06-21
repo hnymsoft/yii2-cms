@@ -22,11 +22,15 @@ return [
         'member' => [
             'class' => 'member\Module',
         ],
+        'core' => [
+            'class' => 'core\Module',
+        ],
     ],
     "aliases" => [
         '@rbac' => '@backend/modules/rbac',
         '@system' => '@backend/modules/system',
         '@member' => '@backend/modules/member',
+        '@core' => '@backend/modules/core',
     ],
     'components' => [
         'request' => [
@@ -67,7 +71,7 @@ return [
             ]
         ],
         "urlManager" => [
-            "enablePrettyUrl" => false,
+            "enablePrettyUrl" => true,
             "enableStrictParsing" => false,
             "showScriptName" => true,
 //            "suffix" => "",

@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title')->textInput(['class'=>'layui-input search_input']) ?>
     <div class="layui-inline">
         <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
+        <?= Html::a('添加',\yii\helpers\Url::to(['create','m_id'=>$model->m_id]), ['class' => "layui-btn layui-default-add"])?>
     </div>
     <?php ActiveForm::end(); ?>
 
