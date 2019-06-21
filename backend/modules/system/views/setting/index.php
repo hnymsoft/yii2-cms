@@ -97,7 +97,7 @@ $this->registerJs($this->render('js/_script.js'));
                                         <div class="layui-input-inline" style="width: 50%">
                                             <select name="<?=$val['item']?>">
                                                 <option value=""></option>
-                                                <option value="FCKeditor" <?=$val['value'] == 'FCKeditor'?'selected':''?>>FCKeditor</option>
+                                                <option value="CKeditor" <?=$val['value'] == 'CKeditor'?'selected':''?>>CKeditor</option>
                                                 <option value="UEditor" <?=$val['value'] == 'UEditor'?'selected':''?>>UEditor</option>
                                             </select>
                                         </div>

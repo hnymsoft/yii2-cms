@@ -76,6 +76,7 @@ class ContentController extends Controller
     {
         $model = new Content();
         $model->m_id = $m_id;
+        $model->author = 'admin';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

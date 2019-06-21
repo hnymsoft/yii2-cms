@@ -35,6 +35,8 @@
 .grid-view .layuipage>.active>a, .grid-view .layuipage>.active>a:focus, .grid-view .layuipage>.active>a:hover, .grid-view .layuipage>.active>span, .grid-view .layuipage>.active>span:focus, .grid-view .layuipage>.active>span:hover {z-index: 3;color: #fff;cursor: default;background-color: #009688;border-color: #009688;}
 .grid-view .layuipage>li>a:focus, .grid-view .layuipage>li>a:hover, .grid-view .layuipage>li>span:focus, .grid-view .layuipage>li>span:hover {z-index: 2;color: #666;background-color: #FBFBFB;border-color: #e6e6e6;}
 
+.layui-form-select dl{z-index: 9999;}
+
 /*welcome*/
 .layadmin-shortcut li .layui-icon {
     display: inline-block;

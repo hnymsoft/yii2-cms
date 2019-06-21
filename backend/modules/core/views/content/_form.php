@@ -23,13 +23,14 @@ $this->registerJs($this->render('js/_script.js'));
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
+                <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <div class="layui-form-item">
                     <label class="layui-form-label">自定义属性</label>
                     <div class="layui-input-block">
-                        <input type="checkbox" name="Content[flag]" value="1" title="置顶"/>
-                        <input type="checkbox" name="Content[flag]" value="0" title="推荐"/>
-                        <input type="checkbox" name="Content[flag]" value="0" title="头条"/>
-                        <input type="checkbox" name="Content[flag]" value="0" title="跳转"/>
+                        <input type="checkbox" name="Content[flag]" value="t" lay-skin="primary" title="置顶"/>
+                        <input type="checkbox" name="Content[flag]" value="c" lay-skin="primary" title="推荐"/>
+                        <input type="checkbox" name="Content[flag]" value="h" lay-skin="primary" title="头条"/>
+                        <input type="checkbox" name="Content[flag]" value="r" lay-skin="primary" title="跳转"/>
                     </div>
                 </div>
 
@@ -44,16 +45,28 @@ $this->registerJs($this->render('js/_script.js'));
                         'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
                     ])->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'请上传缩略图或使用网络图片且必须以 http://（https://）开头']) ?>
                 </div>
+                <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name')) ?>
+                <?= $form->field($model, 'keywords')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
+                <?= $form->field($model, 'description')->textarea(['row' => 6,'class'=>'layui-textarea']) ?>
                 <!--扩展字段-->
                 <?= $this->render('_field',[
                     'form' => $form,
                     'extend_filed' => $extend_filed
 
                 ]) ?>
-                <!--扩展字段-->
+                <!--模型字段-->
+                <?= $this->render('model/_common',['form' => $form,'extend_filed' => $extend_filed]) ?>
+
+                <div class='layui-form-item'>
+                    <div class="layui-form-label">内容</div>
+                    <div class="layui-input-block" style="margin-left: 130px;">
+                        <div type="text/plain" id="editor" name="content"></div>
+                        <?= $this->render('_editor') ?>
+                    </div>
+                </div>
+
 
                 <?= $form->field($model, 'tags')->textInput(['maxlength' => true,'class'=>'layui-input'])->hint('文章tag，英文逗号隔开') ?>
-                <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name')) ?>
                 <?php if($model->m_id == 3):?>
                     <?= $form->field($model, 'money')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?php endif;?>
@@ -72,9 +85,6 @@ $this->registerJs($this->render('js/_script.js'));
             </div>
             <div class="layui-tab-item">
                 <?= $form->field($model, 'color')->textInput(['id'=>'test-form-input','maxlength' => true,'class'=>'layui-input']) ?>
-                <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
-                <?= $form->field($model, 'keywords')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
-                <?= $form->field($model, 'description')->textarea(['row' => 6,'class'=>'layui-textarea']) ?>
                 <?= $form->field($model, 'pubdate_addtime',[
                     'template' => '{label}<div class="layui-input-inline cal" style="width: 30%">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
                 ])->textInput(['class'=>'layui-input','id'=>'pubdate_addtime'])->hint('设置未来时间可定时发布！') ?>
@@ -111,10 +121,5 @@ $this->registerJs($this->render('js/_script.js'));
             </div>
         </div>
     </div>
-
-
-
-
     <?php ActiveForm::end(); ?>
-
 </div>
