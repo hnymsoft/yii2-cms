@@ -17,7 +17,7 @@ $this->registerJs($this->render('js/_script.js'));
             <?php \yii\widgets\ActiveForm::begin(['id' => 'export-form', 'action' => \yii\helpers\Url::to(['backup'])])?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
-                    'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
+                    'options' => ['class' => 'grid-view','lay-filter'=>'allChoose','style'=>'overflow:auto', 'id' => 'grid-view'],
                     'layout' => "{items}\n{pager}",
                     'tableOptions'=> ['class'=>'layui-table'],
                     'pager' => [
