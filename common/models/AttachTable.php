@@ -10,19 +10,13 @@ use Yii;
  */
 class AttachTable extends BaseModel
 {
-    public static $tableName = 'am_';
-
-    public function __construct($table = '',array $config = [])
-    {
-        static::$tableName = $table;
-        parent::__construct($config);
-    }
+    public static $tableName = '';
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return static::$tableName;
+        return self::$tableName;
     }
 }

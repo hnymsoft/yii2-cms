@@ -14,7 +14,7 @@ class ToolsController extends Controller
      */
     public function actionUpload()
     {
-        $type = \Yii::$app->request->post('type');
+        $type = post('type');
         switch ($type){
             case 'ad':
                 $path = "uploads/ad/{rand:10}";
@@ -30,6 +30,10 @@ class ToolsController extends Controller
                 break;
             case 'article':
                 $path = "uploads/article/{rand:10}";
+                break;
+            case 'pic':
+                $path = "uploads/pic/{rand:10}";
+                break;
             default:
                 $path = "uploads/images/{rand:10}";
                 break;
@@ -65,6 +69,21 @@ class ToolsController extends Controller
             return ajaxReturnSuccess('上传成功',$info['url']);
         }else{
             return ajaxReturnFailure('暂无要上传的图片');
+        }
+    }
+
+    /**
+     * 文件删除
+     */
+    public function actionDelFile(){
+        $file = post('file');
+        if(!$file){
+            return ajaxReturnFailure('参数错误');
+        }
+        if(unlink(\Yii::getAlias('@app'.'/web/'.$file))){
+            return ajaxReturnSuccess('删除成功');
+        }else{
+            return ajaxReturnFailure('删除失败');
         }
     }
 

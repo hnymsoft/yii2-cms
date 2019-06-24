@@ -24,10 +24,10 @@ class Content extends BaseModel
     public function rules()
     {
         return [
-            [['id', 'p_id', 'm_id', 'title', 'keywords', 'description', 'thumb', 'author', 'source', 'update_addtime', 'create_user', 'update_user'], 'required'],
-            [['id', 'p_id', 'm_id', 'flag', 'click', 'status', 'create_addtime', 'update_addtime'], 'integer'],
+            [['id', 'p_id', 'm_id', 'title', 'keywords', 'description', 'author', 'source'], 'required'],
+            [['id', 'p_id', 'm_id', 'click', 'status', 'create_addtime', 'update_addtime'], 'integer'],
             [['money'], 'number'],
-            [['color', 'title', 'keywords', 'source', 'create_user', 'update_user'], 'string', 'max' => 50],
+            [['color', 'title', 'keywords', 'source', 'create_user', 'update_user','flag','subtitle','tags'], 'string', 'max' => 50],
             [['description'], 'string', 'max' => 12],
             [['thumb'], 'string', 'max' => 80],
             [['author'], 'string', 'max' => 20],
@@ -63,6 +63,11 @@ class Content extends BaseModel
             'create_user' => '添加操作人',
             'update_user' => '更新操作人',
         ];
+    }
+
+    public function getChannel()
+    {
+        return $this->hasOne(Channel::className(), ['id' => 'p_id']);
     }
 
     /**

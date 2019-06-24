@@ -5,7 +5,8 @@
                 'model' => $model,
                 'attachTableModel' => $attachTableModel,
                 'extend_filed' => $extend_filed,
-                'channelDropdown' => $channelDropdown
+                'channelDropdown' => $channelDropdown,
+                'thumb_list' => $thumb_list
             ]) ?>
         </div>
     </div>

@@ -7,10 +7,10 @@ layui.config({
 
     //监听指定开关
     form.on('switch(status)', function(data){
-        var status = (this.checked) ? 10 : 0;
+        var status = (this.checked) ? 1 : 0;
         var _this = this;
         $.post($(_this).data('url'),{status:status},function(data){
-            layer.msg(data.message);
+            //layer.msg(data.message);
             if(data.status){
                 location.reload();
             }

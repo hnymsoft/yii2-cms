@@ -27,17 +27,9 @@ $this->registerJs($this->render('js/_script.js'));
                 <?= $form->field($model, 'flag')->checkboxList(['t'=>'置顶','c'=>'推荐','h'=>'头条','r'=>'跳转'],['item'=>function($index, $label, $name, $checked, $value){
                     return '<input type="checkbox" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" title="'.$label.'">';
                 }]) ?>
-                <div class="media_img" style="display: <?php
-                if($model->isNewRecord){
-                    echo 'block';
-                }else{
-                    echo ($model->media_type == 0) ? 'block' : 'none';
-                }
-                ?>">
-                    <?= $form->field($model, 'thumb',[
-                        'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
-                    ])->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'请上传缩略图或使用网络图片且必须以 http://（https://）开头']) ?>
-                </div>
+                <?= $form->field($model, 'thumb',[
+                    'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
+                ])->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'请上传缩略图或使用网络图片且必须以 http://（https://）开头']) ?>
                 <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name')) ?>
                 <?= $form->field($model, 'keywords')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'description')->textarea(['row' => 6,'class'=>'layui-textarea']) ?>
@@ -48,7 +40,29 @@ $this->registerJs($this->render('js/_script.js'));
                         <?= $form->field($attachTableModel, 'brand')->textInput(['maxlength' => true,'class'=>'layui-input'])->label('品牌') ?>
                         <?= $form->field($attachTableModel, 'brand')->textInput(['units' => true,'class'=>'layui-input'])->label('单位') ?>
                     <?php elseif ($model->m_id == 2): //图片?>
-                        <!---->
+                        <div class='layui-form-item'>
+                            <div class="layui-form-label"></div>
+                            <div class="layui-input-block" style="margin-left: 130px;">
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn" id="batUpload">多图片上传</button>
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+                                        预览图：
+                                        <?php if($attachTableModel->isNewRecord):?>
+                                            <div class="layui-upload-list" id="batUploadList"></div>
+                                        <?php else:?>
+                                            <div class="layui-upload-list" id="batUploadList">
+                                                <?php if(!empty($thumb_list)):?>
+                                                    <?php foreach ($thumb_list AS $val):?>
+                                                        <div><img src="/<?=$val?>" alt="图集" class="layui-upload-img"><span data-src="<?=$val?>">删除</span></div>
+                                                    <?php endforeach;?>
+                                                <?php endif;?>
+                                            </div>
+                                        <?php endif;?>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <?= Html::activeHiddenInput($attachTableModel,'imgurls')?>
                     <?php endif;?>
 
                     <!--附加模型扩展字段-->
@@ -62,8 +76,7 @@ $this->registerJs($this->render('js/_script.js'));
                     <div class='layui-form-item'>
                         <div class="layui-form-label">内容</div>
                         <div class="layui-input-block" style="margin-left: 130px;">
-                            <div type="text/plain" id="editor" name="AttachTable[body]"></div>
-                            <?= $this->render('_editor') ?>
+                            <?= $this->render('_editor',['attachTableModel' => $attachTableModel]) ?>
                         </div>
                     </div>
                 <!--附加模型字段-->

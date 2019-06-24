@@ -37,6 +37,12 @@
 
 .layui-form-select dl{z-index: 9999;}
 
+.layui-upload-list{}
+.layui-upload-list div{position: relative;width: 92px;margin: 0 10px 0 0;display: inline-block;border:1px solid #ededed;}
+.layui-upload-list div img{width: 92px;height: 92px;}
+.layui-upload-list div span{position: absolute;left:0;top:0;display: inline-block;width:100%;line-height: 30px;cursor: pointer;background-color:rgba(0,0,0,.6);color: #fff;text-align: center;display: none;}
+.layui-upload-list div:hover span{display: block;}
+
 /*welcome*/
 .layadmin-shortcut li .layui-icon {
     display: inline-block;
