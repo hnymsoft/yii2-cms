@@ -162,19 +162,22 @@ class ContentController extends BaseController
 
         $extend_filed = ExtField::find()->where(['m_id' => $m_id])->asArray()->all();
         //图库模型
-        if($m_id == 2){
-            $data['thumb_list'] = $attachTableModel->imgurls ? explode('|',substr($attachTableModel->imgurls,0,strlen($attachTableModel->imgurls)-1)) : [];
+        $thumb_list = [];
+        if($m_id == 2 && $attachTableModel->imgurls){
+            $thumb_list = explode('|',substr($attachTableModel->imgurls,0,strlen($attachTableModel->imgurls)-1));
         }
         $channelModel = Channel::find()->where(['status' => 1,'m_id' => $m_id])->asArray()->all();
         if(!$channelModel){
             exit('当前模型栏目为空，请创建后操作！');
         }
         $channelDropdown = Channel::getDropdownChannelList($channelModel);
-        $data['model'] = $model;                       //内容模型
-        $data['attachTableModel'] = $attachTableModel; //附加表模型
-        $data['extend_filed'] = $extend_filed;
-        $data['channelDropdown'] = $channelDropdown;
-        return $this->render('update',$data);
+        return $this->render('update',[
+            'model' => $model,
+            'attachTableModel' => $attachTableModel,
+            'extend_filed' => $extend_filed,
+            'channelDropdown' => $channelDropdown,
+            'thumb_list' => $thumb_list
+        ]);
     }
 
     /**
@@ -214,7 +217,7 @@ class ContentController extends BaseController
      */
     public function actionAjaxstatus($id){
         $status = post('status');
-        if($status && in_array($status,[0,1])){
+        if(!$status || !in_array($status,[0,1])){
             return ajaxReturnFailure('参数错误');
         }
         $model = $this->findModel($id);

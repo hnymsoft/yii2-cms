@@ -113,4 +113,14 @@ layui.config({
             }
         });
     });
+
+    //媒体类型选择
+    form.on('checkbox(flag)', function(data){
+        console.log(data);
+        if(data.value == 'r' && data.elem.checked){
+            $("#redirect").show();
+        }else{
+            $("#redirect").hide();
+        }
+    });
 });

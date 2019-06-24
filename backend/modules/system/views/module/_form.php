@@ -23,28 +23,9 @@ use yii\widgets\ActiveForm;
         <?php endif;?>
         <?= $form->field($model, 'list_tpl')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
         <?= $form->field($model, 'content_tpl')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <input type="radio" name="Module[status]" value="1" title="启用" <?php
-                if($model->isNewRecord){
-                    echo 'checked';
-                }else{
-                    if($model->status == 1){
-                        echo 'checked';
-                    }
-                }
-                ?> />
-                <input type="radio" name="Module[status]" value="0" title="禁用" <?php
-                if(!$model->isNewRecord){
-                    if($model->status == 0){
-                        echo 'checked';
-                    }
-                }
-                ?> />
-            </div>
-        </div>
-
+        <?= $form->field($model, 'status')->radioList([1=>'启用',0=>'禁用'],['item'=>function($index, $label, $name, $checked, $value){
+            return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
+        }]) ?>
         <div class='layui-form-item'>
             <div class="layui-form-label"></div>
             <div class="layui-input-block">

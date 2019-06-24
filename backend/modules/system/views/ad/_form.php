@@ -67,27 +67,10 @@ $this->registerJs($this->render('js/_script.js'));
         <?= $form->field($model,'code_content')->textarea(['class'=>'layui-textarea'])?>
     </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">是否开启</label>
-        <div class="layui-input-block">
-            <input type="radio" name="Ad[enabled]" value="1" title="开启" <?php
-                if($model->isNewRecord){
-                    echo 'checked';
-                }else{
-                    if($model->enabled == 1){
-                        echo 'checked';
-                    }
-                }
-            ?> />
-            <input type="radio" name="Ad[enabled]" value="0" title="关闭" <?php
-            if(!$model->isNewRecord){
-                if($model->enabled == 0){
-                    echo 'checked';
-                }
-            }
-            ?> />
-        </div>
-    </div>
+    <?= $form->field($model, 'enabled')->radioList([1=>'开启',0=>'关闭'],['item'=>function($index, $label, $name, $checked, $value){
+        return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
+    }]) ?>
+
     <?= $form->field($model, 'link_man')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     <?= $form->field($model, 'link_email')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     <?= $form->field($model, 'link_phone')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>

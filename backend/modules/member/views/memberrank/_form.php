@@ -22,29 +22,9 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'score')->textInput(['class'=>'layui-input']) ?>
 
     <?= $form->field($model, 'discount')->textInput(['class'=>'layui-input'])->hint('折扣（百分比）') ?>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">是否启用</label>
-        <div class="layui-input-block">
-            <input type="radio" name="MemberRank[status]" value="1" title="是" <?php
-            if($model->isNewRecord){
-                echo 'checked';
-            }else{
-                if($model->status == 1){
-                    echo 'checked';
-                }
-            }
-            ?> />
-            <input type="radio" name="MemberRank[status]" value="0" title="否" <?php
-            if(!$model->isNewRecord){
-                if($model->status == 0){
-                    echo 'checked';
-                }
-            }
-            ?> />
-        </div>
-    </div>
-
+    <?= $form->field($model, 'status')->radioList([1=>'是',0=>'否'],['item'=>function($index, $label, $name, $checked, $value){
+        return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
+    }]) ?>
     <div class='layui-form-item'>
         <div class="layui-form-label"></div>
         <div class="layui-input-block">

@@ -50,8 +50,27 @@ $this->registerJs($this->render('js/_script.js'));
                 ],
                 [
                     'attribute' => 'title',
+                    'format' => 'raw',
                     'value' => function($model){
-                        return $model->title;
+                        $str = '';
+                        if($model->thumb){
+                            $str = ' <span class="layui-badge layui-bg-orange">图</span>';
+                        }
+                        if($model->flag){
+                            $flag = explode(',',$model->flag);
+                            foreach ($flag as $val){
+                                if($val == 't'){
+                                    $str .= ' <span class="layui-badge">顶</span>';
+                                }elseif($val == 'c'){
+                                    $str .= ' <span class="layui-badge layui-bg-green">推</span>';
+                                }elseif($val == 'h'){
+                                    $str .= ' <span class="layui-badge layui-bg-blue">头</span>';
+                                }elseif($val == 'r'){
+                                    $str .= ' <span class="layui-badge layui-bg-gray">跳</span>';
+                                }
+                            }
+                        }
+                        return $model->title . $str;
                     }
                 ],
                 [
@@ -79,9 +98,10 @@ $this->registerJs($this->render('js/_script.js'));
                 [
                     'attribute' => 'create_addtime',
                     'headerOptions' => [
-                        'width' => '12%',
+                        'width' => '10%',
                         'style'=> 'text-align: center;'
                     ],
+                    'contentOptions' => ['align'=>'center'],
                     'value' => function($model){
                         return $model->create_addtime;
                     }

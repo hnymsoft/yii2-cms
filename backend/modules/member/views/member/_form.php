@@ -29,29 +29,9 @@ $this->registerJs($this->render('js/upload.js'));
 
     <?= $form->field($model, 'integral')->textInput(['type'=>'number','class'=>'layui-input']) ?>
     <?= $form->field($model, 'balance')->textInput(['type'=>'number','maxlength' => true,'class'=>'layui-input']) ?>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">是否禁用</label>
-        <div class="layui-input-block">
-            <input type="radio" name="Member[status]" value="1" title="是" <?php
-            if($model->isNewRecord){
-                echo 'checked';
-            }else{
-                if($model->status == 10){
-                    echo 'checked';
-                }
-            }
-            ?> />
-            <input type="radio" name="Member[status]" value="0" title="否" <?php
-            if(!$model->isNewRecord){
-                if($model->status == 0){
-                    echo 'checked';
-                }
-            }
-            ?> />
-        </div>
-    </div>
-
+    <?= $form->field($model, 'status')->radioList([10=>'是',0=>'否'],['item'=>function($index, $label, $name, $checked, $value){
+        return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
+    }]) ?>
     <div class='layui-form-item'>
         <div class="layui-form-label"></div>
         <div class="layui-input-block">

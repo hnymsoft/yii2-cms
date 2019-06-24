@@ -25,8 +25,11 @@ $this->registerJs($this->render('js/_script.js'));
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'flag')->checkboxList(['t'=>'置顶','c'=>'推荐','h'=>'头条','r'=>'跳转'],['item'=>function($index, $label, $name, $checked, $value){
-                    return '<input type="checkbox" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" title="'.$label.'">';
+                    return '<input type="checkbox" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
                 }]) ?>
+                <div id="redirect" style="display: <?= in_array('r',$model->flag) ? 'block': 'none'?>">
+                    <?= $form->field($model, 'out_url')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
+                </div>
                 <?= $form->field($model, 'thumb',[
                     'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}<div class="layui-input-inline layui-btn-container" style="width: auto;"><button type="button" class="layui-btn upload_button" id="upload"><i class="layui-icon"></i>上传图片</button><a href="javascript:;" class="layui-btn" id="view_photo">预览图片</a></div>'
                 ])->textInput(['maxlength' => true,'class'=>'layui-input','placeholder'=>'请上传缩略图或使用网络图片且必须以 http://（https://）开头']) ?>

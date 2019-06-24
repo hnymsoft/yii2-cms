@@ -43,6 +43,9 @@
 .layui-upload-list div span{position: absolute;left:0;top:0;display: inline-block;width:100%;line-height: 30px;cursor: pointer;background-color:rgba(0,0,0,.6);color: #fff;text-align: center;display: none;}
 .layui-upload-list div:hover span{display: block;}
 
+.layui-form-switch{margin-top: 0;}
+.layui-badge{top:-5px;}
+
 /*welcome*/
 .layadmin-shortcut li .layui-icon {
     display: inline-block;

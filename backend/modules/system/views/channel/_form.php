@@ -21,28 +21,9 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'seo_keyword')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
     <?= $form->field($model, 'seo_description')->textarea(['row' => 6,'class'=>'layui-textarea']) ?>
     <?= $form->field($model, 'order')->textInput(['class'=>'layui-input']) ?>
-    <div class="layui-form-item">
-        <label class="layui-form-label">是否开启</label>
-        <div class="layui-input-block">
-            <input type="radio" name="Channel[status]" value="1" title="开启" <?php
-            if($model->isNewRecord){
-                echo 'checked';
-            }else{
-                if($model->status == 1){
-                    echo 'checked';
-                }
-            }
-            ?> />
-            <input type="radio" name="Channel[status]" value="0" title="关闭" <?php
-            if(!$model->isNewRecord){
-                if($model->status == 0){
-                    echo 'checked';
-                }
-            }
-            ?> />
-        </div>
-    </div>
-
+    <?= $form->field($model, 'status')->radioList([1=>'开启',0=>'关闭'],['item'=>function($index, $label, $name, $checked, $value){
+        return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
+    }]) ?>
     <div class='layui-form-item'>
         <div class="layui-form-label"></div>
         <div class="layui-input-block">
