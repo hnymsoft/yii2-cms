@@ -69,14 +69,17 @@ class ModuleController extends BaseController
         $model->status = 1;
 
         if(Yii::$app->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
             $model->create_user = Yii::$app->user->identity->username;
             $model->create_addtime = GTIME;
-        }
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-            //创建附加表
-            $model->createModelsTable($model->attach_table);
-
-            return $this->redirect(['index']);
+            if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+                //创建附加表
+                $model->createModelsTable($model->attach_table);
+                $transaction->commit();
+                return $this->redirect(['index']);
+            }else{
+                $transaction->rollBack();
+            }
         }
         return $this->render('create', [
             'model' => $model,

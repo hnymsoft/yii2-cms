@@ -65,12 +65,16 @@ class ExtfieldController extends BaseController
     public function actionCreate()
     {
         $model = new ExtField();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-            //处理自定义字段
-            $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,1);
-
-            return $this->redirect(['index']);
+        if(Yii::$app->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+                //处理自定义字段
+                $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,1);
+                $transaction->commit();
+                return $this->redirect(['index']);
+            }else{
+                $transaction->rollBack();
+            }
         }
 
         return $this->render('create', [

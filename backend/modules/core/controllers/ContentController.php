@@ -88,22 +88,30 @@ class ContentController extends BaseController
         }
         $attachTableModel = new AttachTable();
         $attachTableModel::$tableName = $moduleModel->attach_table;
-        if ($model->load(Yii::$app->request->post(),'Content')) {
-            $model->flag = !empty(post('Content')['flag']) ? implode(',',post('Content')['flag']) : '';
-            if($model->save(false)){
-                //附加表数据整合
-                $attachTableModel->id = $model->attributes['id'];
-                $attachTableModel->p_id = $model->p_id;
-                //附加表动态赋值
-                if(post('AttachTable')){
-                    foreach (post('AttachTable') AS $key => $val){
-                        $attachTableModel->{$key} = $val;
+        if(Yii::$app->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($model->load(Yii::$app->request->post(),'Content')) {
+                $model->flag = !empty(post('Content')['flag']) ? implode(',',post('Content')['flag']) : '';
+                if($model->save(false)){
+                    //附加表数据整合
+                    $attachTableModel->id = $model->attributes['id'];
+                    $attachTableModel->p_id = $model->p_id;
+                    //附加表动态赋值
+                    if(post('AttachTable')){
+                        foreach (post('AttachTable') AS $key => $val){
+                            $attachTableModel->{$key} = $val;
+                        }
                     }
-                }
-                if($attachTableModel->save(false)){
-                    return $this->redirect(['index','m_id'=>$m_id]);
+                    if($attachTableModel->save(false)){
+                        $transaction->commit();
+                        return $this->redirect(['index','m_id'=>$m_id]);
+                    }else{
+                        $transaction->rollBack();
+                        exit('附加表内容添加失败');
+                    }
                 }else{
-                    exit('附加表内容添加失败');
+                    $transaction->rollBack();
+                    exit('主表内容添加失败');
                 }
             }
         }
@@ -138,24 +146,31 @@ class ContentController extends BaseController
         $moduleModel = Module::findOne($m_id);
         AttachTable::$tableName = $moduleModel->attach_table;
         $attachTableModel = AttachTable::findOne(['id' => $model->id,'p_id' => $model->p_id]);
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->flag = !empty(post('Content')['flag']) ? implode(',',post('Content')['flag']) : '';
-            if($model->save(false)){
-                //附加表数据整合
-                $attachTableModel->id = $model->id;
-                $attachTableModel->p_id = $model->p_id;
-                //附加表动态赋值
-                if(post('AttachTable')){
-                    foreach (post('AttachTable') AS $key => $val){
-                        $attachTableModel->{$key} = $val;
+        if(Yii::$app->request->isPost){
+            $transaction = Yii::$app->db->beginTransaction();
+            if ($model->load(Yii::$app->request->post())) {
+                $model->flag = !empty(post('Content')['flag']) ? implode(',',post('Content')['flag']) : '';
+                if($model->save(false)){
+                    //附加表数据整合
+                    $attachTableModel->id = $model->id;
+                    $attachTableModel->p_id = $model->p_id;
+                    //附加表动态赋值
+                    if(post('AttachTable')){
+                        foreach (post('AttachTable') AS $key => $val){
+                            $attachTableModel->{$key} = $val;
+                        }
+                    }
+                    if($attachTableModel->save(false)){
+                        $transaction->commit();
+                        return $this->redirect(['index','m_id'=>$m_id]);
+                    }else{
+                        $transaction->rollBack();
+                        exit('附加表内容更新失败');
                     }
                 }
-                if($attachTableModel->save(false)){
-                    return $this->redirect(['index','m_id'=>$m_id]);
-                }else{
-                    exit('附加表内容添加失败');
-                }
+            }else{
+                $transaction->rollBack();
+                exit('主表数据更新失败');
             }
         }
 
