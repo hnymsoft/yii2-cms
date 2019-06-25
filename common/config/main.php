@@ -13,6 +13,8 @@ return [
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
             'charset' => env('DB_CHARSET'),
+            'enableSchemaCache' => true,
+            'schemaCacheDuration' => 3600, //默认缓存1 hours
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
