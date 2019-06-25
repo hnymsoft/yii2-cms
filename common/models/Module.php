@@ -80,7 +80,7 @@ class Module extends BaseModel
         if(!$table){
             return false;
         }
-        $sql = "DROP TABLE IF EXISTS `$table`; \r\nCREATE TABLE `$table`(\r\n `id` int(11) NOT NULL default '0',\r\n `type_id` int(11) NOT NULL default '0',\r\n `templet` varchar(30) NOT NULL default '',\r\n ";
+        $sql = "DROP TABLE IF EXISTS `$table`; \r\nCREATE TABLE `$table`(\r\n `id` int(11) NOT NULL default '0',\r\n `p_id` int(11) NOT NULL default '0',\r\n `body` mediumtext NOT NULL,\r\n `templet` varchar(30) NOT NULL default '',\r\n ";
         $db = \Yii::$app->db;
         $mysql_ver = $db->createCommand('SELECT VERSION() AS ver;')->queryOne();
         if($mysql_ver < 4.1){
