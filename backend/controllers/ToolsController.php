@@ -17,25 +17,25 @@ class ToolsController extends Controller
         $type = post('type');
         switch ($type){
             case 'ad':
-                $path = "uploads/ad/{rand:10}";
+                $path = "upload/ad/{rand:10}";
                 break;
             case 'avatar':
-                $path = "uploads/avatar/{rand:10}";
+                $path = "upload/avatar/{rand:10}";
                 break;
             case 'logo':
-                $path = "uploads/logo/{rand:10}";
+                $path = "upload/logo/{rand:10}";
                 break;
             case 'flink':
-                $path = "uploads/flink/{rand:10}";
+                $path = "upload/flink/{rand:10}";
                 break;
             case 'article':
-                $path = "uploads/article/{rand:10}";
+                $path = "upload/article/{rand:10}";
                 break;
             case 'pic':
-                $path = "uploads/pic/{rand:10}";
+                $path = "upload/pic/{rand:10}";
                 break;
             default:
-                $path = "uploads/images/{rand:10}";
+                $path = "upload/images/{rand:10}";
                 break;
         }
 

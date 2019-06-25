@@ -323,12 +323,12 @@ class Uploader
     private function getFilePath()
     {
         $fullname = $this->fullName;
-        $rootPath = $_SERVER['DOCUMENT_ROOT'];
-
+        //$rootPath = $_SERVER['DOCUMENT_ROOT'];
+        //图片保存路径改动 前台目录 2019-06-25改
+        $rootPath = \Yii::getAlias('@frontend/web');
         if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;
         }
-
         return $rootPath . $fullname;
     }
 
