@@ -55,15 +55,6 @@ LayuiAsset::register($this);
                     </li>
                 </ul>
                 <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
-                    <li class="layui-nav-item" lay-unselect title="消息中心">
-                        <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
-                            <i class="layui-icon layui-icon-notice"></i>
-
-                            <!-- 如果有新消息，则显示小圆点 -->
-                            <span class="layui-badge-dot"></span>
-                        </a>
-                    </li>
                     <li class="layui-nav-item layui-hide-xs" lay-unselect title="全屏">
                         <a href="javascript:;" layadmin-event="fullscreen">
                             <i class="layui-icon layui-icon-screen-full"></i>
@@ -90,12 +81,10 @@ LayuiAsset::register($this);
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="/">
+                    <div class="layui-logo" lay-href="<?=Url::to(['system/index/welcome'])?>">
                         <span>后台管理系统</span>
                     </div>
-
                     <?=$menu?>
-
                 </div>
             </div>
 
