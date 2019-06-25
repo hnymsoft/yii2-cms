@@ -27,7 +27,7 @@ $this->registerJs($this->render('js/_script.js'));
                 <?= $form->field($model, 'flag')->checkboxList(['t'=>'置顶','c'=>'推荐','h'=>'头条','r'=>'跳转'],['item'=>function($index, $label, $name, $checked, $value){
                     return '<input type="checkbox" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
                 }]) ?>
-                <div id="redirect" style="display: <?= in_array('r',$model->flag) ? 'block': 'none'?>">
+                <div id="redirect" style="display: <?=isset($model->flag) && in_array('r',$model->flag) ? 'block': 'none'?>">
                     <?= $form->field($model, 'out_url')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 </div>
                 <?= $form->field($model, 'thumb',[

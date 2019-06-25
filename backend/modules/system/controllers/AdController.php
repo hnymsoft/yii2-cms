@@ -65,6 +65,8 @@ class AdController extends BaseController
     public function actionCreate()
     {
         $model = new Ad();
+        $model->status = 1;
+
         $post_data = Yii::$app->request->post();
 
         //数据整理

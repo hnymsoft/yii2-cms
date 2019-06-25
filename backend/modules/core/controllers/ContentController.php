@@ -86,7 +86,8 @@ class ContentController extends BaseController
         if(!$moduleModel){
             exit('模型不存在');
         }
-        $attachTableModel = new AttachTable($moduleModel->attach_table);
+        $attachTableModel = new AttachTable();
+        $attachTableModel::$tableName = $moduleModel->attach_table;
         if ($model->load(Yii::$app->request->post(),'Content')) {
             $model->flag = !empty(post('Content')['flag']) ? implode(',',post('Content')['flag']) : '';
             if($model->save(false)){
@@ -117,7 +118,8 @@ class ContentController extends BaseController
             'model' => $model,                       //内容模型
             'attachTableModel' => $attachTableModel, //附加表模型
             'extend_filed' => $extend_filed,
-            'channelDropdown' => $channelDropdown
+            'channelDropdown' => $channelDropdown,
+            'thumb_list' => []
         ]);
     }
 
