@@ -67,6 +67,7 @@ class ChannelController extends Controller
     public function actionCreate()
     {
         $model = new Channel();
+        $model->status = 1;
         if(Yii::$app->request->isPost){
             $model->level = 0;
             if(is_numeric(Yii::$app->request->post('Channel')['p_id']) && Yii::$app->request->post('Channel')['p_id'] > 0){

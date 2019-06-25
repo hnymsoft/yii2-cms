@@ -45,7 +45,7 @@ class Guestbook extends BaseModel
             'reply' => '回复',
             'info' => '设备信息',
             'addtime' => '留言时间',
-            'status' => '状态',
+            'status' => '是否显示',
         ];
     }
 

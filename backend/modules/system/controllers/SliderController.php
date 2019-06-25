@@ -2,18 +2,18 @@
 
 namespace system\controllers;
 
-use backend\controllers\BaseController;
-use common\models\BaseModel;
 use Yii;
-use common\models\Module;
-use common\models\searchs\Module as ModuleSearch;
+use common\models\Slider;
+use common\models\searchs\Slider as SliderSearch;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ModuleController implements the CRUD actions for Module model.
+ * Class SliderController
+ * @package system\controllers
  */
-class ModuleController extends BaseController
+class SliderController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,16 +32,16 @@ class ModuleController extends BaseController
 
     /**
      * 列表
-     * @return string
+     * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ModuleSearch();
+        $searchModel = new SliderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -61,23 +61,20 @@ class ModuleController extends BaseController
     /**
      * 添加
      * @return string|\yii\web\Response
-     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
-        $model = new Module();
+        $model = new Slider();
         $model->status = 1;
-
+        $model->order = 0;
         if(Yii::$app->request->isPost){
+            $model->create_time = GTIME;
             $model->create_user = Yii::$app->user->identity->username;
-            $model->create_addtime = GTIME;
         }
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-            //创建附加表
-            $model->createModelsTable($model->attach_table);
-
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -93,12 +90,13 @@ class ModuleController extends BaseController
     {
         $model = $this->findModel($id);
         if(Yii::$app->request->isPost){
+            $model->update_time = GTIME;
             $model->update_user = Yii::$app->user->identity->username;
-            $model->update_addtime = GTIME;
         }
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -112,16 +110,11 @@ class ModuleController extends BaseController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        if($model && $model->delete()){
-            //1、检查当前模型附加表是否存在文章
-
-            //2、删除附加表
-            $model->dropModelsTable($model->attach_table);
-
+        if($this->findModel($id)->delete()){
             return ajaxReturnSuccess('删除成功');
+        }else{
+            return ajaxReturnFailure('删除失败');
         }
-        return ajaxReturnFailure('删除失败');
     }
 
     /**
@@ -150,15 +143,10 @@ class ModuleController extends BaseController
      */
     protected function findModel($id)
     {
-        if (($model = Module::findOne($id)) !== null) {
+        if (($model = Slider::findOne($id)) !== null) {
             return $model;
         }
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 
-    public function actionCheckTableUnique($id = null){
-        $model = new Module();
-        $model->load(Yii::$app->request->post());
-        return json_encode(\yii\widgets\ActiveForm::validate($model,'attach_table'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

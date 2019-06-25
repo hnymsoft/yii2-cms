@@ -66,6 +66,7 @@ class MemberController extends Controller
     public function actionCreate()
     {
         $model = new Member();
+        $model->status = 10;
         $model->scenario = 'create';
         $postData = Yii::$app->request->post();
         if(Yii::$app->request->isPost && isset($postData)){

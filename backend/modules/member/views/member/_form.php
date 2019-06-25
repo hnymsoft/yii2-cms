@@ -29,7 +29,7 @@ $this->registerJs($this->render('js/upload.js'));
 
     <?= $form->field($model, 'integral')->textInput(['type'=>'number','class'=>'layui-input']) ?>
     <?= $form->field($model, 'balance')->textInput(['type'=>'number','maxlength' => true,'class'=>'layui-input']) ?>
-    <?= $form->field($model, 'status')->radioList([10=>'是',0=>'否'],['item'=>function($index, $label, $name, $checked, $value){
+    <?= $form->field($model, 'status')->radioList([10=>'启用',0=>'禁用'],['item'=>function($index, $label, $name, $checked, $value){
         return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
     }]) ?>
     <div class='layui-form-item'>
