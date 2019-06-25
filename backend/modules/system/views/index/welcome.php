@@ -106,20 +106,52 @@ $this->registerJs($this->render('js/_script.js'));
                             <div class="layui-card">
                                 <div class="layui-card-header">系统信息</div>
                                 <div class="layui-card-body">
-                                    <div class="layui-row">
-                                        <div class="layui-col-md6">服务器操作系统：<?=$sysinfo['os']?></div>
-                                        <div class="layui-col-md6">Web 服务器：<?=$sysinfo['web_server']?></div>
-                                        <div class="layui-col-md6">PHP 版本：<?=$sysinfo['php_ver']?></div>
-                                        <div class="layui-col-md6">MySQL 版本：<?=$sysinfo['mysql_ver']?></div>
-                                        <div class="layui-col-md6">安全模式：<?=$sysinfo['safe_mode']?></div>
-                                        <div class="layui-col-md6">安全模式GID：<?=$sysinfo['safe_mode_gid']?></div>
-                                        <div class="layui-col-md6">Socket 支持：<?=$sysinfo['socket']?></div>
-                                        <div class="layui-col-md6">时区设置：<?=$sysinfo['time_zone']?></div>
-                                        <div class="layui-col-md6">GD 版本：<?=$sysinfo['os']?></div>
-                                        <div class="layui-col-md6">Zlib 支持：<?=$sysinfo['zlib']?></div>
-                                        <div class="layui-col-md6">IP：<?=$sysinfo['ip']?></div>
-                                        <div class="layui-col-md6">文件上传的最大大小：<?=$sysinfo['max_filesize']?></div>
-                                    </div>
+                                    <table class="layui-table" lay-even>
+                                        <colgroup>
+                                            <col>
+                                            <col width="37.5%">
+                                            <col>
+                                            <col width="37.5%">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <td>服务器系统</td>
+                                                <td><?=$sysinfo['os']?></td>
+                                                <td>Web 服务器</td>
+                                                <td><?=$sysinfo['web_server']?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>PHP 版本</td>
+                                                <td><?=$sysinfo['php_ver']?></td>
+                                                <td>MySQL 版本</td>
+                                                <td><?=$sysinfo['mysql_ver']?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>安全模式</td>
+                                                <td><?=$sysinfo['safe_mode']?></td>
+                                                <td>安全模式GID</td>
+                                                <td><?=$sysinfo['safe_mode_gid']?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Socket 支持</td>
+                                                <td><?=$sysinfo['socket']?></td>
+                                                <td>时区设置</td>
+                                                <td><?=$sysinfo['time_zone']?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>GD 版本</td>
+                                                <td><?=$sysinfo['os']?></td>
+                                                <td>Zlib 支持</td>
+                                                <td><?=$sysinfo['zlib']?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>IP</td>
+                                                <td><?=$sysinfo['ip']?></td>
+                                                <td>文件上传限制</td>
+                                                <td><?=$sysinfo['max_filesize']?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -127,14 +159,38 @@ $this->registerJs($this->render('js/_script.js'));
                             <div class="layui-card">
                                 <div class="layui-card-header">开发信息</div>
                                 <div class="layui-card-body">
-                                    <div class="layui-row">
-                                        <div class="layui-col-md12">版权所有：<span style="float: right">小艾</span></div>
-                                        <div class="layui-col-md12">官方网站：<span style="float: right">xxx.com</span></div>
-                                        <div class="layui-col-md12">Git地址：<span style="float: right"><a href="https://github.com/aimitech/yii2-cms" target="_blank">点击查看</a></span></div>
-                                        <div class="layui-col-md12">系统开发：<span style="float: right">小艾</span></div>
-                                        <div class="layui-col-md12">开源协议：<span style="float: right">Apache Licene 2.0</span></div>
-                                        <div class="layui-col-md12">技术QQ：<span style="float: right">1596229276</span></div>
-                                    </div>
+                                    <table class="layui-table" lay-even>
+                                        <colgroup>
+                                            <col width="130">
+                                            <col>
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <td>版权所有</td>
+                                            <td>小艾</td>
+                                        </tr>
+                                        <tr>
+                                            <td>官方网站</td>
+                                            <td>xxx.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Git地址</td>
+                                            <td><a href="https://github.com/aimitech/yii2-cms" target="_blank">点击查看</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>系统开发</td>
+                                            <td>小艾</td>
+                                        </tr>
+                                        <tr>
+                                            <td>开源协议</td>
+                                            <td>Apache Licene 2.0</td>
+                                        </tr>
+                                        <tr>
+                                            <td>技术QQ</td>
+                                            <td>1596229276</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
