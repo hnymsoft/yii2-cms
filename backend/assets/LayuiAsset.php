@@ -1,7 +1,5 @@
 <?php
-
 namespace backend\assets;
-
 use yii\web\AssetBundle;
 
 /**
@@ -12,15 +10,17 @@ class LayuiAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'layuiadmin/layui/css/layui.css',
-		'layuiadmin/style/admin.css',
         'static/css/iconfont.css',
         'static/awesome/css/font-awesome.min.css',
-        'static/css/style.css',
+
+        'plugins/layui/css/layui.css',
+        'static/css/main.css', //主样式表
+        'static/css/style.css',//副样式表
     ];
     public $js = [
-		'layuiadmin/layui/layui.js',
-        'static/js/common.js',
+        'plugins/layui/layui.all.js',
+        //'static/js/main.js',
+        //'static/js/common.js',
     ];
     public $depends = [
     ];

@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 <div class="form-box-dialog">
 
     <?php $form = ActiveForm::begin([
-        'options' => ['class' => 'layui-form'],
+        'options' => ['class' => 'layui-form layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],

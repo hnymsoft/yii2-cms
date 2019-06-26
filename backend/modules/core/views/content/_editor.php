@@ -5,9 +5,9 @@
         if($conf->value == 'UEditor'){
 ?>
     <div type="text/plain" id="editor" name="AttachTable[body]"></div>
-    <?php $this->registerJsFile('@web/static/ueditor1_4_3_3/ueditor.config.js',['position'=>\yii\web\View::POS_HEAD]) ?>
-    <?php $this->registerJsFile('@web/static/ueditor1_4_3_3/ueditor.all.min.js',['position'=>\yii\web\View::POS_HEAD]) ?>
-    <?php $this->registerJsFile('@web/static/ueditor1_4_3_3/lang/zh-cn/zh-cn.js',['position'=>\yii\web\View::POS_HEAD]) ?>
+    <?php $this->registerJsFile('@web/plugins/editor/ueditor1_4_3_3/ueditor.config.js',['position'=>\yii\web\View::POS_HEAD]) ?>
+    <?php $this->registerJsFile('@web/plugins/editor/ueditor1_4_3_3/ueditor.all.min.js',['position'=>\yii\web\View::POS_HEAD]) ?>
+    <?php $this->registerJsFile('@web/plugins/editor/ueditor1_4_3_3/lang/zh-cn/zh-cn.js',['position'=>\yii\web\View::POS_HEAD]) ?>
 
 <?php
 $content = trim($attachTableModel->body);
@@ -23,8 +23,8 @@ $this->registerJs($js,\yii\web\View::POS_END);
         }elseif($conf->value == 'CKeditor'){
 ?>
             <textarea id="editor" name="AttachTable[body]"><?=$attachTableModel->body?></textarea>
-            <?php $this->registerJsFile('@web/static/ckeditor/ckeditor.js',['position'=>\yii\web\View::POS_HEAD]) ?>
-            <?php $this->registerJsFile('@web/static/ckeditor/config.js',['position'=>\yii\web\View::POS_HEAD]) ?>
+            <?php $this->registerJsFile('@web/plugins/editor/ckeditor/ckeditor.js',['position'=>\yii\web\View::POS_HEAD]) ?>
+            <?php $this->registerJsFile('@web/plugins/editor/ckeditor/config.js',['position'=>\yii\web\View::POS_HEAD]) ?>
 <?php
 $js2 = <<<JS
 var editor = CKEDITOR.replace('editor',{ allowedContent: true });    

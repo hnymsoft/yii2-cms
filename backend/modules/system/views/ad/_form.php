@@ -8,7 +8,7 @@ $this->registerJs($this->render('js/_script.js'));
 
 <div class="form-box-dialog">
     <?php $form = ActiveForm::begin([
-        'options' => ['class' => 'layui-form'],
+        'options' => ['class' => 'layui-form layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],
@@ -67,7 +67,7 @@ $this->registerJs($this->render('js/_script.js'));
         <?= $form->field($model,'code_content')->textarea(['class'=>'layui-textarea'])?>
     </div>
 
-    <?= $form->field($model, 'enabled')->radioList([1=>'开启',0=>'关闭'],['item'=>function($index, $label, $name, $checked, $value){
+    <?= $form->field($model, 'status')->radioList([1=>'开启',0=>'关闭'],['item'=>function($index, $label, $name, $checked, $value){
         return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' lay-skin="primary" lay-filter="flag" title="'.$label.'">';
     }]) ?>
 

@@ -13,13 +13,13 @@ use yii\widgets\ActiveForm;
         'fieldConfig' => [
             'options' => ['class' => 'layui-inline'],
             'labelOptions' => ['class' => 'layui-form-label'],
-            'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div><span class="help-block" style="display: inline-block;">{hint}</span>',
+            'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div>',
         ]
     ]); ?>
     <?= $form->field($model, 'name')->textInput(['class'=>'layui-input search_input']) ?>
-    <div class="layui-inline">
-        <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加模型',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('搜索', ['class' => 'layui-btn']) ?>
+        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-btn-primary layui-default-add"])?>
     </div>
     <?php ActiveForm::end(); ?>
 

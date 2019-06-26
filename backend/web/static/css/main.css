@@ -1,0 +1,113 @@
+/*layui重构 开始*/
+.layui-card .layui-card-header.responsive{height: auto;}
+
+.layui-layout-admin .layui-header .layui-nav{height: 60px;}
+
+/*左侧导航重定义*/
+.layui-nav-item a cite{ padding:0 5px; }
+.layui-side-scroll{ height:auto; }
+.layui-nav-tree .layui-nav-child a{}
+.layui-nav-tree .layui-nav-child a:hover{ background-color:#4E5465; }
+.layui-nav-tree .layui-nav-child dd.layui-this a:hover{ background-color:#009688; }
+
+/*switch*/
+.layui-form-switch{min-width: 22px!important;height: 20px;line-height: 20px;border-radius:15px;padding:0 3px;margin-top: 0;}
+.layui-form-switch i{width: 14px;height: 14px;}
+
+/*定义分页样式*/
+.layuipage{display:inline-block;padding-left:0;margin:15px 0 10px;border-radius:0;}
+.layuipage>li{display:inline}
+.layuipage>li>a,.layuipage>li>span{position:relative;float:left;padding:6px 9pt;margin-left:-1px;line-height:1.42857143;color:#333;text-decoration:none;background-color:#fff;border:1px solid #ddd}
+.layuipage>li:first-child>a,.layuipage>li:first-child>span{margin-left:0}
+.layuipage>li>a:focus,.layuipage>li>a:hover,.layuipage>li>span:focus,.layuipage>li>span:hover{z-index:2;color:#23527c;background-color:#eee;border-color:#ddd}
+.layuipage>.active>a,.layuipage>.active>a:focus,.layuipage>.active>a:hover,.layuipage>.active>span,.layuipage>.active>span:focus,.layuipage>.active>span:hover{z-index:3;color:#fff;cursor:default;background-color:#009688;border-color:#009688}
+.layuipage>.disabled>a,.layuipage>.disabled>a:focus,.layuipage>.disabled>a:hover,.layuipage>.disabled>span,.layuipage>.disabled>span:focus,.layuipage>.disabled>span:hover{color:#ccc;cursor:not-allowed;background-color:#fff;border-color:#ddd}
+/*layui重构 结束*/
+
+/*主布局样式重构*/
+.layui-layout-admin .layui-logo{font-size: 20px;color: #fff;}
+.layui-side dl.layui-nav-child dd a{padding-left: 33px;}
+
+/*ifarm盒子样式*/
+.childrenBody {margin: 0 10px 0;}
+/*公共样式*/
+.mainBody{ min-width:320px; }
+.layui-elem-quote.title{ padding:10px 15px; margin-bottom:0; }
+.layui-tab-more{ position: relative; z-index: 99; background:#fff; }
+.layui-layer-tab .layui-layer-title span.layui-layer-tabnow{ height:42px !important; }
+.layui-layer-tab .layui-layer-title span{ min-width:45px !important; }
+.marg0{ margin:0; }
+.blog-header{background:#393D49!important}
+.nav-top{left: 0;border-top: 2px solid;border-top-color: #282b33;}
+
+/*模拟加载层图标样式*/
+.layui-layer-dialog .layui-layer-content .layui-layer-ico16{ background-size:100% 100% !important; }
+.top_menu .line-h50{line-height: 50px;}
+.line-h50 .top-50{top:50px}
+
+/**换皮肤样式*/
+.layui-form-item-skin {margin-bottom: 8px;clear: both;}
+.skinBtn-skin {text-align: center;}
+
+/*右侧body*/
+#top_tabs_box{ padding-right:138px; height:40px; border-bottom:1px solid #e2e2e2;overflow:hidden;}
+#top_tabs{ position: absolute; border-bottom:none;}
+
+/*多窗口页面操作下拉*/
+.layui-nav.opt{position:absolute; top:0;right:0; background-color:#fff !important; color:#000;text-align: center;padding:0 10px;height:40px;}
+.layui-nav.opt .layui-nav-item{ line-height:40px; }
+.layui-nav.opt .layui-nav-item a{padding:0 10px;color:#333;}
+.layui-nav.opt .layui-nav-item a:hover{color:green;}
+.layui-nav.opt .layui-this:after{display: none!important;height: 0!important;}
+
+/*tab切换样式*/
+#top_tabs_box{overflow:hidden;}
+#top_tabs_box .layui-tab-title .layui-this{background-color: #f6f6f6;color: #000;border-bottom-color: red}
+#top_tabs_box .layui-tab-title .layui-this:after{ border:none; }
+#top_tabs_box .layui-tab-title li cite{ font-style: normal; padding-left:5px; }
+#top_tabs_box .layui-tab-content.clildFrame{ height:100%; padding:0; }
+#top_tabs_box .layui-tab-content.clildFrame .layui-tab-item{ position: absolute; top: 41px; bottom:0; left: 0; right: 0; padding: 0; margin: 0; -webkit-overflow-scrolling:touch; overflow:auto;}
+#top_tabs_box .layui-tab-content.clildFrame{ padding-right: 0;}
+#top_tabs_box .layui-tab-content.clildFrame iframe{ width: 100%; height:100%; border:none; min-width: 320px; position:absolute; }
+
+/*锁屏-开始*/
+.admin-header-lock{width: 320px; height: 170px; padding: 20px; position: relative; text-align: center;}
+.admin-header-lock-img{width: 60px; height: 60px; margin: 0 auto;}
+.admin-header-lock-img img{width: 60px; height: 60px; border-radius: 100%;}
+.admin-header-lock-name{color: #009688;margin: 8px 0 15px 0;}
+.input_btn{ overflow: hidden; margin-bottom: 10px; }
+.admin-header-lock-input{width: 170px; color: #333;background: #f2f2f2; float: left; margin:0 10px 0 40px; border:none;}
+.admin-header-lock-input::-webkit-input-placeholder {color:#666;}
+.admin-header-lock-input::-moz-placeholder {color:#666;}
+.admin-header-lock-input::-ms-input-placeholder {color:#666;}
+.admin-header-lock-input:-moz-placeholder {color:#666;}
+#unlock{ float: left; }
+#lock-box p{ color:#e60000; }
+
+/***更换换肤***/
+.layui-nav {background-color: inherit !important;}
+.skins_box{ padding:10px 34px 0; }
+.skinBtn{ text-align:right; }
+
+/*橙色*/
+.orange .layui-layout-admin .layui-header{ background-color:orange !important; }
+.orange .layui-side{ background-color:#e47214 !important; }
+.orange .layui-nav-tree .layui-nav-child a,.blue .layui-nav-tree .layui-nav-child a{ color:#fff; }
+.orange .layui-nav .layui-nav-more,.blue .layui-nav .layui-nav-more{border-color:#fff transparent transparent !important;}
+.orange .layui-nav-itemed .layui-nav-more,.orange .layui-nav .layui-nav-mored,.blue .layui-nav-itemed .layui-nav-more,.blue .layui-nav .layui-nav-mored{border-color:transparent transparent #fff !important;}
+
+/*蓝色*/
+.blue .layui-layout-admin .layui-header{ background-color:#3396d8 !important; }
+.blue .layui-bg-black,.blue .hideMenu{ background-color:#146aa2 !important; }
+
+/*自定义*/
+.skinCustom{ visibility:hidden; }
+.skinCustom input{ width:48%; margin:5px 2% 5px 0; float:left; }
+
+/***子页面布局样式***/
+.box-body{background: #F2F2F2;padding-top: 15px;padding-bottom: 15px;}
+#main-tab ul.layui-tab-title li{font-size: 15px;}
+.layui-table .layui-form-checkbox[lay-skin=primary]{padding-left: 0;}
+.layui-table .layui-form-checkbox[lay-skin=primary] i{width: 13px;height: 13px;}
+.layui-form-item.has-error .hint-block{display: none;}
+.layui-nav-tree .layui-nav-item a{cursor: pointer}

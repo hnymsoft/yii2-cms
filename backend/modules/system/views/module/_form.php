@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="form-box-dialog">
     <?php $form = ActiveForm::begin([
-        'options' => ['class' => 'layui-form'],
+        'options' => ['class' => 'layui-form layui-text'],
         'enableAjaxValidation' => $model->isNewRecord ? true : false,
         'validationUrl' => \yii\helpers\Url::toRoute(['check-table-unique']),
         'fieldConfig' => [

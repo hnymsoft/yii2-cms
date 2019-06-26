@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use backend\assets\LayuiAsset;
-
+LayuiAsset::addScript($this, "@web/static/js/common.js");
 LayuiAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -14,7 +14,7 @@ LayuiAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="box-body">
 <?php $this->beginBody() ?>
 <?= $content ?>
 <?php $this->endBody() ?>

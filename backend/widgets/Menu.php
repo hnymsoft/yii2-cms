@@ -14,7 +14,7 @@ class Menu extends \yii\widgets\Menu
     /**
      * @inheritdoc
      */
-    public $linkTemplate = '<a href="{url}">{icon} {label}</a>';
+    public $linkTemplate = '<a href="{url}>{icon} {label}</a>';
     /**
      * @inheritdoc
      * Styles all labels of items on sidebar by AdminLTE
@@ -67,7 +67,7 @@ class Menu extends \yii\widgets\Menu
                 foreach ($modelModule AS $key => $val){
                     $list[$key]['label'] = $val['name'].'内容';
                     $list[$key]['url'][] = '/core/content/index?m_id='.$val['id'];
-                    $list[$key]['icon'] = 'icon fa fa fa-file-text-o';
+                    $list[$key]['icon'] = 'icon fa fa-file-text-o';
                     $list[$key]['active'] = '';
                 }
                 $channel[] = [
@@ -82,7 +82,7 @@ class Menu extends \yii\widgets\Menu
             }
 
             $options = $this->options;
-            $tag = ArrayHelper::remove($options, 'tag', 'ul');
+            $tag = ArrayHelper::remove($options, 'tag', 'dl');
             echo Html::tag($tag, $this->renderItems($items), $options);
         }
     }
@@ -102,20 +102,20 @@ class Menu extends \yii\widgets\Menu
 		if(substr($item['icon'],0,2)=='&#'){ //iconfont图标
 			$replacements = [
 				'{label}' => strtr($this->labelTemplate, ['{label}' => $item['label'],]),
-				'{icon}' => empty($item['icon']) ? $this->defaultIconHtml: '<i class="icon iconfont" data-icon="'.self::$iconClassPrefix . $item['icon'].'">'.self::$iconClassPrefix . $item['icon'].'</i> ',
-				'{url}' => isset($item['url'][0]) ? '' . '" lay-href="'.Url::to($item["url"]).'"' : '',
+				'{icon}' => empty($item['icon']) ? $this->defaultIconHtml: '<i class="icon iconfont" data-icon="'.self::$iconClassPrefix . $item['icon'].'"  data-icon="icon '.$item['icon'].'">'.self::$iconClassPrefix . $item['icon'].'</i> ',
+				'{url}' => isset($item['url'][0]) ? '' . '" href="javascript:;" data-url="'.Url::to($item["url"]).'" target="iframe"' : '',
 			];
 		}else if(substr($item['icon'],0,2)=='fa'){ //fa图标
             $replacements = [
                 '{label}' => strtr($this->labelTemplate, ['{label}' => $item['label'],]),
-                '{icon}' => empty($item['icon']) ? $this->defaultIconHtmlIcon: '<i class="icon fa '.$item['icon'].' "></i> ',
-                '{url}' => isset($item['url'][0]) ? '' . '" lay-href="'.Url::to($item["url"]).'"' : '',
+                '{icon}' => empty($item['icon']) ? $this->defaultIconHtmlIcon: '<i class="icon fa '.$item['icon'].'" data-icon="icon '.$item['icon'].'"></i> ',
+                '{url}' => isset($item['url'][0]) ? '' . '" href="javascript:;" data-url="'.Url::to($item["url"]).'" target="iframe"' : '',
             ];
         }else{
 			$replacements = [
 				'{label}' => strtr($this->labelTemplate, ['{label}' => $item['label'],]),
-				'{icon}' => empty($item['icon']) ? $this->defaultIconHtmlIcon: '<i class="icon '.$item['icon'].' "></i> ',
-				'{url}' => isset($item['url'][0]) ? '' . '" lay-href="'.Url::to($item["url"]).'"' : '',
+				'{icon}' => empty($item['icon']) ? $this->defaultIconHtmlIcon: '<i class="icon fa '.$item['icon'].'"  data-icon="icon '.$item['icon'].'"></i> ',
+				'{url}' => isset($item['url'][0]) ? '' . '" href="javascript:;" data-url="'.Url::to($item["url"]).'" target="iframe"' : '',
 			];
 		}
 

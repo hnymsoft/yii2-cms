@@ -27,7 +27,7 @@ class Ad extends BaseModel
     public function rules()
     {
         return [
-            [['position_id', 'media_type', 'click_count', 'enabled'], 'integer'],
+            [['position_id', 'media_type', 'click_count', 'status'], 'integer'],
             [['ad_code','position_id','ad_name','start_time','end_time'], 'required'],
             [['ad_code'], 'string'],
             [['ad_name', 'link_man', 'link_email', 'link_phone'], 'string', 'max' => 60],
@@ -54,7 +54,7 @@ class Ad extends BaseModel
             'link_email' => '联系邮箱',
             'link_phone' => '联系电话',
             'click_count' => '点击数量',
-            'enabled' => '是否开启',
+            'status' => '是否开启',
             'font_content' => '广告内容',
             'img_link' => '图片地址',
             'code_content' => '广告代码'

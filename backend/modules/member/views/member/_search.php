@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => ['class' => 'layui-form layui-form-item'],
+        'options' => ['class' => 'layui-form layui-form-item layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-inline'],
             'labelOptions' => ['class' => 'layui-form-label'],
@@ -21,10 +21,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'username')->textInput(['class'=>'layui-input search_input']) ?>
     <?= $form->field($model, 'nickname')->textInput(['class'=>'layui-input search_input']) ?>
 
-    <div class="layui-inline">
-        <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加会员',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
-        <?= Html::a('级别管理',\yii\helpers\Url::to(['memberrank/index']), ['class' => "layui-btn layui-default-add"])?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('搜索', ['class' => 'layui-btn']) ?>
+        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-btn-primary layui-default-add"])?>
+        <?= Html::a('级别管理',\yii\helpers\Url::to(['memberrank/index']), ['class' => "layui-btn layui-btn-primary layui-default-add"])?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -66,6 +66,7 @@ class FlinkController extends BaseController
     public function actionCreate()
     {
         $model = new Flink();
+        $model->status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

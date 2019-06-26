@@ -6,19 +6,18 @@ $this->registerJs($this->render('js/_script.js'));
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-card-body form-box-dialog">
-            <?php $form = ActiveForm::begin([
-                'options' => ['class' => 'layui-form','id'=>'form']
-            ]); ?>
-            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <div class="layui-card-body">
+            <div class="layui-tab layui-tab-brief">
                 <ul class="layui-tab-title">
                     <li class="layui-this">系统配置</li>
                     <li>会员配置</li>
                     <li>邮件服务器配置</li>
                 </ul>
-
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
+                        <?php $form = ActiveForm::begin([
+                            'options' => ['class' => 'layui-form layui-text form-box-dialog','id'=>'form']
+                        ]); ?>
                         <?php foreach($model AS $key => $val):?>
                             <?php if($val['group'] == 1):?>
                                 <?php if ($val['type'] == 'textarea'):?>
@@ -64,14 +63,17 @@ $this->registerJs($this->render('js/_script.js'));
 
                         <div class='layui-form-item'>
                             <laybel class="layui-form-label"></laybel>
-                            <div class="layui-input-block">
+                            <div class="保存">
                                 <?= Html::buttonInput('保存', ['class' => 'layui-btn','id'=>'btn','lay-submit'=>'','lay-filter'=>'go','data-url'=>\yii\helpers\Url::to(['index'])]) ?>
                             </div>
                         </div>
-
+                        <?php ActiveForm::end(); ?>
                     </div>
 
                     <div class="layui-tab-item">
+                        <?php $form = ActiveForm::begin([
+                            'options' => ['class' => 'layui-form layui-text form-box-dialog','id'=>'form']
+                        ]); ?>
                         <?php foreach($model AS $key => $val):?>
                             <?php if($val['group'] == 2):?>
                                 <?php if ($val['type'] == 'textarea'):?>
@@ -117,13 +119,17 @@ $this->registerJs($this->render('js/_script.js'));
 
                         <div class='layui-form-item'>
                             <laybel class="layui-form-label"></laybel>
-                            <div class="layui-input-block">
+                            <div class="保存">
                                 <?= Html::buttonInput('保存', ['class' => 'layui-btn','id'=>'btn','lay-submit'=>'','lay-filter'=>'go','data-url'=>\yii\helpers\Url::to(['index'])]) ?>
                             </div>
                         </div>
+                        <?php ActiveForm::end(); ?>
                     </div>
 
                     <div class="layui-tab-item">
+                        <?php $form = ActiveForm::begin([
+                            'options' => ['class' => 'layui-form layui-text form-box-dialog','id'=>'form']
+                        ]); ?>
                         <?php foreach($model AS $key => $val):?>
                             <?php if($val['group'] == 3):?>
                                 <?php if ($val['type'] == 'textarea'):?>
@@ -169,14 +175,16 @@ $this->registerJs($this->render('js/_script.js'));
 
                         <div class='layui-form-item'>
                             <laybel class="layui-form-label"></laybel>
-                            <div class="layui-input-block">
+                            <div class="layui-input-inline">
                                 <?= Html::buttonInput('保存', ['class' => 'layui-btn','id'=>'btn','lay-submit'=>'','lay-filter'=>'go','data-url'=>\yii\helpers\Url::to(['index'])]) ?>
                             </div>
                         </div>
+
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
             </div>
-            <?php ActiveForm::end(); ?>
+
         </div>
     </div>
 </div>

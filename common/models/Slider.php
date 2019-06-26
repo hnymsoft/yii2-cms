@@ -44,7 +44,7 @@ class Slider extends BaseModel
             'pic' => '图片',
             'link' => '链接',
             'title' => '标题',
-            'subtitle' => '子标题',
+            'subtitle' => '副标题',
             'order' => '排序',
             'status' => '状态',
             'create_user' => '添加帐号',

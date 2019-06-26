@@ -1,6 +1,7 @@
 <?php
 $this->registerJs($this->render('js/_script.js'));
 ?>
+
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
@@ -71,7 +72,7 @@ $this->registerJs($this->render('js/_script.js'));
                     <div class="layui-card">
                         <div class="layui-card-header">最新文档</div>
                         <div class="layui-card-body">
-                            <ul class="layadmin-wait">
+                            <ul class="layadmin-wait layui-text">
                                 <?php if(!empty($list)):?>
                                     <?php foreach ($list as $key => $val):?>
                                         <li><span style="float: right"><?=date('Y-m-d',strtotime($val['create_addtime']))?></span><a href="javascript:;"><?=$val['title']?></a></li>
@@ -95,7 +96,6 @@ $this->registerJs($this->render('js/_script.js'));
                                     <div>3</div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ $this->registerJs($this->render('js/_script.js'));
                                         </tr>
                                         <tr>
                                             <td>Git地址</td>
-                                            <td><a href="https://github.com/aimitech/yii2-cms" target="_blank">点击查看</a></td>
+                                            <td><a href="https://github.com/aimitech/yii2-cms" target="_blank" class="layui-text">点击查看>></a></td>
                                         </tr>
                                         <tr>
                                             <td>系统开发</td>

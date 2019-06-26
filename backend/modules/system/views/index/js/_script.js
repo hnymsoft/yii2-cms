@@ -1,5 +1,5 @@
 layui.config({
-    base : "js/"
+    base: 'js/' //静态资源所在路径
 }).use(['form','layer','jquery','laydate','upload','element','carousel'],function(){
     var form = layui.form
         ,layer = parent.layer === undefined ? layui.layer : parent.layer

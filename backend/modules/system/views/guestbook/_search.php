@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => ['class' => 'layui-form layui-form-item'],
+        'options' => ['class' => 'layui-form layui-form-item layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-inline'],
             'labelOptions' => ['class' => 'layui-form-label'],
@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'subject')->textInput(['class'=>'layui-input search_input']) ?>
     <?= $form->field($model, 'name')->textInput(['class'=>'layui-input search_input']) ?>
     <?= $form->field($model, 'mobile')->textInput(['class'=>'layui-input search_input']) ?>
-    <div class="layui-inline">
-        <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('搜索', ['class' => 'layui-btn']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

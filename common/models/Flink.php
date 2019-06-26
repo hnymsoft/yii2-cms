@@ -42,7 +42,7 @@ class Flink extends BaseModel
             'webname' => '网站名称',
             'linkurl' => '网站地址',
             'logo' => '网站Logo',
-            'typeid' => '分类ID',
+            'typeid' => '分类',
             'introduce' => '网站概况',
             'order' => '排列位置',
             'status' => '链接状态',

@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 <div class="form-box-dialog">
 
     <?php $form = ActiveForm::begin([
-        'options' => ['class' => 'layui-form'],
+        'options' => ['class' => 'layui-form layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],
@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         ]
     ]); ?>
     <?= $form->field($model, 'typename')->textInput(['maxlength' => true,'class' => 'layui-input']) ?>
-    <?= $form->field($model, 'order')->textInput(['maxlength' => true,'class' => 'layui-input']) ?>
+    <?= $form->field($model, 'order')->textInput(['type' => 'number','class' => 'layui-input']) ?>
     <div class='layui-form-item'>
         <div class="layui-form-label"></div>
         <div class="layui-input-block">

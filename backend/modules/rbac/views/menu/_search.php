@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => ['class' => 'layui-form layui-form-item'],
+        'options' => ['class' => 'layui-form layui-form-item layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-inline'],
             'labelOptions' => ['class' => 'layui-form-label'],
@@ -26,9 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'route')->textInput(['class'=>'layui-input search_input']) ?>
 
-    <div class="layui-inline">
-        <?= Html::submitButton('查找', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('查找', ['class' => 'layui-btn']) ?>
+        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn  layui-btn-primary layui-default-add"])?>
 		<?= Html::button('批量删除', ['class' => 'layui-btn layui-btn-danger layui-default-delete-all']) ?>
     </div>
 

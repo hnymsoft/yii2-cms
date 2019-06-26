@@ -21,10 +21,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'webname')->textInput(['class'=>'layui-input search_input']) ?>
     <?= $form->field($model, 'typeid')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Flinktype::find()->orderBy('order asc')->asArray()->all(),'id','typename')) ?>
 
-    <div class="layui-inline">
-        <?= Html::submitButton('搜索', ['class' => 'layui-btn layui-btn-normal']) ?>
-        <?= Html::a('添加友链',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-default-add"])?>
-        <?= Html::a('分类管理',\yii\helpers\Url::to(['flinktype/index']), ['class' => "layui-btn layui-default-add"])?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('搜索', ['class' => 'layui-btn']) ?>
+        <?= Html::a('添加',\yii\helpers\Url::to(['create']), ['class' => "layui-btn layui-btn-primary layui-default-add"])?>
+        <?= Html::a('分类管理',\yii\helpers\Url::to(['flinktype/index']), ['class' => "layui-btn layui-btn-primary layui-default-add"])?>
     </div>
 
     <?php ActiveForm::end(); ?>

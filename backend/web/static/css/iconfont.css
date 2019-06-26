@@ -6,7 +6,7 @@
   url('/fonts/iconfont.ttf?t=1516772845031') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
   url('/fonts/iconfont.svg?t=1516772845031#iconfont') format('svg'); /* iOS 4.1- */
 }
-.icon{margin-left: -23px;margin-right: 5px;}
+
 .layui-nav-child .icon{margin-left: 0;}
 .iconfont {
   font-family:"iconfont" !important;

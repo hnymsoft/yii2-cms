@@ -2,7 +2,7 @@ layui.use(['upload','layer'], function(){
   var upload = layui.upload,layer = parent.layer === undefined ? layui.layer : parent.layer;
 
     upload.render({
-        elem: '#test3',
+        elem: '#upload',
         url: "<?=yii\helpers\Url::to(['/tools/upload'])?>",
         done: function(res){
             if(res.status==1){

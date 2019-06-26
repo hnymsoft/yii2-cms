@@ -53,8 +53,9 @@ layui.config({
 
     //操作按钮
     function btn(data){//操作中显示的内容
+        var url = '<?=\yii\helpers\Url::toRoute(["update"])?>'+'?id='+data.id;
         return [
-            "<a class='layui-btn layui-btn-normal layui-btn-xs' lay-event='edit' href='javascript:;'>编辑</a>",
+            "<a class='layui-btn layui-btn-normal layui-btn-xs' href='"+url+"'>编辑</a>",
             "<a class='layui-btn layui-btn-danger layui-btn-xs' lay-event='delete' href='javascript:;'>删除</a>",
         ].join('');
     }
@@ -83,8 +84,6 @@ layui.config({
         var layEvent = obj.event;
         if (layEvent === 'delete') {
             del(data.id);
-        }else if (layEvent === 'edit') {
-            location.href = "/index.php?r=system/channel/update&id="+data.id;
         }else if(layEvent == 'order'){
             layer.prompt({
                 formType: 3

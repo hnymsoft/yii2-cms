@@ -4,9 +4,7 @@ use backend\widgets\Menu;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\assets\LayuiAsset;
-
 $this->title = '管理系统';
-
 $menu = Menu::widget([
     'options' => ['class' => 'layui-nav layui-nav-tree'],
     'items' => MenuHelper::getAssignedMenu(Yii::$app->user->id, null, function($menu){
@@ -24,6 +22,7 @@ $menu = Menu::widget([
         return $return;
     }),
 ]);
+LayuiAsset::addScript($this, "@web/static/js/main.js");
 LayuiAsset::register($this);
 ?>
 
@@ -32,100 +31,70 @@ LayuiAsset::register($this);
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body class="layui-layout-body">
-    <?php $this->beginBody() ?>
-    <div id="LAY_app">
-        <div class="layui-layout layui-layout-admin">
-            <div class="layui-header">
-                <!-- 头部区域 -->
-                <ul class="layui-nav layui-layout-left">
-                    <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                        <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
-                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
-                        </a>
-                    </li>
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="" target="_blank" title="前台">
-                            <i class="layui-icon layui-icon-website"></i>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect title="全屏">
-                        <a href="javascript:;" layadmin-event="fullscreen">
-                            <i class="layui-icon layui-icon-screen-full"></i>
-                        </a>
-                    </li>
-                    <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;">
-                            <cite><?=Yii::$app->user->identity->username?></cite>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a lay-href="<?= Url::to(['rbac/user/update-self','id'=>Yii::$app->user->identity->id])?>">基本资料</a></dd>
-                            <dd><a href="" class="signOut yii2-post-logout">修改密码</a></dd>
-                            <hr>
-                            <dd layadmin-event="logout" style="text-align: center;"><a href="<?= Url::to(['rbac/user/logout'])?>">退出</a></dd>
-                        </dl>
-                    </li>
+<?php $this->beginBody() ?>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item lockcms"><a href="javascript:;"><i class="iconfont icon-lock"></i><cite>锁屏</cite></a></li>
+            <li class="layui-nav-item"><a href="javascript:;" class="changeSkin"><i class="iconfont icon-yifu userMenu"></i><cite>换肤</cite></a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">网站首页</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><cite id="username"><?=Yii::$app->user->identity->username?></cite></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="<?= Url::to(['rbac/user/update-self','id'=>Yii::$app->user->identity->id])?>"><i class="iconfont icon-wo userMenu" data-icon="icon-wo"></i><cite>资料</cite></a></dd>
+                    <dd><a href="<?= Url::to(['rbac/user/logout'])?>" class="signOut"><i class="iconfont icon-logout userMenu"></i><cite>退出</cite></a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
 
-                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                        <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                    </li>
-                </ul>
-            </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll navBar">
+            <?=$menu?>
+        </div>
+    </div>
 
-            <!-- 侧边菜单 -->
-            <div class="layui-side layui-side-menu">
-                <div class="layui-side-scroll">
-                    <div class="layui-logo" lay-href="<?=Url::to(['system/index/welcome'])?>">
-                        <span>后台管理系统</span>
-                    </div>
-                    <?=$menu?>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-tab marg0" lay-filter="tab" id="top_tabs_box">
+            <ul class="layui-tab-title top_tab" id="top_tabs">
+                <li class="layui-this" lay-id=""><i class="iconfont">&#xe603;</i> <cite>后台首页</cite></li>
+            </ul>
+            <ul class="layui-nav opt">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refresh refreshThis" title="刷新当前"><i class="iconfont icon-refresh"></i></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="closePageOther" title="关闭其他"><i class="iconfont icon-guanbi"></i></a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="closePageAll" title="关闭全部"><i class="iconfont icon-close"></i></a>
+                </li>
+            </ul>
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="<?=Url::toRoute(['system/index/welcome'])?>" data-id="0"></iframe>
                 </div>
-            </div>
-
-            <!-- 页面标签 -->
-            <div class="layadmin-pagetabs" id="LAY_app_tabs">
-                <div class="layui-icon layadmin-tabs-control layui-icon-down">
-                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
-                        <li class="layui-nav-item" lay-unselect>
-                            <a href="javascript:;"></a>
-                            <dl class="layui-nav-child layui-anim-fadein">
-                                <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
-                                <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
-                                <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
-                <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
-                    <ul class="layui-tab-title" id="LAY_app_tabsheader">
-                        <li lay-id="<?=Url::to(['system/index/welcome'])?>" lay-attr="<?=Url::to(['system/index/welcome'])?>" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
-                    </ul>
-                </div>
-            </div>
-
-
-            <!-- 主体内容 -->
-            <div class="layui-body" id="LAY_app_body">
-                <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="<?=Url::to(['system/index/welcome'])?>" frameborder="0" class="layadmin-iframe" id="iframe"></iframe>
-                </div>
-            </div>
-
-            <!-- 辅助元素，一般用于移动设备下遮罩 -->
-            <div class="layadmin-body-shade" layadmin-event="shade"></div>
-
-            <div class="layui-footer footer">
-                <p>copyright @2019 xiaoai</p>
             </div>
         </div>
     </div>
-    <?php $this->endBody() ?>
+
+    <div class="layui-footer" align="center">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -17,7 +17,7 @@ class Ad extends AdModel
     public function rules()
     {
         return [
-            [['id', 'position_id', 'media_type', 'start_time', 'end_time', 'click_count', 'enabled'], 'integer'],
+            [['id', 'position_id', 'media_type', 'start_time', 'end_time', 'click_count', 'status'], 'integer'],
             [['ad_name', 'ad_link', 'ad_code', 'link_man', 'link_email', 'link_phone'], 'safe'],
         ];
     }

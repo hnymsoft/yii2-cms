@@ -7,17 +7,17 @@ $this->registerJs($this->render('js/_script.js'));
 <div class="form-box-dialog">
     <?php $form = ActiveForm::begin([
         'id' => 'item-form',
-        'options' => ['class' => 'layui-form'],
+        'options' => ['class' => 'layui-form layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-form-item'],
             'labelOptions' => ['class' => 'layui-form-label','align'=>'right'],
             'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}',
         ],
     ]); ?>
-    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-        <ul class="layui-tab-title">
-            <li class="layui-this">基本内容</li>
-            <li>高级内容</li>
+    <div class="layui-tab">
+        <ul class="layui-tab-title" style="margin-bottom: 10px;">
+            <li class="layui-this">常规内容</li>
+            <li>高级参数</li>
         </ul>
 
         <div class="layui-tab-content">
@@ -45,7 +45,7 @@ $this->registerJs($this->render('js/_script.js'));
                     <?php elseif ($model->m_id == 2): //图片?>
                         <div class='layui-form-item'>
                             <div class="layui-form-label"></div>
-                            <div class="layui-input-block" style="margin-left: 130px;">
+                            <div class="layui-input-block">
                                 <div class="layui-upload">
                                     <button type="button" class="layui-btn" id="batUpload">多图片上传</button>
                                     <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
@@ -78,7 +78,7 @@ $this->registerJs($this->render('js/_script.js'));
 
                     <div class='layui-form-item'>
                         <div class="layui-form-label">内容</div>
-                        <div class="layui-input-block" style="margin-left: 130px;">
+                        <div class="layui-input-block">
                             <?= $this->render('_editor',['attachTableModel' => $attachTableModel]) ?>
                         </div>
                     </div>
@@ -101,12 +101,12 @@ $this->registerJs($this->render('js/_script.js'));
                 </div>
             </div>
             <div class="layui-tab-item">
-                <?= $form->field($model, 'color')->textInput(['id'=>'test-form-input','maxlength' => true,'class'=>'layui-input']) ?>
+                <?= $form->field($model, 'color')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
                 <?= $form->field($model, 'pubdate_addtime',[
-                    'template' => '{label}<div class="layui-input-inline cal" style="width: 35%">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
-                ])->textInput(['class'=>'layui-input','id'=>'pubdate_addtime'])->hint('设置未来时间可定时发布！') ?>
+                    'template' => '{label}<div class="layui-input-inline cal" style="width: 35%;">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
+                ])->textInput(['class'=>'layui-input','id'=>'pubdate_addtime']) ?>
 
-                <?= $form->field($attachTableModel, 'templet')->textInput(['maxlength' => true,'class'=>'layui-input'])->label('自定义路径名') ?>
+                <?= $form->field($attachTableModel, 'templet')->textInput(['maxlength' => true,'class'=>'layui-input'])->label('自定义路径') ?>
                 <?= $form->field($model, 'status')->radioList(['待审核','通过'],['item'=>function($index, $label, $name, $checked, $value){
                     return '<input type="radio" name="'.$name.'" value="'.$value.'" '.($checked?"checked":"").' title="'.$label.'">';
                 }]) ?>

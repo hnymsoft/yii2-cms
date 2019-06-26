@@ -65,6 +65,7 @@ class MemberrankController extends Controller
     public function actionCreate()
     {
         $model = new MemberRank();
+        $model->status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);

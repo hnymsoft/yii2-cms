@@ -57,7 +57,7 @@ class ExtField extends BaseModel
             'id' => 'ID',
             'm_id' => '模型类型',
             'f_type' => '字段类型',
-            'name' => '表单提示文字',
+            'name' => '提示文字',
             'item' => '字段名称',
             'value' => '字段内容',
             'desc' => '字段描述',
