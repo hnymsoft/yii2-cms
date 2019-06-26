@@ -90,7 +90,7 @@ LayuiAsset::register($this);
 
     <div class="layui-footer" align="center">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        © aimitech.com - xiaoai
     </div>
 </div>
 

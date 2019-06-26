@@ -1,7 +1,7 @@
 /*layui重构 开始*/
 .layui-card .layui-card-header.responsive{height: auto;}
-
 .layui-layout-admin .layui-header .layui-nav{height: 60px;}
+.layui-layout-admin .layui-footer{background: #e8eaec;}
 
 /*左侧导航重定义*/
 .layui-nav-item a cite{ padding:0 5px; }
