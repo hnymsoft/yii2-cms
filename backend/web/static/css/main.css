@@ -11,7 +11,7 @@
 .layui-nav-tree .layui-nav-child dd.layui-this a:hover{ background-color:#009688; }
 
 /*switch*/
-.layui-form-switch{min-width: 22px!important;height: 20px;line-height: 20px;border-radius:15px;padding:0 3px;margin-top: 0;}
+.layui-form-switch{min-width: 22px!important;height: 20px;line-height: 20px;border-radius:15px;margin-top: 0;}
 .layui-form-switch i{width: 14px;height: 14px;}
 
 /*定义分页样式*/

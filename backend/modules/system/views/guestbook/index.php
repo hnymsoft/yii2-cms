@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+$this->registerJs($this->render('js/_script.js'));
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -18,7 +18,7 @@ use yii\grid\GridView;
                         <?= GridView::widget([
                             'dataProvider' => $dataProvider,
                             //'filterModel' => $searchModel,
-                            'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
+                            'options' => ['class' => 'grid-view layui-form','style'=>'overflow:auto', 'id' => 'grid-view'],
                             'layout' => "{items}\n{pager}",
                             'tableOptions'=> ['class'=>'layui-table'],
                             'pager' => [
@@ -30,36 +30,37 @@ use yii\grid\GridView;
                                 'maxButtonCount'=>5,
                             ],
                             'columns' => [
-                                'id',
+                                [
+                                    'attribute' => 'id',
+                                    'headerOptions' => [
+                                        'width' => '5%',
+                                        'style'=> 'text-align: center;'
+                                    ],
+                                    'contentOptions' => ['align'=>'center'],
+                                ],
                                 'subject',
                                 'content',
                                 'name',
                                 'mobile',
+                                'addtime',
                                 [
                                     'label' => '是否前台显示',
-                                    'contentOptions' => ['align'=>'center'],
                                     'headerOptions' => [
-                                        'width' => '10%',
+                                        'width' => '8%',
                                         'style'=> 'text-align: center;'
                                     ],
-                                    'format' => 'raw',
-                                    'value' => function($model){
-                                        return $model->status == 1 ? '<font color="green">是</font>' : '<font color="red">否</font>';
-                                    }
-                                ],
-                                [
-                                    'label' => '是否回复（管理员）',
                                     'contentOptions' => ['align'=>'center'],
-                                    'headerOptions' => [
-                                        'width' => '10%',
-                                        'style'=> 'text-align: center;'
-                                    ],
                                     'format' => 'raw',
                                     'value' => function($model){
-                                        return !empty($model->reply) ? '<font color="green">是</font>' : '<font color="red">否</font>';
+                                        $status = $model->status == 1 ? true : false;
+                                        return Html::checkbox('status',$status,[
+                                            'lay-skin' => 'switch',
+                                            'lay-filter' => 'status',
+                                            'lay-text' => '是|否',
+                                            'data-url' => \yii\helpers\Url::toRoute(['ajaxstatus','id' => $model->id])
+                                        ]);
                                     }
                                 ],
-                                'addtime',
                                 [
                                     'header' => '操作',
                                     'class' => 'yii\grid\ActionColumn',
