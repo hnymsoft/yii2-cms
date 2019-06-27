@@ -12,15 +12,12 @@ class LayuiAsset extends AssetBundle
     public $css = [
         'static/css/iconfont.css',
         'static/awesome/css/font-awesome.min.css',
-
         'plugins/layui/css/layui.css',
         'static/css/main.css', //主样式表
         'static/css/style.css',//副样式表
     ];
     public $js = [
         'plugins/layui/layui.all.js',
-        //'static/js/main.js',
-        //'static/js/common.js',
     ];
     public $depends = [
     ];

@@ -3,6 +3,9 @@
 use backend\assets\AnimateAsset;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use backend\assets\LayuiAsset;
+LayuiAsset::addCss($this, "@web/static/css/rbac.css");
+LayuiAsset::register($this);
 AnimateAsset::register($this);
 $opts = Json::htmlEncode([
     'routes' => $routes,
