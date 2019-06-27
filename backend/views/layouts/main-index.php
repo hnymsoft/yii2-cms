@@ -42,15 +42,18 @@ LayuiAsset::register($this);
     <div class="layui-header">
         <div class="layui-logo">后台管理系统</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item lockcms"><a href="javascript:;"><i class="iconfont icon-lock"></i><cite>锁屏</cite></a></li>
             <li class="layui-nav-item"><a href="javascript:;" class="changeSkin"><i class="iconfont icon-yifu userMenu"></i><cite>换肤</cite></a></li>
+            <li class="layui-nav-item lockcms"><a href="javascript:;"><i class="iconfont icon-lock"></i><cite>锁屏</cite></a></li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item"><a href="">网站首页</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;"><cite id="username"><?=Yii::$app->user->identity->username?></cite></a>
+            <li class="layui-nav-item panel">
+                <a href="javascript:;">
+                    <?=Html::img(Yii::$app->user->identity->head_pic,['id'=>'avatar','style'=>'display:none'])?>
+                    <cite id="username"><?=Yii::$app->user->identity->username?></cite>
+                </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="<?= Url::to(['rbac/user/update-self','id'=>Yii::$app->user->identity->id])?>"><i class="iconfont icon-wo userMenu" data-icon="icon-wo"></i><cite>资料</cite></a></dd>
+                    <dd><a href="javascript:;" data-url="<?= Url::to(['rbac/user/update-self','id'=>Yii::$app->user->identity->id])?>"><i class="iconfont icon-wo userMenu"></i><cite>个人中心</cite></a></dd>
                     <dd><a href="<?= Url::to(['rbac/user/logout'])?>" class="signOut"><i class="iconfont icon-logout userMenu"></i><cite>退出</cite></a></dd>
                 </dl>
             </li>

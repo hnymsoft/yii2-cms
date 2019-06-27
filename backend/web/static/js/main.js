@@ -7,6 +7,9 @@ layui.config({
 	var form = layui.form,
         layer = layui.layer,
         element = layui.element;
+
+	//接口配置
+	var check_pwd_url = '/index.php/site/checkpassword';  //验证解锁密码api接口
     
     //切换皮肤
     skins();
@@ -140,7 +143,6 @@ layui.config({
     function lockPage() {
         var avatar = $("#avatar").attr("src");
         var username = $("#username").html();
-        layer.msg('请输入admin解锁，默认密码是admin，正式使用可以去掉或者自己后台认证下密码');
         layer.open({
             title: false,
             type: 1,
@@ -148,8 +150,8 @@ layui.config({
                 '<div class="admin-header-lock-img"><img src="' + avatar + '"/></div>' +
                 '<div class="admin-header-lock-name" id="lockUserName">' + username + '</div>' +
                 '<div class="input_btn">' +
-                '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入解锁密码.." name="lockPwd" id="lockPwd" />' +
-                '<button class="layui-btn" id="unlock">解锁</button>' +
+                '<input type="password" class="admin-header-lock-input layui-input" autocomplete="off" placeholder="请输入登陆密码.." name="lockPwd" id="lockPwd" />' +
+                '<button class="layui-btn" id="unlock"><i class="layui-icon"></i>解锁</button>' +
                 '</div>' +
                 '</div>',
             closeBtn: 0,
@@ -170,17 +172,30 @@ layui.config({
     // 解锁
     $("body").on("click", "#unlock", function () {
         if ($(this).siblings(".admin-header-lock-input").val() == '') {
-            layer.msg("请输入解锁密码！");
+            layer.msg("请输入登陆密码！");
             $(this).siblings(".admin-header-lock-input").focus();
         } else {
-            if ($(this).siblings(".admin-header-lock-input").val() == "admin") {
-                window.sessionStorage.setItem("lockcms", false);
-                $(this).siblings(".admin-header-lock-input").val('');
-                layer.closeAll("page");
-            } else {
-                layer.msg("密码错误，请重新输入！");
-                $(this).siblings(".admin-header-lock-input").val('').focus();
-            }
+            var password = $(this).siblings(".admin-header-lock-input").val();
+            var _this = this;
+            $(_this).addClass('layui-btn-disabled').find('i').addClass('layui-icon-refresh-3 layui-anim layui-anim-rotate layui-anim-loop');
+            $.post(check_pwd_url,{password:password},function(data){
+                layer.msg(data.message);
+                if(data.status){
+                    window.sessionStorage.setItem("lockcms", false);
+                    $(_this).siblings(".admin-header-lock-input").val('');
+                    layer.closeAll("page");
+                }else{
+                    $(_this).siblings(".admin-header-lock-input").val('').focus();
+                }
+                $(_this).removeClass('layui-btn-disabled').find('i').removeClass('layui-icon-refresh-3 layui-anim layui-anim-rotate layui-anim-loop');
+            },"json").fail(function(a,b,c){
+                if(a.status==403){
+                    layer.msg('没有权限');
+                }else{
+                    layer.msg('系统错误');
+                }
+                $(_this).removeClass('layui-btn-disabled').find('i').removeClass('layui-icon-refresh-3 layui-anim layui-anim-rotate layui-anim-loop');
+            });
         }
     });
 

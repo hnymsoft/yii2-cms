@@ -1,16 +1,31 @@
 <?php
 namespace backend\controllers;
-
+use rbac\models\User;
 use Yii;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
+
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'checkpassword' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -36,8 +51,28 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * 默认首页
+     * @return string
+     */
     public function actionIndex(){
         return $this->render('index');
+    }
+
+    /**
+     * 锁屏检测登陆密码
+     * @return string
+     */
+    public function actionCheckpassword(){
+        $password = post('password');
+        if(!$password){
+            return ajaxReturnFailure('密码不能为空!');
+        }
+        $user = User::findIdentity(Yii::$app->user->identity->id);
+        if (!$user || !$user->validatePassword($password)) {
+            return ajaxReturnFailure('密码错误！');
+        }
+        return ajaxReturnSuccess('验证成功!');
     }
 
 }
