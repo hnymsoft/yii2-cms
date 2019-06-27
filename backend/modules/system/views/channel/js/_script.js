@@ -1,5 +1,5 @@
 layui.config({
-    base : "/layuiadmin/layui/lay/modules/"
+    base : "/plugins/layui/lay/modules/"
 }).extend({
     treetable: 'treetable-lay/treetable'
 }).use(['form','layer','jquery','table','treetable'],function(){

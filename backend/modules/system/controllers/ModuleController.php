@@ -4,6 +4,7 @@ namespace system\controllers;
 
 use backend\controllers\BaseController;
 use common\models\BaseModel;
+use common\models\Channel;
 use Yii;
 use common\models\Module;
 use common\models\searchs\Module as ModuleSearch;
@@ -115,15 +116,23 @@ class ModuleController extends BaseController
      */
     public function actionDelete($id)
     {
+        $count = Channel::find()->where(['m_id'=>$id])->count();
+        if($count){
+            return ajaxReturnFailure('当前模型栏目不为空，删除失败！');
+        }
+        $transaction = Yii::$app->db->beginTransaction();
         $model = $this->findModel($id);
         if($model && $model->delete()){
-            //1、检查当前模型附加表是否存在文章
-
-            //2、删除附加表
-            $model->dropModelsTable($model->attach_table);
-
+            //删除附加表
+            $res = $model->dropModelsTable($model->attach_table);
+            if(!$res['status']){
+                return ajaxReturnSuccess($res['message']);
+            }
+            $transaction->commit();
             return ajaxReturnSuccess('删除成功');
         }
+
+        $transaction->rollBack();
         return ajaxReturnFailure('删除失败');
     }
 

@@ -42,7 +42,7 @@ LayuiAsset::register($this);
     <div class="layui-header">
         <div class="layui-logo">后台管理系统</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="javascript:;" id="hideMenu"><i class="fa fa-dedent"></i></a></li>
+            <li class="layui-nav-item"><a href="javascript:;" id="hideMenu"><i class="fa fa-dedent" style="font-size: 20px;position: relative;top:3px;"></i></a></li>
             <li class="layui-nav-item"><a href="javascript:;" class="changeSkin"><i class="iconfont icon-yifu userMenu"></i><cite>换肤</cite></a></li>
             <li class="layui-nav-item lockcms"><a href="javascript:;"><i class="iconfont icon-lock"></i><cite>锁屏</cite></a></li>
         </ul>

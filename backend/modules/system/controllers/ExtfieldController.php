@@ -69,7 +69,10 @@ class ExtfieldController extends BaseController
             $transaction = Yii::$app->db->beginTransaction();
             if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
                 //处理自定义字段
-                $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,1);
+                $res = $model->setAttachTableField($model->modules->attach_table,$model->item,$model->value,$model->f_type,1);
+                if(!$res['status']){
+                    return ajaxReturnFailure($res['message']);
+                }
                 $transaction->commit();
                 return $this->redirect(['index']);
             }else{

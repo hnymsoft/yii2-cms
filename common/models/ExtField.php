@@ -132,9 +132,9 @@ class ExtField extends BaseModel
         $sql = ($opt == 1) ? " ALTER TABLE `$table` ADD COLUMN $field " : " ALTER TABLE `$table` CHANGE COLUMN $field ";
         $res = Yii::$app->db->createCommand($sql)->execute();
         if($res){
-            return true;
+            return ajaxReturnSuccess('附加字段创建成功！');
         }else{
-            return false;
+            return ajaxReturnFailure('附加字段创建成功！');
         }
     }
 }

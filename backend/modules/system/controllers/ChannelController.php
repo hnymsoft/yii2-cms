@@ -2,6 +2,7 @@
 
 namespace system\controllers;
 
+use common\models\Content;
 use common\models\Module;
 use Yii;
 use common\models\Channel;
@@ -119,6 +120,10 @@ class ChannelController extends Controller
      */
     public function actionDelete($id)
     {
+        $count = Content::find()->where(['p_id'=>$id])->count();
+        if($count){
+            return ajaxReturnFailure('当前栏目内容不为空，删除失败！');
+        }
         if($this->findModel($id)->delete()){
             return ajaxReturnSuccess('删除成功');
         }

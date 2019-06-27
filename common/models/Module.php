@@ -78,7 +78,7 @@ class Module extends BaseModel
      */
     public function createModelsTable($table = ''){
         if(!$table){
-            return false;
+            return ajaxReturnFailure('附加表不存在！');
         }
         $sql = "DROP TABLE IF EXISTS `$table`; \r\nCREATE TABLE `$table`(\r\n `id` int(11) NOT NULL default '0',\r\n `p_id` int(11) NOT NULL default '0',\r\n `body` mediumtext NOT NULL,\r\n `templet` varchar(30) NOT NULL default '',\r\n ";
         $db = \Yii::$app->db;
@@ -91,9 +91,9 @@ class Module extends BaseModel
             $sql .= " PRIMARY KEY  (`id`), KEY `".$table."_index` (`type_id`)\r\n) ENGINE=MyISAM DEFAULT CHARSET=utf8; ";
         }
         if($db->createCommand($sql)->execute()){
-            return true;
+            return ajaxReturnSuccess('附加表创建成功！');
         }else{
-            return false;
+            return ajaxReturnFailure('附加表创建成功！');
         }
     }
 
@@ -105,15 +105,22 @@ class Module extends BaseModel
      */
     public function dropModelsTable($table = ''){
         if(!$table){
-            return false;
+            return ajaxReturnFailure('附加表不存在！');
+        }
+        if(strpos($table,'attach_') === false){
+            return ajaxReturnFailure('非附加表不允许删除！');
+        }
+        //系统模型不允许删除
+        if(in_array($table,['attach_news','attach_image','attach_product','attach_special','attach_page'])){
+            return ajaxReturnFailure('系统模型附加表不允许删除！');
         }
         $sql = "DROP TABLE IF EXISTS `$table`; ";
 
         $db = \Yii::$app->db;
         if($db->createCommand($sql)->execute()){
-            return true;
+            return ajaxReturnSuccess('附加表删除成功');
         }else{
-            return false;
+            return ajaxReturnFailure('附加表删除失败');
         }
     }
 }
