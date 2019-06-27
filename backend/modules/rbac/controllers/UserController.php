@@ -208,7 +208,7 @@ class UserController extends Controller
         $post_data = Yii::$app->request->post();
 		
 		if($id!=Yii::$app->user->identity->id){
-			throw new ForbiddenHttpException('你没有权限修改');
+			throw new ForbiddenHttpException('你没有权限编辑');
 		}
         if ($model->load($post_data) && $model->validate()) {
 			if($post_data['User']['password_hash']){

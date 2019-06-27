@@ -91,7 +91,7 @@ $this->registerJs($this->render('js/_script.js'));
                                     'template' =>'{update} {delete}',
                                     'buttons' => [
                                         'update' => function ($url) {
-                                            return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                            return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'delete' => function ($url) {
                                             return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);

@@ -162,7 +162,7 @@ class ChannelController extends Controller
     }
 
     /**
-     * Ajax修改排序方式
+     * Ajax编辑排序方式
      * @param $id
      * @param $order
      * @return string
@@ -175,13 +175,13 @@ class ChannelController extends Controller
         if(!is_numeric($order)) return ajaxReturnFailure('请输入正确的数字');
         $model->order = $order;
         if($model->save(false)){
-            return ajaxReturnSuccess('排序修改成功');
+            return ajaxReturnSuccess('排序编辑成功');
         }
-        return ajaxReturnFailure('排序修改失败');
+        return ajaxReturnFailure('排序编辑失败');
     }
 
     /**
-     * Ajax修改排序方式
+     * Ajax编辑排序方式
      * @param $id
      * @param $order
      * @return string
@@ -194,8 +194,8 @@ class ChannelController extends Controller
         if(!in_array($status,[0,1])) return ajaxReturnFailure('状态不正确');
         $model->status = $status;
         if($model->save(false)){
-            return ajaxReturnSuccess('状态修改成功');
+            return ajaxReturnSuccess('状态编辑成功');
         }
-        return ajaxReturnFailure('状态修改失败');
+        return ajaxReturnFailure('状态编辑失败');
     }
 }

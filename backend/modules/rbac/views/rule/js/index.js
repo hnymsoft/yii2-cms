@@ -76,7 +76,7 @@ layui.config({
         var href = $(this).attr("href");
         console.log(href);
         var index = layui.layer.open({
-            title : "修改规则",
+            title : "编辑规则",
             type : 2,
             area: ['400px', '260px'],
             content : [href,"no"]

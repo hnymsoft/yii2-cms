@@ -117,7 +117,7 @@ $this->registerJs($this->render('js/index.js'));
                                             return Html::a('查看', $url, ['class' => "layui-btn layui-btn-primary layui-btn-xs layui-default-view"]);
                                         },
                                         'update' => function ($url, $model, $key) {
-                                            return Html::a('修改', Url::to(['update','id'=>$model->id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                            return Html::a('编辑', Url::to(['update','id'=>$model->id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'auth' => function ($url, $model, $key) {
                                             return Html::a('授权', Url::to(['assignment/view','id'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-update"]);

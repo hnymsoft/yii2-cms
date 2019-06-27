@@ -78,7 +78,7 @@ $this->registerJs($this->render('js/index.js'));
                                             return Html::a('查看', Url::to(['view','id'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                                         },
                                         'update' => function ($url, $model, $key) {
-                                            return Html::a('修改', Url::to(['update','id'=>$model->id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                            return Html::a('编辑', Url::to(['update','id'=>$model->id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'delete' => function ($url, $model, $key) {
                                             return Html::a('删除', Url::to(['delete','id'=>$model->id]), ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);

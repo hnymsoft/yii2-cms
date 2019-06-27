@@ -111,7 +111,7 @@ class MemberrankController extends Controller
     }
 
     /**
-     * 状态修改
+     * 状态编辑
      * @param $id
      * @return string
      * @throws NotFoundHttpException
@@ -123,9 +123,9 @@ class MemberrankController extends Controller
         }
         $model = $this->findModel($id);
         if($model->load($status,'') && $model->save(false)){
-            return ajaxReturnSuccess('状态修改成功');
+            return ajaxReturnSuccess('状态编辑成功');
         }
-        return ajaxReturnFailure('状态修改失败');
+        return ajaxReturnFailure('状态编辑失败');
     }
 
     /**

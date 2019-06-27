@@ -227,7 +227,7 @@ class ContentController extends BaseController
     }
 
     /**
-     * 状态修改
+     * 状态编辑
      * @param $id
      * @return string
      * @throws NotFoundHttpException
@@ -240,9 +240,9 @@ class ContentController extends BaseController
         $model = $this->findModel($id);
         $model->status = $status;
         if($model->save(false)){
-            return ajaxReturnSuccess('状态修改成功');
+            return ajaxReturnSuccess('状态编辑成功');
         }
-        return ajaxReturnFailure('状态修改失败');
+        return ajaxReturnFailure('状态编辑失败');
     }
 
     /**

@@ -101,7 +101,7 @@ class Log extends ActiveRecord
             'ip' => 'IP地址',
             'user_agent' => '用户浏览器',
             'updated_at' => '创建时间',
-            'created_at' => '修改时间',
+            'created_at' => '编辑时间',
         ];
     }
 

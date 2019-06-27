@@ -31,32 +31,32 @@ $this->registerJs($this->render('js/index.js'));
                             'columns' => [
                                 [
                                     'attribute' => 'name',
-                                    'label' => Yii::t('rbac-admin', 'Name'),
-                                ],
-                                [
-                                    'attribute' => 'ruleName',
-                                    'label' => Yii::t('rbac-admin', 'Rule Name'),
+                                    'label' => '名称',
+                                    'headerOptions' => [
+                                        'width' => '35%',
+                                        'style'=> 'text-align: center;'
+                                    ],
                                 ],
                                 [
                                     'attribute' => 'description',
-                                    'label' => Yii::t('rbac-admin', 'Description'),
+                                    'label' => '描述',
                                 ],
                                 [
                                     'header' => '操作',
                                     'class' => 'yii\grid\ActionColumn',
                                     'contentOptions' => ['align'=>'center'],
                                     'headerOptions' => [
-                                        'width' => '12%',
+                                        'width' => '10%',
                                         'style'=> 'text-align: center;'
                                     ],
                                     'template' =>'{view} {update} {delete}',
                                     'buttons' => [
                                         'view' => function ($url){
-                                            $name = Yii::$app->controller->id == 'permission' ? '查看' : '分配权限';
+                                            $name = Yii::$app->controller->id == 'permission' ? '查看' : '授权';
                                             return Html::a($name, $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                                         },
                                         'update' => function ($url) {
-                                            return Html::a('修改', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                            return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'delete' => function ($url) {
                                             return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);

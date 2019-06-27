@@ -64,7 +64,7 @@ class User extends ActiveRecord implements IdentityInterface
 			'mobile' => '手机号码',
             'status' => '状态',
             'created_at'=>'创建时间',
-            'updated_at'=>'修改时间',
+            'updated_at'=>'编辑时间',
             'auth_key'=>'授权码',
             'password_hash'=>'密码',
             'password_reset_token'=>'重置码',

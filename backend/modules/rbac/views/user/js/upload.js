@@ -6,11 +6,11 @@ layui.use(['upload','layer'], function(){
         url: "<?=yii\helpers\Url::to(['/tools/upload'])?>",
         done: function(res){
             if(res.status==1){
-                //修改上传成功后需要修改的地方
+                //编辑上传成功后需要编辑的地方
                 $("#signup-head_pic").val(res.data);
                 $("#user-head_pic").val(res.data);
                 $(".userinfo_head_pic").attr('src',res.data);
-                //修改父窗口数据
+                //编辑父窗口数据
                 parent.$('.header_user_head_pic').attr('src',res.data);
                 layer.msg("上传成功");
             }else{

@@ -143,7 +143,7 @@ $this->registerJs($this->render('js/_script.js'));
                                             return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
                                         },
                                         'update' => function ($url,$model) {
-                                            return Html::a('修改', \yii\helpers\Url::toRoute(['update','id'=>$model->id,'m_id'=>$model->m_id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
+                                            return Html::a('编辑', \yii\helpers\Url::toRoute(['update','id'=>$model->id,'m_id'=>$model->m_id]), ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'delete' => function ($url) {
                                             return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);

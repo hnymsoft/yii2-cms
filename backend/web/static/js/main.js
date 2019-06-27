@@ -316,6 +316,23 @@ layui.config({
         //渲染顶部窗口
         tab.tabMove();
     });
+
+    //隐藏左侧导航
+    $("body").on("click","#hideMenu i.fa-dedent",function () {
+        $(this).removeClass('fa-dedent').addClass('fa-indent');
+        $(".layui-body,.layui-footer").animate({left:"0"});
+
+        //渲染顶部窗口
+        tab.tabMove();
+    });
+
+    $("body").on("click","#hideMenu i.fa-indent",function () {
+        $(this).removeClass('fa-indent').addClass('fa-dedent');
+        $(".layui-body,.layui-footer").animate({left:"200px"});
+
+        //渲染顶部窗口
+        tab.tabMove();
+    });
 });
 //打开新窗口
 function addTab(_this) {

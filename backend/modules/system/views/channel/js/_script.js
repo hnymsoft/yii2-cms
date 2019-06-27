@@ -87,7 +87,7 @@ layui.config({
         }else if(layEvent == 'order'){
             layer.prompt({
                 formType: 3
-                ,title: '修改['+ data.name +']的栏目顺序'
+                ,title: '编辑['+ data.name +']的栏目顺序'
                 ,value: data.order
             }, function(value, index){
                 layer.close(index);

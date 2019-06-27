@@ -15,9 +15,9 @@ $this->registerJs($this->render('js/_script.js'));
                     <div class="layui-tab-item layui-show">
                         <div class="search-box">
                             <div class="layui-inline">
-                                <?=Html::a('开始备份 <span class="fa fa-refresh layui-anim" style="display: none"></span>','javascript:;',['class' => 'layui-btn layui-btn-normal','id'=>'backup']);?>
+                                <?=Html::a('开始备份 <span class="fa fa-refresh layui-anim" style="display: none"></span>','javascript:;',['class' => 'layui-btn','id'=>'backup']);?>
 
-                                <?=Html::a('还原管理',\yii\helpers\Url::to(['import/index']),['class' => 'layui-btn']);?>
+                                <?=Html::a('还原管理',\yii\helpers\Url::to(['import/index']),['class' => 'layui-btn layui-btn-primary']);?>
                             </div>
                         </div>
 

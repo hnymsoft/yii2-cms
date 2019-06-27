@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => ['class' => 'layui-form layui-form-item'],
+        'options' => ['class' => 'layui-form layui-form-item layui-text'],
         'fieldConfig' => [
             'options' => ['class' => 'layui-inline'],
             'labelOptions' => ['class' => 'layui-form-label'],
