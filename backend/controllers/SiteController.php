@@ -1,5 +1,9 @@
 <?php
 namespace backend\controllers;
+use common\models\Collection;
+use GuzzleHttp\Client;
+use QL\Ext\AbsoluteUrl;
+use QL\QueryList;
 use rbac\models\User;
 use Yii;
 use yii\filters\VerbFilter;
@@ -74,5 +78,24 @@ class SiteController extends BaseController
         }
         return ajaxReturnSuccess('验证成功!');
     }
+
+    /**
+     * 测试用
+     */
+    public function actionTest(){
+
+        $query = new Collection();
+        $conf = $query->getConf();
+        $list = $query->getCollectionData($conf['url'],$conf['list'],$conf['options']);
+        if(!$list){
+            return ajaxReturnFailure('暂无采集数据！');
+        }
+        foreach ($list as $key => $val){
+            $content[$key] = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
+        }
+        dd($content);
+    }
+
+
 
 }

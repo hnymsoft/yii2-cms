@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98e4277aca57ba435a564f1478766459",
+    "content-hash": "430b057cc5d7d762ef17a957e9622651",
     "packages": [
+        {
+            "name": "ares333/php-curl",
+            "version": "v4.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ares333/php-curl.git",
+                "reference": "580025300c3cbf7cafe825bd454018ffc62233cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ares333/php-curl/zipball/580025300c3cbf7cafe825bd454018ffc62233cf",
+                "reference": "580025300c3cbf7cafe825bd454018ffc62233cf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ares333\\Curl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ares",
+                    "homepage": "http://phpdr.net"
+                }
+            ],
+            "description": "The best php curl library.",
+            "keywords": [
+                "PHP cURL",
+                "aysnc http",
+                "curl",
+                "curlmulti"
+            ],
+            "time": "2018-12-13T03:47:27+00:00"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.4.1",
@@ -834,6 +877,86 @@
             "time": "2019-02-22T07:33:54+00:00"
         },
         {
+            "name": "jaeger/querylist-absolute-url",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jae-jae/QueryList-AbsoluteUrl.git",
+                "reference": "0c7a5677ccfca959ee353cbc3b19472dc9e9739f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jae-jae/QueryList-AbsoluteUrl/zipball/0c7a5677ccfca959ee353cbc3b19472dc9e9739f",
+                "reference": "0c7a5677ccfca959ee353cbc3b19472dc9e9739f",
+                "shasum": ""
+            },
+            "require": {
+                "pguardiario/phpuri": "^1.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "jaeger/querylist": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "QL\\Ext\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaeger",
+                    "email": "JaegerCode@gmail.com"
+                }
+            ],
+            "description": "QueryList Plugin: Converting relative urls to absolute.QueryList插件:转换URL相对路径到绝对路径.",
+            "time": "2017-12-22T07:36:53+00:00"
+        },
+        {
+            "name": "jaeger/querylist-curl-multi",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jae-jae/QueryList-CurlMulti.git",
+                "reference": "6f9bec5198cdafc56ffcc2e047374c76a08b153a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jae-jae/QueryList-CurlMulti/zipball/6f9bec5198cdafc56ffcc2e047374c76a08b153a",
+                "reference": "6f9bec5198cdafc56ffcc2e047374c76a08b153a",
+                "shasum": ""
+            },
+            "require": {
+                "ares333/php-curl": "^4.2",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "jaeger/querylist": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "QL\\Ext\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaeger",
+                    "email": "JaegerCode@gmail.com"
+                }
+            ],
+            "description": "QueryList Plugin: Curl multi threading. QueryList Curl多线程插件",
+            "time": "2018-10-16T07:13:30+00:00"
+        },
+        {
             "name": "league/flysystem",
             "version": "dev-master",
             "source": {
@@ -916,6 +1039,30 @@
                 "storage"
             ],
             "time": "2019-06-20T20:52:55+00:00"
+        },
+        {
+            "name": "pguardiario/phpuri",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/monkeysuffrage/phpuri.git",
+                "reference": "ad0a5ec033fe616cfef55578b9c7f2458be8fbfc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/monkeysuffrage/phpuri/zipball/ad0a5ec033fe616cfef55578b9c7f2458be8fbfc",
+                "reference": "ad0a5ec033fe616cfef55578b9c7f2458be8fbfc",
+                "shasum": ""
+            },
+            "type": "project",
+            "autoload": {
+                "files": [
+                    "phpuri.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "A php library for converting relative urls to absolute.",
+            "time": "2015-05-24T09:13:17+00:00"
         },
         {
             "name": "psr/cache",
@@ -4433,7 +4580,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "jaeger/querylist": 20
+        "jaeger/querylist": 20,
+        "jaeger/querylist-absolute-url": 20,
+        "jaeger/querylist-curl-multi": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
