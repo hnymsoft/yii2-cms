@@ -101,7 +101,9 @@ $this->registerJs($this->render('js/_script.js'));
                 </div>
             </div>
             <div class="layui-tab-item">
-                <?= $form->field($model, 'color')->textInput(['maxlength' => true,'class'=>'layui-input']) ?>
+                <?= $form->field($model, 'color',[
+                    'template' => '{label}<div class="layui-input-inline" style="width: 35%">{input}</div>{hint}{error}<div class="layui-input-inline" id="title_color"></div>'
+                ])->textInput(['maxlength' => true,'class'=>'layui-input','id'=>'input_title_color']) ?>
                 <?= $form->field($model, 'pubdate_addtime',[
                     'template' => '{label}<div class="layui-input-inline cal" style="width: 35%;">{input}<i class="cus fa fa-calendar"></i></div>{hint}<span class="help-block">{error}</span>',
                 ])->textInput(['class'=>'layui-input','id'=>'pubdate_addtime']) ?>

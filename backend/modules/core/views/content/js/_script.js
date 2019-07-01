@@ -1,12 +1,22 @@
 layui.config({
     base : "js/"
-}).use(['form','layer','jquery','laydate','upload','element'],function(){
+}).use(['form','layer','jquery','laydate','upload','element','colorpicker'],function(){
     var form = layui.form
         ,layer = parent.layer === undefined ? layui.layer : parent.layer
         ,$ = layui.jquery
         ,laydate = layui.laydate
         ,upload = layui.upload
-        ,element = layui.element;
+        ,element = layui.element
+        ,colorpicker = layui.colorpicker;
+
+        //表单赋值
+        colorpicker.render({
+            elem: '#title_color'
+            ,color: '#1c97f5'
+            ,done: function(color){
+                $('#input_title_color').val(color);
+            }
+        });
 
         //日期时间选择器
         laydate.render({
