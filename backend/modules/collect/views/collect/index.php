@@ -1,13 +1,21 @@
 <?php
+
 use yii\helpers\Html;
 use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel common\models\searchs\Collect */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Collects';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-card-body">
             <div class="layui-tab layui-tab-brief" id="main-tab">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">友链列表</li>
+                    <li class="layui-this">采集节点列表</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -18,7 +26,7 @@ use yii\grid\GridView;
                             //'filterModel' => $searchModel,
                             'options' => ['class' => 'grid-view','style'=>'overflow:auto', 'id' => 'grid-view'],
                             'layout' => "{items}\n{pager}",
-                            'tableOptions'=> ['class'=>'layui-table'],
+                            'tableOptions'=> ['class'=>'layui-table layui-form'],
                             'pager' => [
                                 'options'=>['class'=>'layuipage pull-right'],
                                 'prevPageLabel' => '上一页',
@@ -40,56 +48,26 @@ use yii\grid\GridView;
                                         return $model->id;
                                     }
                                 ],
+                                'name',
+                                'encoding',
+                                'num',
+                                'create_addtime',
                                 [
-                                    'label' => '分类',
-                                    'value' => function($model){
-                                        return $model->flinktype->typename;
-                                    }
-                                ],
-                                'webname',
-                                'linkurl',
-                                [
-                                    'label' => '网站Logo',
+                                    'attribute' => 'status',
                                     'headerOptions' => [
-                                        'width' => '12%',
+                                        'width' => '8%',
                                         'style'=> 'text-align: center;'
                                     ],
                                     'contentOptions' => ['align'=>'center'],
                                     'format' => 'raw',
                                     'value' => function($model){
-                                        return isset($model->logo) ? '<img src="'.$model->logo.'" width="200" height="30" />' : '--';
-                                    }
-                                ],
-                                [
-                                    'label' => '网站介绍',
-                                    'headerOptions' => [
-                                        'width' => '25%',
-                                        'style'=> 'text-align: center;'
-                                    ],
-                                    'value' => function($model){
-                                        return $model->introduce;
-                                    }
-                                ],
-                                [
-                                    'label' => '显示顺序',
-                                    'headerOptions' => [
-                                        'width' => '8%',
-                                        'style'=> 'text-align: center;'
-                                    ],
-                                    'contentOptions' => ['align'=>'center'],
-                                    'value' => function($model){
-                                        return $model->order;
-                                    }
-                                ],
-                                [
-                                    'label' => '链接状态',
-                                    'headerOptions' => [
-                                        'width' => '8%',
-                                        'style'=> 'text-align: center;'
-                                    ],
-                                    'contentOptions' => ['align'=>'center'],
-                                    'value' => function($model){
-                                        return $model->status == 1 ? '通过' : '待审';
+                                        $status = $model->status == 1 ? true : false;
+                                        return Html::checkbox('status',$status,[
+                                            'lay-skin' => 'switch',
+                                            'lay-filter' => 'status',
+                                            'lay-text' => '启用|禁用',
+                                            'data-url' => \yii\helpers\Url::toRoute(['ajaxstatus','id' => $model->id])
+                                        ]);
                                     }
                                 ],
                                 [
@@ -97,17 +75,26 @@ use yii\grid\GridView;
                                     'class' => 'yii\grid\ActionColumn',
                                     'contentOptions' => ['align'=>'center'],
                                     'headerOptions' => [
-                                        'width' => '8%',
+                                        'width' => '17%',
                                         'style'=> 'text-align: center;'
                                     ],
-                                    'template' =>'{view} {update} {delete}',
+                                    'template' =>'{view} {update} {delete} {test} {start}',
                                     'buttons' => [
+                                        'view' => function ($url){
+                                            return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                                        },
                                         'update' => function ($url) {
                                             return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
                                         },
                                         'delete' => function ($url) {
                                             return Html::a('删除', $url, ['class' => "layui-btn layui-btn-danger layui-btn-xs layui-default-delete"]);
-                                        }
+                                        },
+                                        'test' => function ($url) {
+                                            return Html::a('测试', $url, ['class' => "layui-btn layui-btn-primary layui-btn-xs layui-default-test"]);
+                                        },
+                                        'start' => function ($url) {
+                                            return Html::a('采集', $url, ['class' => "layui-btn layui-btn-warm layui-btn-xs layui-default-collect"]);
+                                        },
                                     ]
                                 ],
                             ],

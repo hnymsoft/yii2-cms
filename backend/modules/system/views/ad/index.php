@@ -29,7 +29,18 @@ use yii\grid\GridView;
                                 'maxButtonCount'=>5,
                             ],
                             'columns' => [
-                                'id',
+                                [
+                                    'label' => 'ID',
+                                    'headerOptions' => [
+                                        'width' => '4%',
+                                        'style'=> 'text-align: center;'
+                                    ],
+                                    'contentOptions' => ['align'=>'center'],
+                                    'format' => 'raw',
+                                    'value' => function($model){
+                                        return $model->id;
+                                    }
+                                ],
                                 [
                                     'label' => '广告位置',
                                     'value' => function($model){
