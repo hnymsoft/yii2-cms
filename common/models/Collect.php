@@ -20,11 +20,12 @@ class Collect extends \yii\db\ActiveRecord
 
     //扩展字段
     //基础
-    public $head = 0;
-    public $reverse = 0;
-    public $is_guard = 0;
-    public $referer;
+    public $is_head = 0;
+    public $is_reverse = 0;
+    public $is_ref = 0;
+    public $is_ref_url;
     public $timeout = 30; //采集超时
+    public $encoding = 0; //默认utf-8
     //列表
     public $list_url;
     public $list_range;
@@ -34,8 +35,8 @@ class Collect extends \yii\db\ActiveRecord
     //内容
     public $content_range;
     public $content_rules_title;
-    public $content_rules_kw;
-    public $content_rules_desc;
+    public $content_rules_kw = 'meta[name=keyword]';
+    public $content_rules_desc = 'meta[name=description]';
     public $content_rules_content;
     public $content_rules_author;
     public $content_rules_source;
@@ -46,6 +47,7 @@ class Collect extends \yii\db\ActiveRecord
     public $content_rules_source_filter;
     public $content_rules_click_filter;
     public $content_rules_addtime_filter;
+    public $is_thumb = 0;
 
     /**
      * Collection constructor.
@@ -74,16 +76,16 @@ class Collect extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'encoding', 'baseconfig', 'listconfig', 'arcconfig', 'status'], 'required'],
-            [['id', 'm_id','status', 'create_addtime', 'update_addtime'], 'integer'],
+            [['id', 'm_id','status', 'create_addtime', 'update_addtime','is_thumb','is_ref','is_head','is_reverse','timeout','encoding'], 'integer'],
             [['baseconfig', 'listconfig', 'arcconfig'], 'string'],
             [['name'], 'string', 'max' => 50],
-            [['encoding', 'create_user', 'update_user'], 'string', 'max' => 10],
+            [['create_user', 'update_user'], 'string', 'max' => 10],
             [['id'], 'unique'],
             //扩展字段
             [['list_url','list_rules_title','list_rules_url','content_rules_title','content_rules_content'],'required'],
             [['list_range','list_rules_thumb','content_range','content_rules_kw','content_rules_desc','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime'],'string','max' => 50],
-            [['referer','list_url'],'url'],
-            [['content_rules_content_filter','content_rules_author_filter','content_rules_source_filter','content_rules_click_filter','content_rules_addtime_filter'],'match','pattern'=>'/^[-].*$/','message'=>'{attribute}必须以"-"开头，多个使用英文逗号分隔开']
+            [['is_ref_url','list_url'],'url'],
+            [['content_rules_content_filter','content_rules_author_filter','content_rules_source_filter','content_rules_click_filter','content_rules_addtime_filter'],'match','pattern'=>'/^[-].*$/','message'=>'{attribute}必须以"-"开头，多个使用空格分隔开']
         ];
     }
 
@@ -103,13 +105,14 @@ class Collect extends \yii\db\ActiveRecord
             'arcconfig' => '内容配置',
             'status' => '状态',
             'create_addtime' => '创建时间',
-            'update_addtime' => '更新时间',
+            'update_addtime' => '最后采集时间',
             'create_user' => '创建用户',
             'update_user' => '更新用户',
             //扩展字段
-            'is_guard' => '防盗链模式',
-            'head' => '移除HEAD',
-            'reverse' => '内容导入顺序',
+            'is_ref' => '防盗链模式',
+            'is_ref_url' => '防盗链模式网址',
+            'is_head' => '移除HEAD',
+            'is_reverse' => '内容导入顺序',
 
             'timeout' => '超时时间',
             'list_range' => '列表采集区域',
@@ -131,7 +134,8 @@ class Collect extends \yii\db\ActiveRecord
             'content_rules_click' => '点击量匹配规则',
             'content_rules_click_filter' => '文章点击量过滤规则',
             'content_rules_addtime' => '发布时间匹配规则',
-            'content_rules_addtime_filter' => '文章发布时间过滤规则'
+            'content_rules_addtime_filter' => '文章发布时间过滤规则',
+            'is_thumb' => '提取缩略图'
         ];
     }
 
@@ -149,7 +153,7 @@ class Collect extends \yii\db\ActiveRecord
     public function afterFind(){
         parent::afterFind();
         $this->create_addtime = date('Y-m-d',$this->create_addtime);
-        $this->update_addtime = date('Y-m-d',$this->update_addtime);
+        //$this->update_addtime = date('Y-m-d',$this->update_addtime);
     }
 
     /**
@@ -158,18 +162,21 @@ class Collect extends \yii\db\ActiveRecord
      */
     public function getConf(){
         $conf['options'] = [
-            'head' => 0, //0 不移除 1 移除
-            'encode' => '',      //utf-8、gb2312、gbk
-            'reverse' => 'desc',   //asc升序   desc降序
-            'referer' => 'http://www.dedecms.com', //引用地址
+            'is_head' => 0, //0 不移除 1 移除
+            'encoding' => '',      //utf-8、gb2312、gbk
+            'is_reverse' => 'desc',   //asc升序   desc降序
+            'is_ref' => 0,
+            '_is_ref_url' => 'http://www.dedecms.com', //引用地址
+            'is_thumb' => 1,
+            'timeout' => 30
         ];
         $conf['list'] = [
-            'url' => 'https://www.xinqii.cn/list/news.html',
-            'range' => '.news-container .wow',
-            'rules' => [
-                'title' => ['.n-right .n-title','text'],
-                'url' => ['a','href'],
-                'thumb' => ['img','src']
+            'list_url' => 'https://www.xinqii.cn/list/news.html',
+            'list_range' => '.news-container .wow',
+            'list_rules' => [
+                'list_rules_title' => ['.n-right .n-title','text'],
+                'list_rules_url' => ['a','href'],
+                'list_rules_thumb' => ['img','src']
             ]
         ];
         $conf['content'] = [
@@ -203,8 +210,8 @@ class Collect extends \yii\db\ActiveRecord
         $args['headers'] = [
             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
         ];
-        if(!empty($options['referer'])){
-            $args['headers']['Referer'] = $options['referer'];
+        if(!empty($options['is_ref_is_ref_url'])){
+            $args['headers']['is_ref_url'] = $options['is_ref_is_ref_url'];
         }
         $this->_query->get($url,[],$args);
         //编码转换
@@ -231,7 +238,7 @@ class Collect extends \yii\db\ActiveRecord
 
                 //img标签本地化处理
                 preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i',$item['content'], $match);
-                foreach($match[1] as $imgurl){
+                foreach($match[1] as $key => $imgurl){
                     $img_url = strpos($imgurl, 'http') !== false ? $imgurl : $domain.$imgurl;
                     $upload = new Uploader($img_url,$config = array(
                         "pathFormat" => "upload/article/{rand:10}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
@@ -241,6 +248,9 @@ class Collect extends \yii\db\ActiveRecord
                     $info = $upload->getFileInfo();
                     $content = $item['content'];
                     if($info['state'] == 'SUCCESS'){
+                        if($options['is_thumb'] && $key == 0){ //是否抓取内容第一张图作为缩略图
+                            $item['thumb'] = '/'.$info['url'];
+                        }
                         $content = str_replace($imgurl,'/'.$info['url'],$item['content']);
                     }
                     $item['content'] = $content;
@@ -259,7 +269,7 @@ class Collect extends \yii\db\ActiveRecord
         })->getData();
 
         //采集顺序
-        if(isset($options['reverse']) && $options['reverse'] == 'desc'){
+        if(isset($options['is_reverse']) && $options['is_reverse'] == 'desc'){
             return $result->reverse()->all();
         }else{
             return $result->all();

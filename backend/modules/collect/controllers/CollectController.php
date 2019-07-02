@@ -72,62 +72,64 @@ class CollectController extends Controller
                 exit('数据填充失败！');
             }
             $baseconfig = [
-                'head' => $model->head,
-                'encode' => $model->encoding,
-                'reverse' => $model->reverse,
-                'is_guard' => $model->is_guard,
-                'referer' => $model->referer,
+                'encoding' => $model->encoding,
+                'is_head' => $model->is_head,
+                'is_reverse' => $model->is_reverse,
+                'is_ref' => $model->is_ref,
+                'is_ref_url' => $model->is_ref_url,
+                'is_thumb' => $model->is_thumb
             ];
             $rule_list = [];
-            if($model->list_rules_title){
-                $rule_list['title'] = [$model->list_rules_title,'text'];
-            }
             if($model->list_rules_url){
-                $rule_list['url'] = [$model->list_rules_url,'href'];
+                $rule_list['list_rules_url'] = [$model->list_rules_url,'href'];
+            }
+            if($model->list_rules_title){
+                $rule_list['list_rules_title'] = [$model->list_rules_title,'text'];
             }
             if($model->list_rules_thumb){
-                $rule_list['thumb'] = [$model->list_rules_thumb,'src'];
+                $rule_list['list_rules_thumb'] = [$model->list_rules_thumb,'src'];
             }
             //列表匹配规则
             $listconfig = [
-                'url' => $model->list_url,
-                'range' => $model->list_range,
-                'rules' => $rule_list
+                'list_url' => $model->list_url,
+                'list_range' => $model->list_range,
+                'list_rules' => $rule_list
             ];
             $rule_content = [];
             if($model->content_rules_title){
-                $rule_content['title'] = [$model->content_rules_title,'text'];
+                $rule_content['content_rules_title'] = [$model->content_rules_title,'text'];
             }
             if($model->content_rules_kw){
-                $rule_content['kw'] = [$model->content_rules_kw,'text'];
+                $rule_content['content_rules_kw'] = [$model->content_rules_kw,'text'];
             }
             if($model->content_rules_desc){
-                $rule_content['desc'] = [$model->content_rules_desc,'text'];
+                $rule_content['content_rules_desc'] = [$model->content_rules_desc,'text'];
             }
             if($model->content_rules_content){
-                $rule_content['content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];
+                $rule_content['content_rules_content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];
             }
             if($model->content_rules_author){
-                $rule_content['author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];
+                $rule_content['content_rules_author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];
             }
             if($model->content_rules_source){
-                $rule_content['source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];
+                $rule_content['content_rules_source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];
             }
             if($model->content_rules_click){
-                $rule_content['click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];
+                $rule_content['content_rules_click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];
             }
             if($model->content_rules_addtime){
-                $rule_content['addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];
+                $rule_content['content_rules_addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];
             }
             //内容匹配规则
             $arcconfig = [
-                'range' => '',
-                'rules' => $rule_content
+                'content_range' => $model->content_range,
+                'content_rules' => $rule_content
             ];
             $model->baseconfig = serialize($baseconfig);
             $model->listconfig = serialize($listconfig);
             $model->arcconfig = serialize($arcconfig);
-            dd($rule_content);
+            $model->create_addtime = GTIME;
+            $model->create_user = Yii::$app->user->identity->username;
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
@@ -146,11 +148,95 @@ class CollectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if(Yii::$app->request->isPost){
+            if(!$model->load(Yii::$app->request->post())){
+                exit('数据填充失败！');
+            }
+            $baseconfig = [
+                'encoding' => $model->encoding,
+                'is_head' => $model->is_head,
+                'is_reverse' => $model->is_reverse,
+                'is_ref' => $model->is_ref,
+                'is_ref_url' => $model->is_ref_url,
+                'is_thumb' => $model->is_thumb
+            ];
+            $rule_list = [];
+            if($model->list_rules_url){
+                $rule_list['list_rules_url'] = [$model->list_rules_url,'href'];
+            }
+            if($model->list_rules_title){
+                $rule_list['list_rules_title'] = [$model->list_rules_title,'text'];
+            }
+            if($model->list_rules_thumb){
+                $rule_list['list_rules_thumb'] = [$model->list_rules_thumb,'src'];
+            }
+            //列表匹配规则
+            $listconfig = [
+                'list_url' => $model->list_url,
+                'list_range' => $model->list_range,
+                'list_rules' => $rule_list
+            ];
+            $rule_content = [];
+            if($model->content_rules_title){
+                $rule_content['content_rules_title'] = [$model->content_rules_title,'text'];
+            }
+            if($model->content_rules_kw){
+                $rule_content['content_rules_kw'] = [$model->content_rules_kw,'text'];
+            }
+            if($model->content_rules_desc){
+                $rule_content['content_rules_desc'] = [$model->content_rules_desc,'text'];
+            }
+            if($model->content_rules_content){
+                $rule_content['content_rules_content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];
+            }
+            if($model->content_rules_author){
+                $rule_content['content_rules_author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];
+            }
+            if($model->content_rules_source){
+                $rule_content['content_rules_source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];
+            }
+            if($model->content_rules_click){
+                $rule_content['content_rules_click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];
+            }
+            if($model->content_rules_addtime){
+                $rule_content['content_rules_addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];
+            }
+            //内容匹配规则
+            $arcconfig = [
+                'content_range' => $model->content_range,
+                'content_rules' => $rule_content
+            ];
+            $model->baseconfig = serialize($baseconfig);
+            $model->listconfig = serialize($listconfig);
+            $model->arcconfig = serialize($arcconfig);
+            $model->update_user = Yii::$app->user->identity->username;
+            if ($model->save(false)) {
+                return $this->redirect(['index']);
+            }
         }
+        $listconfig = unserialize($model->listconfig);
+        $list_rules = $listconfig['list_rules'];
+        foreach ($list_rules as $key => $val){
+            if(isset($val[0])){
+                $listconfig[$key] = $val[0];
+            }
+        }
+        $arcconfig = unserialize($model->arcconfig);
+        $content_rules = $arcconfig['content_rules'];
+        foreach ($content_rules as $key => $val){
+            if(isset($val[0])){
+                $arcconfig[$key] = $val[0];
+            }
+            if(isset($val[2]) && in_array($key,['content_rules_content','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime'])){
+                $filter = $key.'_filter';
+                $arcconfig[$filter] = $val[2];
+            }
+        }
+        unset($listconfig['list_rules'],$arcconfig['content_rules']);
 
+        $baseconfig = unserialize($model->baseconfig);
+        $attr = array_merge($baseconfig,$listconfig,$arcconfig);
+        $model->attributes = $attr;
         return $this->render('update', [
             'model' => $model,
         ]);

@@ -49,9 +49,33 @@ $this->params['breadcrumbs'][] = $this->title;
                                     }
                                 ],
                                 'name',
-                                'encoding',
-                                'num',
+                                [
+                                    'attribute' => 'encoding',
+                                    'value' => function($model){
+                                        switch ($model->encoding){
+                                            case 0:
+                                                $encode = 'UTF-8';
+                                                break;
+                                            case 1:
+                                                $encode = 'GB2312';
+                                                break;
+                                            case 2:
+                                                $encode = 'BIG-5';
+                                                break;
+                                            default:
+                                                $encode = '未知';
+                                                break;
+                                        }
+                                        return $encode;
+                                    }
+                                ],
                                 'create_addtime',
+                                [
+                                        'attribute' => 'update_addtime',
+                                        'value' => function($model){
+                                            return $model->update_addtime > 0 ? date('Y-m-d H:i:s',$model->update_addtime) : '--';
+                                        }
+                                ],
                                 [
                                     'attribute' => 'status',
                                     'headerOptions' => [
