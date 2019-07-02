@@ -96,4 +96,10 @@ class ToolsController extends Controller
 
 		return $this->render('ico');
 	}
+
+	public function actionJqdoc(){
+        $this->layout = '@backend/views/layouts/main-index2';
+
+        return $this->render('jqdoc');
+    }
 }

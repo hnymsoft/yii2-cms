@@ -24,7 +24,7 @@ class Collect extends \yii\db\ActiveRecord
     public $reverse = 0;
     public $is_guard = 0;
     public $referer;
-    public $timeout = 10;
+    public $timeout = 30; //采集超时
     //列表
     public $list_url;
     public $list_range;
@@ -41,6 +41,11 @@ class Collect extends \yii\db\ActiveRecord
     public $content_rules_source;
     public $content_rules_click;
     public $content_rules_addtime;
+    public $content_rules_content_filter;
+    public $content_rules_author_filter;
+    public $content_rules_source_filter;
+    public $content_rules_click_filter;
+    public $content_rules_addtime_filter;
 
     /**
      * Collection constructor.
@@ -68,15 +73,17 @@ class Collect extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'encoding', 'baseconfig', 'listconfig', 'arcconfig', 'status', 'create_addtime', 'update_addtime', 'create_user', 'update_user'], 'required'],
-            [['id', 'm_id', 'num', 'status', 'create_addtime', 'update_addtime'], 'integer'],
+            [['name', 'encoding', 'baseconfig', 'listconfig', 'arcconfig', 'status'], 'required'],
+            [['id', 'm_id','status', 'create_addtime', 'update_addtime'], 'integer'],
             [['baseconfig', 'listconfig', 'arcconfig'], 'string'],
             [['name'], 'string', 'max' => 50],
             [['encoding', 'create_user', 'update_user'], 'string', 'max' => 10],
             [['id'], 'unique'],
             //扩展字段
             [['list_url','list_rules_title','list_rules_url','content_rules_title','content_rules_content'],'required'],
-            [['referer','list_url','list_rules_url'],'url']
+            [['list_range','list_rules_thumb','content_range','content_rules_kw','content_rules_desc','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime'],'string','max' => 50],
+            [['referer','list_url'],'url'],
+            [['content_rules_content_filter','content_rules_author_filter','content_rules_source_filter','content_rules_click_filter','content_rules_addtime_filter'],'match','pattern'=>'/^[-].*$/','message'=>'{attribute}必须以"-"开头，多个使用英文逗号分隔开']
         ];
     }
 
@@ -116,10 +123,15 @@ class Collect extends \yii\db\ActiveRecord
             'content_rules_kw' => '关键词匹配规则',
             'content_rules_desc' => '描述匹配规则',
             'content_rules_content' => '内容匹配规则',
+            'content_rules_content_filter' => '文章内容过滤规则',
             'content_rules_author' => '作者匹配规则',
+            'content_rules_author_filter' => '文章作者过滤规则',
             'content_rules_source' => '来源匹配规则',
+            'content_rules_source_filter' => '文章来源过滤规则',
             'content_rules_click' => '点击量匹配规则',
+            'content_rules_click_filter' => '文章点击量过滤规则',
             'content_rules_addtime' => '发布时间匹配规则',
+            'content_rules_addtime_filter' => '文章发布时间过滤规则'
         ];
     }
 
@@ -166,7 +178,7 @@ class Collect extends \yii\db\ActiveRecord
                 'title' => ['.newscontentbox h4','text'],
                 'kw' => ['meta[name=keywords]','content'],
                 'desc' => ['meta[name=description]','content'],
-                'content' => ['.newscontentbox .article-content','html'],
+                'content' => ['.newscontentbox .article-content','html','-img -div'],
                 'author' => ['author','text'],
                 'source' => ['source','text'],
                 'click' => ['.article-tags span:eq(1)','text'],

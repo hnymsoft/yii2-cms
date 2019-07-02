@@ -3,10 +3,9 @@
 .layui-layout-admin .layui-header .layui-nav{height: 60px;}
 .layui-layout-admin .layui-footer{background: #e8eaec;z-index: 999;}
 .layui-layout-admin .layui-body{z-index: 999;}
-
 .form-box-dialog .hint-block,.form-box-dialog .help-block{float: left;}
-
 .layui-colorpicker{position: relative;top:1px;left:-46px;border:0;}
+.layui-form-select dl{z-index: 1000}
 
 /*左侧导航重定义*/
 .layui-nav-item a cite{ padding:0 5px; }

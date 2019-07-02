@@ -2,10 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Collect */
-/* @var $form yii\widgets\ActiveForm */
+$this->registerJs($this->render('js/_script.js'));
 ?>
 
 <div class="form-box-dialog">
@@ -41,11 +38,16 @@ use yii\widgets\ActiveForm;
     }])?>
     <?= $form->field($model, 'timeout')->textInput(['maxlength' => true,'class' => 'layui-input']) ?>
 
+    <blockquote class="layui-elem-quote">
+        备注：
+        <br>下方所有匹配规则、过滤规则，均支持Jquery语法。详情请点击 <a href="javascript:;" id="open-jqdoc">Jquery参考</a>。过滤某元素前加‘-’号，多个过滤规则使用英文逗号分隔开。
+    </blockquote>
+
     <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0">
         <legend>列表区域匹配规则</legend>
     </fieldset>
 
-    <?= $form->field($model, 'list_url')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'请输入采集网址 例：http://www.baidu.com/news/list.htm']) ?>
+    <?= $form->field($model, 'list_url')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'请输入采集网址 例：http://www.xxx.com/news/list.htm']) ?>
     <?= $form->field($model, 'list_range')->textarea(['row' => 6,'class' => 'layui-textarea','placeholder'=>'例：.list_arc li'])?>
     <?= $form->field($model, 'list_rules_title')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：h2 a'])?>
     <?= $form->field($model, 'list_rules_url')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：h2 a'])?>
@@ -54,15 +56,35 @@ use yii\widgets\ActiveForm;
     <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0">
         <legend>文章网址匹配规则</legend>
     </fieldset>
-
+    <?= $form->field($model, 'content_range')->textarea(['row' => 6,'class' => 'layui-textarea','placeholder'=>'例：.content_arc'])?>
     <?= $form->field($model, 'content_rules_title')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：h1.subject'])?>
     <?= $form->field($model, 'content_rules_kw')->textarea(['row'=>6,'class' => 'layui-textarea','placeholder'=>'例：meta[name=keyword]'])?>
     <?= $form->field($model, 'content_rules_desc')->textarea(['row'=>6,'class' => 'layui-textarea','placeholder'=>'例：meta[name=description]'])?>
-    <?= $form->field($model, 'content_rules_content')->textarea(['row'=>6,'class' => 'layui-textarea','placeholder'=>'例：div.arc_content'])?>
-    <?= $form->field($model, 'content_rules_author')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.author'])?>
-    <?= $form->field($model, 'content_rules_source')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.source'])?>
-    <?= $form->field($model, 'content_rules_click')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.click'])?>
-    <?= $form->field($model, 'content_rules_addtime')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.datetime'])?>
+    <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0;">
+        <legend style="font-size: 16px;">文章内容</legend>
+    </fieldset>
+    <?= $form->field($model, 'content_rules_content')->textarea(['row'=>6,'class' => 'layui-textarea','placeholder'=>'例：div.arc_content'])->label('匹配规则')?>
+    <?= $form->field($model, 'content_rules_content_filter')->textarea(['row'=>6,'class' => 'layui-textarea','placeholder'=>'例：-div strong,-div small'])->label('过滤规则')?>
+    <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0;">
+        <legend style="font-size: 16px;">文章作者</legend>
+    </fieldset>
+    <?= $form->field($model, 'content_rules_author')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.author'])->label('匹配规则')?>
+    <?= $form->field($model, 'content_rules_author_filter')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：-div strong,-div small'])->label('过滤规则')?>
+    <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0;">
+        <legend style="font-size: 16px;">文章来源</legend>
+    </fieldset>
+    <?= $form->field($model, 'content_rules_source')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.source'])->label('匹配规则')?>
+    <?= $form->field($model, 'content_rules_source_filter')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：-div strong,-div small'])->label('过滤规则')?>
+    <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0;">
+        <legend style="font-size: 16px;">文章点击量</legend>
+    </fieldset>
+    <?= $form->field($model, 'content_rules_click')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.click'])->label('匹配规则')?>
+    <?= $form->field($model, 'content_rules_click_filter')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：-div strong,-div small'])->label('过滤规则')?>
+    <fieldset class="layui-elem-field layui-field-title" style="margin:30px 0;">
+        <legend style="font-size: 16px;">文章发布时间</legend>
+    </fieldset>
+    <?= $form->field($model, 'content_rules_addtime')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：div h2 span.datetime'])->label('匹配规则')?>
+    <?= $form->field($model, 'content_rules_addtime_filter')->textInput(['maxlength' => true,'class' => 'layui-input','placeholder'=>'例：-div strong,-div small'])->label('过滤规则')?>
     <div class='layui-form-item'>
         <div class="layui-form-label" style="width: 120px;"></div>
         <div class="layui-input-block" style="margin-left: 150px;">
