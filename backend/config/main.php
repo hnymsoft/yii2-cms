@@ -25,12 +25,16 @@ return [
         'core' => [
             'class' => 'core\Module',
         ],
+        'collect' => [
+            'class' => 'collect\Module',
+        ],
     ],
     "aliases" => [
         '@rbac' => '@backend/modules/rbac',
         '@system' => '@backend/modules/system',
         '@member' => '@backend/modules/member',
         '@core' => '@backend/modules/core',
+        '@collect' => '@backend/modules/collect',
     ],
     'components' => [
         'request' => [

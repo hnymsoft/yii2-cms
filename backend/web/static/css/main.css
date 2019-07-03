@@ -112,6 +112,6 @@
 .box-body{background: #F2F2F2;padding-top: 15px;padding-bottom: 15px;}
 #main-tab ul.layui-tab-title li{font-size: 15px;}
 .layui-table .layui-form-checkbox[lay-skin=primary]{padding-left: 0;}
-.layui-table .layui-form-checkbox[lay-skin=primary] i{width: 13px;height: 13px;}
+.layui-table .layui-form-checkbox[lay-skin=primary] i{width: 16px;height: 16px;}
 .layui-form-item.has-error .hint-block{display: none;}
 .layui-nav-tree .layui-nav-item a{cursor: pointer}

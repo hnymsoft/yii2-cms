@@ -23,3 +23,7 @@ a.layui-btn.prev{margin:12px 0;}
 .form-box-dialog .help-block,.form-box-dialog .hint-block{position: relative;top:6px;color: #f00;}
 .layui-form-item .layui-input-inline.cal{position: relative;}
 .layui-form-item .layui-input-inline.cal .cus{position: absolute;top:10px;right:10px;font-size: 18px;}
+
+/*采集进度*/
+.collect-progress{width:100%;margin: 15px auto 50px;display: none;}
+.collect-progress .subject{text-align: center;line-height: 40px;}

@@ -21,5 +21,4 @@ layui.config({
             $("#collect-is_ref_url").val('');
         }
     });
-		
 });

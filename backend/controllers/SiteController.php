@@ -1,6 +1,6 @@
 <?php
 namespace backend\controllers;
-use common\models\Collection;
+use common\models\Collect;
 use GuzzleHttp\Client;
 use QL\Ext\AbsoluteUrl;
 use QL\QueryList;
@@ -83,17 +83,16 @@ class SiteController extends BaseController
      * 测试用
      */
     public function actionTest(){
-
-        $query = new Collection();
+        $query = new Collect();
         $conf = $query->getConf();
-        $list = $query->getCollectionData($conf['url'],$conf['list'],$conf['options']);
+        $list = $query->getCollectionData($conf['list']['url'],$conf['list'],$conf['options']);
         if(!$list){
             return ajaxReturnFailure('暂无采集数据！');
         }
         foreach ($list as $key => $val){
-            $content[$key] = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
+            $data[$key] = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
         }
-        dd($content);
+        dd($data);
     }
 
 

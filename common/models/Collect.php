@@ -160,38 +160,16 @@ class Collect extends \yii\db\ActiveRecord
      * 配置信息
      * @return mixed
      */
-    public function getConf(){
-        $conf['options'] = [
-            'is_head' => 0, //0 不移除 1 移除
-            'encoding' => '',      //utf-8、gb2312、gbk
-            'is_reverse' => 'desc',   //asc升序   desc降序
-            'is_ref' => 0,
-            '_is_ref_url' => 'http://www.dedecms.com', //引用地址
-            'is_thumb' => 1,
-            'timeout' => 30
-        ];
-        $conf['list'] = [
-            'list_url' => 'https://www.xinqii.cn/list/news.html',
-            'list_range' => '.news-container .wow',
-            'list_rules' => [
-                'list_rules_title' => ['.n-right .n-title','text'],
-                'list_rules_url' => ['a','href'],
-                'list_rules_thumb' => ['img','src']
-            ]
-        ];
-        $conf['content'] = [
-            'range' => '',
-            'rules' => [
-                'title' => ['.newscontentbox h4','text'],
-                'kw' => ['meta[name=keywords]','content'],
-                'desc' => ['meta[name=description]','content'],
-                'content' => ['.newscontentbox .article-content','html','-img -div'],
-                'author' => ['author','text'],
-                'source' => ['source','text'],
-                'click' => ['.article-tags span:eq(1)','text'],
-                'addtime' => ['.article-tags span:eq(0)','text']
-            ]
-        ];
+    public function getConf($id = 0){
+        $model = Collect::findOne(['id'=>$id,'status'=>1]);
+        if(!$model){
+            return ajaxReturnFailure('采集信息不存在！');
+        }
+        $conf['options'] = unserialize($model->baseconfig);
+        $conf['options'] = array_merge($conf['options'],['subject'=>$model->name]);
+
+        $conf['list'] = unserialize($model->listconfig);
+        $conf['content'] = unserialize($model->arcconfig);
         return $conf;
     }
 
@@ -210,8 +188,8 @@ class Collect extends \yii\db\ActiveRecord
         $args['headers'] = [
             'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36',
         ];
-        if(!empty($options['is_ref_is_ref_url'])){
-            $args['headers']['is_ref_url'] = $options['is_ref_is_ref_url'];
+        if(isset($options['is_ref']) && $options['is_ref'] == 1){
+            $args['headers']['HTTP_REFERER'] = $options['is_ref_url'];
         }
         $this->_query->get($url,[],$args);
         //编码转换
@@ -229,7 +207,8 @@ class Collect extends \yii\db\ActiveRecord
             //相对链接改为绝对链接
             if(isset($item['url']) && !preg_match("/^(http:\/\/|https:\/\/).*$/",$item['url'])){
                 $item['url'] = "{$domain}{$item['url']}";
-            }elseif(isset($item['content'])){
+            }
+            if(isset($item['content'])){
                 //a标签外部链接替换
                 preg_match_all('/<a .*?href="(.*?)".*?>/is',$item['content'],$match);
                 foreach ($match[1] as $aurl){
@@ -258,10 +237,12 @@ class Collect extends \yii\db\ActiveRecord
 
                 //详情路径
                 $item['url'] = $url;
-            }elseif(isset($item['datetime'])){
-                preg_match("'\d{4}[/-]\d{1,2}[/-]\d{1,2} (\d{1,2}\:\d{1,2}\:\d{1,2})?'is",trim($item['datetime']),$match);
-                $item['datetime'] = isset($match[0]) ? $match[0] : date('Y-m-d H:i:s');
-            }elseif (isset($item['click'])){
+            }
+            if(!empty($item['addtime'])){
+                preg_match("'\d{4}[/-]\d{1,2}[/-]\d{1,2} (\d{1,2}\:\d{1,2}\:\d{1,2})?'is",trim($item['addtime']),$match);
+                $item['addtime'] = isset($match[0]) ? $match[0] : date('Y-m-d H:i:s');
+            }
+            if (isset($item['click'])){
                 preg_match("/\d/",$item['click'],$match);
                 $item['click'] = isset($item['click']) ? $match[0] : 0;
             }
