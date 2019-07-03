@@ -2,12 +2,11 @@
 
 namespace collect\controllers;
 
+use backend\controllers\BaseController;
 use common\models\CollectHtml;
-use PHPUnit\Util\Json;
 use Yii;
 use common\models\Collect;
 use common\models\searchs\Collect as CollectSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -15,7 +14,7 @@ use yii\filters\VerbFilter;
  * Class CollectController
  * @package collect\controllers
  */
-class CollectController extends Controller
+class CollectController extends BaseController
 {
     private $_cache = null;
 
@@ -31,6 +30,7 @@ class CollectController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    //'start' => ['POST']
                 ],
             ],
         ];
@@ -73,6 +73,7 @@ class CollectController extends Controller
     /**
      * 添加
      * @return string|\yii\web\Response
+     * @throws \yii\db\Exception
      */
     public function actionCreate()
     {
@@ -229,8 +230,6 @@ class CollectController extends Controller
      * @param $id
      * @return \yii\web\Response
      * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -241,6 +240,7 @@ class CollectController extends Controller
 
     /**
      * 测试采集
+     * @param int $id
      * @return string
      */
     public function actionTest($id = 0){
@@ -268,28 +268,43 @@ class CollectController extends Controller
      * @param int $id
      * @return string
      */
-    public function actionStart($id = 0){
+    public function actionInitcollect($id){
         if(!$id){
             return ajaxReturnFailure('参数不能为空');
         }
-        //采集内容
-        if(Yii::$app->request->isPost){
-            $query = new Collect();
-            $conf = $query->getConf($id);
-            $list = CollectHtml::find()->select('id,c_id,title,url')->where(['c_id'=>$id,'is_down'=>0,'is_export'=>0])->asArray()->all();
-            if(!$list){
-                return ajaxReturnFailure('暂无数据，请更新种子列表！');
-            }
-            $data = [];
-            foreach ($list as $key => $val){
-                $data[$key] = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
-            }
-            dd($data);
-        }
-
-        return $this->render('start',[
+        return $this->render('initcollect',[
             'id' => $id
         ]);
+    }
+
+    /**
+     * 采集内容入库
+     * @param $id
+     * @return string
+     */
+    public function actionStart($id){
+        set_time_limit(0);
+        if(!$id){
+            return ajaxReturnFailure('参数不能为空');
+        }
+        $query = new Collect();
+        $conf = $query->getConf($id);
+        $list = CollectHtml::find()->select('id,c_id,title,url')->where(['c_id'=>$id,'is_down'=>0])->asArray()->all();
+        if(!$list){
+            return ajaxReturnFailure('暂无数据，请更新种子列表！');
+        }
+        $count = count($list);
+        $succ_num = $err_num = 0;
+        foreach ($list as $key => $val){
+            $data = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
+            if($data){
+                $res = CollectHtml::updateAll(['is_down'=>1,'content'=>serialize($data)],['id'=>$val['id'],'is_down'=>0]);
+                ($res) ? $succ_num++ : $err_num++;
+            }else{
+                $err_num++;
+            }
+        }
+        return ajaxReturnSuccess("共入库{$count}条数据，成功{$succ_num}条，失败{$err_num}条！");
     }
 
     /**
@@ -306,7 +321,7 @@ class CollectController extends Controller
             ->alias('ch')
             ->select('c.name,ch.*')
             ->leftJoin(Collect::tableName().' as c','c.id = ch.c_id')
-            ->where(['c_id'=>$id,'is_down'=>0,'is_export'=>0])->asArray()->all();
+            ->where(['c_id'=>$id])->asArray()->all();
         return json_encode([
             'code' => 0,
             'subject' => $model->name,
@@ -316,12 +331,15 @@ class CollectController extends Controller
 
     /**
      * 删除采集列表（Ajax）
+     * @param int $id
+     * @param int $ids
+     * @return string
      */
     public function actionAjaxcollectdel($id = 0,$ids = 0){
         if(!$ids){
             return ajaxReturnFailure('参数不能为空');
         }
-        $res = CollectHtml::deleteAll("id in({$ids}) AND is_down = 0 AND is_export = 0");
+        $res = CollectHtml::deleteAll("id in({$ids})");
         if($res){
             return ajaxReturnSuccess('删除成功');
         }
@@ -343,6 +361,22 @@ class CollectController extends Controller
             return ajaxReturnSuccess('刷新成功');
         }
         return ajaxReturnFailure($res['message']);
+    }
+
+    /**
+     * 获取入库数据百分比
+     * @param int $id
+     * @return string
+     */
+    public function actionAjaxcollectstatus($id = 0){
+        set_time_limit(0);
+        if(!$id){
+            return ajaxReturnFailure('参数不能为空');
+        }
+        $total = CollectHtml::find()->where(['c_id'=>$id])->count();
+        $total_already = CollectHtml::find()->where(['c_id'=>$id,'is_down'=>1])->count();
+        $persent = ($total_already / $total) * 100;
+        return ajaxReturnSuccess('一切正常',ceil($persent));
     }
 
     /**

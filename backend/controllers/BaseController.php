@@ -22,7 +22,8 @@ class BaseController extends Controller
     public function beforeAction($action) {
         $currentaction = $action->id;
         $novalidactions = [
-            'checkpassword'
+            'checkpassword',
+            'start'
         ];
         if(in_array($currentaction,$novalidactions)) {
             $action->controller->enableCsrfValidation = false;

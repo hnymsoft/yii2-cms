@@ -19,17 +19,19 @@ use yii\helpers\Html;
                         </table>
                         <div class="search-box" style="text-align: center">
                             <div class="layui-inline btn-group">
-                                <?= Html::button('开始采集网页',['class'=>'layui-btn','id'=>'startCollect'])?>
+                                <?= Html::button('开始采集网页',['class'=>'layui-btn','id'=>'startCollect','style'=>'display:none'])?>
                                 <?= Html::button('<i class="layui-icon layui-icon-refresh-3 layui-anim"></i>更新种子网址',['class'=>'layui-btn layui-btn-primary','id'=>'refreshCollect'])?>
                             </div>
                         </div>
                         <div class="collect-progress">
-                            <div class="subject layui-text">完成当前任务的：</div>
-                            <div class="layui-progress layui-progress-big" lay-showPercent="true">
-                                <div class="layui-progress-bar layui-bg-orange" lay-percent="80%"></div>
+                            <div class="subject layui-text">完成当前任务的：<span class="progress"></span></div>
+                            <div class="layui-progress layui-progress-big" lay-showPercent="true" lay-filter="collect">
+                                <div class="layui-progress-bar layui-bg-orange" lay-percent="0%"></div>
                             </div>
                         </div>
-                        <table class="layui-hide" id="collect_list" lay-filter="collect"></table>
+                        <div class="collect-list">
+                            <table class="layui-hide" id="collect_list" lay-filter="collect"></table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,17 +46,20 @@ use yii\helpers\Html;
 </script>
 
 <?php
+$collect_start_url = \yii\helpers\Url::toRoute(['start','id'=>$id]);
 $collect_list_url = \yii\helpers\Url::toRoute(['ajaxcollectlist','id'=>$id]);
 $collect_del_url = \yii\helpers\Url::toRoute(['ajaxcollectdel','id'=>$id]);
 $collect_ref_url = \yii\helpers\Url::toRoute(['ajaxcollectref','id'=>$id]);
+$collect_status_url = \yii\helpers\Url::toRoute(['ajaxcollectstatus','id'=>$id]);
 $js = <<<JS
 layui.config({
 	base : "js/"
-}).use(['form','layer','jquery','table'],function(){
+}).use(['form','layer','jquery','table','element'],function(){
 	var form = layui.form,
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		$ = layui.jquery
-        ,table = layui.table;
+        ,table = layui.table
+        ,element = layui.element;
 	
     table.render({
         id:'collect'
@@ -73,6 +78,9 @@ layui.config({
         ,done: function(res){
             $("#subject").text(res.subject);
             $("#num").text("共 "+res.data.length+" 个种子网址");
+            if(res.data.length > 0){
+                $("#startCollect").show();
+            }
           }
     });
     
@@ -127,6 +135,48 @@ layui.config({
             $(_this).removeClass('layui-btn-disabled').find('i').removeClass('layui-anim-rotate layui-anim-loop');
         });
     })
+
+    //采集
+    $('body').on('click','#startCollect',function() {
+        $('#startCollect,#refreshCollect').addClass('layui-btn-disabled');
+        $('.collect-progress').show();     
+              
+        $.post('$collect_start_url',function(data,status ,xhr){                       
+            if(data.status){
+                $('.collect-progress .subject').html(data.message);
+            }else{
+                layer.msg(data.message);
+            }
+            $('#startCollect,#refreshCollect').removeClass('layui-btn-disabled');
+        },"json").fail(function(a,b,c){
+            if(a.status==403){
+                layer.msg('没有权限');
+            }else{
+                layer.msg('系统错误');
+            }
+            $('#startCollect,#refreshCollect').removeClass('layui-btn-disabled');
+        });
+    })
+    
+    var t = setInterval(function() {
+      $.ajax({
+            async:false,
+            url:'$collect_status_url',
+            type:"get",
+            dataType:"json",
+            success:function(res){
+                $('.progress').html(res.data+'%');
+                element.progress('collect', res.data+'%');    
+            },
+            error:function(a,b,c){
+                if(a.status==403){
+                    layer.msg('没有权限');
+                }else{
+                    layer.msg('系统错误');
+                }
+            }
+        });   
+    },3000)
 });
 JS;
 $this->registerJs($js);

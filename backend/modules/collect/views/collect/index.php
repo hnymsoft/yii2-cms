@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'width' => '17%',
                                         'style'=> 'text-align: center;'
                                     ],
-                                    'template' =>'{view} {update} {delete} {test} {start}',
+                                    'template' =>'{view} {update} {delete} {test} {initcollect}',
                                     'buttons' => [
                                         'view' => function ($url){
                                             return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'test' => function ($url) {
                                             return Html::a('测试', $url, ['class' => "layui-btn layui-btn-primary layui-btn-xs layui-default-test"]);
                                         },
-                                        'start' => function ($url) {
+                                        'initcollect' => function ($url) {
                                             return Html::a('采集', $url, ['class' => "layui-btn layui-btn-warm layui-btn-xs layui-default-collect"]);
                                         },
                                     ]
