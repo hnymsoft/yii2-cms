@@ -2,13 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\searchs\Collect */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Collects';
-$this->params['breadcrumbs'][] = $this->title;
+$this->registerJs($this->render('js/_script.js'));
 ?>
 <div class="layui-fluid">
     <div class="layui-card">
@@ -69,13 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return $encode;
                                     }
                                 ],
+                                'num',
                                 'create_addtime',
-                                [
-                                        'attribute' => 'update_addtime',
-                                        'value' => function($model){
-                                            return $model->update_addtime > 0 ? date('Y-m-d H:i:s',$model->update_addtime) : '--';
-                                        }
-                                ],
+                                'update_addtime',
                                 [
                                     'attribute' => 'status',
                                     'headerOptions' => [
@@ -99,13 +89,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'class' => 'yii\grid\ActionColumn',
                                     'contentOptions' => ['align'=>'center'],
                                     'headerOptions' => [
-                                        'width' => '17%',
+                                        'width' => '19%',
                                         'style'=> 'text-align: center;'
                                     ],
-                                    'template' =>'{view} {update} {delete} {test} {initcollect}',
+                                    'template' =>'{view} {update} {delete} {test} {initcollect} {storage}',
                                     'buttons' => [
-                                        'view' => function ($url){
-                                            return Html::a('查看', $url, ['class' => "layui-btn layui-btn-xs layui-default-view"]);
+                                        'view' => function ($url, $model, $key){
+                                            return Html::a('查看', \yii\helpers\Url::toRoute(['collecthtml/index','c_id'=>$model->id]), ['class' => "layui-btn layui-btn-primary layui-btn-xs layui-default-view"]);
                                         },
                                         'update' => function ($url) {
                                             return Html::a('编辑', $url, ['class' => "layui-btn layui-btn-normal layui-btn-xs layui-default-update"]);
@@ -119,6 +109,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'initcollect' => function ($url) {
                                             return Html::a('采集', $url, ['class' => "layui-btn layui-btn-warm layui-btn-xs layui-default-collect"]);
                                         },
+                                        'storage' => function ($url, $model, $key) {
+                                            return Html::a('入库', \yii\helpers\Url::toRoute(['collecthtml/pushindex','c_id'=>$model->id]), ['class' => "layui-btn layui-btn-xs layui-default-collect"]);
+                                        }
                                     ]
                                 ],
                             ],

@@ -104,13 +104,14 @@ class CollectController extends BaseController
             ];
             $rule_content = [];
             if($model->content_rules_title){$rule_content['title'] = [$model->content_rules_title,'text'];}
-            if($model->content_rules_kw){$rule_content['keyword'] = [$model->content_rules_kw,'text'];}
-            if($model->content_rules_desc){$rule_content['describtion'] = [$model->content_rules_desc,'text'];}
+            if($model->content_rules_kw){$rule_content['keywords'] = [$model->content_rules_kw,'text'];}
+            if($model->content_rules_desc){$rule_content['description'] = [$model->content_rules_desc,'text'];}
             if($model->content_rules_content){$rule_content['content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];}
             if($model->content_rules_author){$rule_content['author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];}
             if($model->content_rules_source){$rule_content['source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];}
             if($model->content_rules_click){$rule_content['click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];}
-            if($model->content_rules_addtime){$rule_content['addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];}
+            if($model->content_rules_addtime){$rule_content['create_addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];}
+            if($model->content_rules_thumb){$rule_content['thumb'] = [$model->content_rules_addtime,'text'];}
             //内容匹配规则
             $arcconfig = [
                 'range' => $model->content_range,
@@ -167,13 +168,14 @@ class CollectController extends BaseController
             ];
             $rule_content = [];
             if($model->content_rules_title){$rule_content['title'] = [$model->content_rules_title,'text'];}
-            if($model->content_rules_kw){$rule_content['kw'] = [$model->content_rules_kw,'text'];}
-            if($model->content_rules_desc){$rule_content['desc'] = [$model->content_rules_desc,'text'];}
+            if($model->content_rules_kw){$rule_content['keywords'] = [$model->content_rules_kw,'text'];}
+            if($model->content_rules_desc){$rule_content['description'] = [$model->content_rules_desc,'text'];}
             if($model->content_rules_content){$rule_content['content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];}
             if($model->content_rules_author){$rule_content['author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];}
             if($model->content_rules_source){$rule_content['source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];}
             if($model->content_rules_click){$rule_content['click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];}
-            if($model->content_rules_addtime){$rule_content['addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];}
+            if($model->content_rules_addtime){$rule_content['create_addtime'] = [$model->content_rules_addtime,'text',$model->content_rules_addtime_filter];}
+            if($model->content_rules_thumb){$rule_content['thumb'] = [$model->content_rules_addtime,'text'];}
             //内容匹配规则
             $arcconfig = [
                 'range' => $model->content_range,
@@ -242,17 +244,20 @@ class CollectController extends BaseController
             return ajaxReturnFailure('参数不能为空');
         }
         $query = new Collect();
-        $conf = $query->getConf($id);
-        $list = $query->getCollectionData($conf['list']['list_url'],$conf['list'],$conf['options']);
+        $conf = json_decode($query->getConf($id),true);
+        if(!$conf['status']){
+            return ajaxReturnFailure($conf['message']);
+        }
+        $list = $query->getCollectionData($conf['data']['list']['list_url'],$conf['data']['list'],$conf['data']['options']);
         if(!$list){
             return ajaxReturnFailure('暂无采集数据！');
         }
         $data = [];
         foreach ($list as $key => $val){
-            $data[$key] = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
+            $data[$key] = $query->getCollectionData($val['url'],$conf['data']['content'],$conf['data']['options']);
         }
         return $this->render('test',[
-            'subject' => $conf['options']['subject'],
+            'subject' => $conf['data']['options']['subject'],
             'data' => $data
         ]);
     }
@@ -289,9 +294,12 @@ class CollectController extends BaseController
         $count = count($list);
         $succ_num = $err_num = 0;
         $query = new Collect();
-        $conf = $query->getConf($id);
+        $conf = json_decode($query->getConf($id),true);
+        if(!$conf['status']){
+            return ajaxReturnFailure($conf['message']);
+        }
         foreach ($list as $key => $val){
-            $data = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
+            $data = $query->getCollectionData($val['url'],$conf['data']['content'],$conf['data']['options']);
             if($data){
                 $res = CollectHtml::updateAll(['is_down'=>1,'content'=>serialize($data)],['id'=>$val['id'],'is_down'=>0]);
                 ($res) ? $succ_num++ : $err_num++;
@@ -372,6 +380,26 @@ class CollectController extends BaseController
         $total_already = CollectHtml::find()->where(['c_id'=>$id,'is_down'=>1])->count();
         $persent = ($total_already / $total) * 100;
         return ajaxReturnSuccess('一切正常',ceil($persent));
+    }
+
+    /**
+     * 状态编辑
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAjaxstatus($id){
+        $status = Yii::$app->request->post();
+        if($status && in_array($status,[0,1])){
+            return ajaxReturnFailure('参数错误');
+        }
+        $model = $this->findModel($id);
+        unset($model->create_addtime,$model->update_addtime);
+        $model->load($status,'');
+        if($model->load($status,'') && $model->save(false)){
+            return ajaxReturnSuccess('状态编辑成功');
+        }
+        return ajaxReturnFailure('状态编辑失败');
     }
 
     /**

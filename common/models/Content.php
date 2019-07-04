@@ -10,6 +10,8 @@ use Yii;
  */
 class Content extends BaseModel
 {
+    public $seconds = 3; //针对采集数据每批次导入的条数
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +36,9 @@ class Content extends BaseModel
             [['thumb'], 'string', 'max' => 80],
             [['author'], 'string', 'max' => 20],
             [['id'], 'unique'],
+            //扩展字段
+            [['seconds'],'required'],
+            [['seconds'],'integer'],
         ];
     }
 
@@ -65,6 +70,8 @@ class Content extends BaseModel
             'pubdate_addtime' => '发布时间',
             'create_user' => '添加操作人',
             'update_user' => '更新操作人',
+
+            'seconds' => '入库间隔秒数'
         ];
     }
 

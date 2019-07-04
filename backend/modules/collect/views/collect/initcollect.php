@@ -157,8 +157,6 @@ layui.config({
             error:function(a,b,c){
                 if(a.status==403){
                     layer.msg('没有权限');
-                }else{
-                    layer.msg('系统错误');
                 }
             }
         });   

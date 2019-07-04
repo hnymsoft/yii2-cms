@@ -98,9 +98,11 @@ class ContentController extends BaseController
                     $attachTableModel->p_id = $model->p_id;
                     //附加表动态赋值
                     if(post('AttachTable')){
-                        foreach (post('AttachTable') AS $key => $val){
-                            $attachTableModel->{$key} = $val;
-                        }
+//                        foreach (post('AttachTable') AS $key => $val){
+//                            $attachTableModel->{$key} = $val;
+//                        }
+                        //动态赋值，使用非安全属性
+                        $attachTableModel->setAttributes(post('AttachTable'),false);
                     }
                     if($attachTableModel->save(false)){
                         $transaction->commit();

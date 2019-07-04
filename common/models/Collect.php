@@ -42,6 +42,7 @@ class Collect extends \yii\db\ActiveRecord
     public $content_rules_source;
     public $content_rules_click;
     public $content_rules_addtime;
+    public $content_rules_thumb;
     public $content_rules_content_filter;
     public $content_rules_author_filter;
     public $content_rules_source_filter;
@@ -83,7 +84,7 @@ class Collect extends \yii\db\ActiveRecord
             [['id'], 'unique'],
             //扩展字段
             [['list_url','list_rules_title','list_rules_url','content_rules_title','content_rules_content'],'required'],
-            [['list_range','list_rules_thumb','content_range','content_rules_kw','content_rules_desc','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime'],'string','max' => 50],
+            [['list_range','list_rules_thumb','content_range','content_rules_kw','content_rules_desc','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime','content_rules_thumb'],'string','max' => 100],
             [['is_ref_url','list_url'],'url'],
             [['content_rules_content_filter','content_rules_author_filter','content_rules_source_filter','content_rules_click_filter','content_rules_addtime_filter'],'match','pattern'=>'/^[-].*$/','message'=>'{attribute}必须以"-"开头，多个使用空格分隔开']
         ];
@@ -152,8 +153,8 @@ class Collect extends \yii\db\ActiveRecord
      */
     public function afterFind(){
         parent::afterFind();
-        $this->create_addtime = date('Y-m-d',$this->create_addtime);
-        //$this->update_addtime = date('Y-m-d',$this->update_addtime);
+        $this->create_addtime = date('Y-m-d H:i:s',$this->create_addtime);
+        $this->update_addtime = $this->update_addtime > 0 ? date('Y-m-d H:i:s',$this->update_addtime) : '--';
     }
 
     /**
@@ -161,16 +162,19 @@ class Collect extends \yii\db\ActiveRecord
      * @return mixed
      */
     public function getConf($id = 0){
-        $model = Collect::findOne(['id'=>$id,'status'=>1]);
+        $model = Collect::findOne(['id'=>$id]);
         if(!$model){
             return ajaxReturnFailure('采集信息不存在！');
+        }
+        if($model->status != 1){
+            return ajaxReturnFailure('当前节点已禁用，请使用其它节点采集！');
         }
         $conf['options'] = unserialize($model->baseconfig);
         $conf['options'] = array_merge($conf['options'],['subject'=>$model->name]);
 
         $conf['list'] = unserialize($model->listconfig);
         $conf['content'] = unserialize($model->arcconfig);
-        return $conf;
+        return ajaxReturnSuccess('一切正常',$conf);
     }
 
     /**
