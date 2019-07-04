@@ -170,7 +170,7 @@ class CollectController extends BaseController
             if($model->content_rules_title){$rule_content['title'] = [$model->content_rules_title,'text'];}
             if($model->content_rules_kw){$rule_content['keywords'] = [$model->content_rules_kw,'text'];}
             if($model->content_rules_desc){$rule_content['description'] = [$model->content_rules_desc,'text'];}
-            if($model->content_rules_content){$rule_content['content'] = [$model->content_rules_content,'text',$model->content_rules_content_filter];}
+            if($model->content_rules_content){$rule_content['content'] = [$model->content_rules_content,'html',$model->content_rules_content_filter];}
             if($model->content_rules_author){$rule_content['author'] = [$model->content_rules_author,'text',$model->content_rules_author_filter];}
             if($model->content_rules_source){$rule_content['source'] = [$model->content_rules_source,'text',$model->content_rules_source_filter];}
             if($model->content_rules_click){$rule_content['click'] = [$model->content_rules_click,'text',$model->content_rules_click_filter];}

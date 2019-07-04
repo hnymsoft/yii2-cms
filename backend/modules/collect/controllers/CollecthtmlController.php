@@ -133,6 +133,12 @@ class CollecthtmlController extends Controller
         ]);
     }
 
+    /**
+     * 采集数据入正式库
+     * @param int $c_id
+     * @return string
+     * @throws \yii\db\Exception
+     */
     public function actionStorage($c_id = 0){
         $model = new Content();
         $model->load(Yii::$app->request->post());
