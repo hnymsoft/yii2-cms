@@ -3,43 +3,24 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\searchs\CollectHtml */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="collect-html-search">
-
+<div class="search-box">
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => ['class' => 'layui-form layui-form-item'],
+        'fieldConfig' => [
+            'options' => ['class' => 'layui-inline'],
+            'labelOptions' => ['class' => 'layui-form-label'],
+            'template' => '<div class="layui-inline">{label}<div class="layui-input-inline">{input}</div></div><span class="help-block" style="display: inline-block;">{hint}</span>',
+        ]
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'title')->textInput(['class'=>'layui-input search_input']) ?>
 
-    <?= $form->field($model, 'c_id') ?>
-
-    <?= $form->field($model, 'p_id') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'thumb') ?>
-
-    <?php // echo $form->field($model, 'url') ?>
-
-    <?php // echo $form->field($model, 'addtime') ?>
-
-    <?php // echo $form->field($model, 'is_down') ?>
-
-    <?php // echo $form->field($model, 'is_export') ?>
-
-    <?php // echo $form->field($model, 'hash') ?>
-
-    <?php // echo $form->field($model, 'content') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="layui-inline btn-group">
+        <?= Html::submitButton('搜索', ['class' => 'layui-btn']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

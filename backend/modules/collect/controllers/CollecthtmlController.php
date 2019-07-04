@@ -68,15 +68,7 @@ class CollecthtmlController extends Controller
      */
     public function actionCreate()
     {
-        $model = new CollectHtml();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -165,6 +157,9 @@ class CollecthtmlController extends Controller
             $main_table = $content;
             $main_table['m_id'] = $modelModule->id;
             $main_table['p_id'] = $model->p_id;
+            $main_table['create_addtime'] = GTIME;
+            $main_table['status'] = 0;
+            $main_table['create_user'] = Yii::$app->user->identity->username;
             $model->isNewRecord = true;
             $model->attributes = $main_table;
             unset($model->id);
