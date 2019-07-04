@@ -24,10 +24,11 @@ use yii\helpers\Html;
                             </div>
                         </div>
                         <div class="collect-progress">
-                            <div class="subject layui-text">完成当前任务的：<span class="progress"></span></div>
+                            <div class="subject layui-text">完成当前任务总进度：</div>
                             <div class="layui-progress layui-progress-big" lay-showPercent="true" lay-filter="collect">
-                                <div class="layui-progress-bar layui-bg-orange" lay-percent="0%"></div>
+                                <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
                             </div>
+                            <div class="info layui-text"></div>
                         </div>
                         <div class="collect-list">
                             <table class="layui-hide" id="collect_list" lay-filter="collect"></table>
@@ -144,11 +145,14 @@ layui.config({
             type:"get",
             dataType:"json",
             success:function(res){
-                $('.progress').html('完成当前任务的：0%');
-                if(res.data > 0){
-                    $('.progress').html(res.data+'%');    
+                if(res.status == 1){
+                    element.progress('collect', res.data+'%');
+                    if(res.data > 0){
+                        $('.progress').html(res.data+'%');    
+                    }else if(res.data == 100){
+                        $('.info').show(5000);
+                    }
                 }
-                element.progress('collect', res.data+'%');    
             },
             error:function(a,b,c){
                 if(a.status==403){
@@ -158,27 +162,25 @@ layui.config({
                 }
             }
         });   
-    },1000)
+    },1500)
 
     //采集
     $('body').on('click','#startCollect',function() {
         $('#startCollect,#refreshCollect').addClass('layui-btn-disabled');
-        $('.collect-progress').show();              
-        $.post('$collect_start_url',function(data,status ,xhr){                       
-            if(data.status){
-                clearInterval(t);
-                $('.collect-progress .subject').html(data.message);
+        $('.collect-progress').show();
+        $.post('$collect_start_url',function(data,status ,xhr){
+            if(data.status == 1){
+                $('.info').html(data.message);
             }else{
                 layer.msg(data.message);
-            }
-            $('#startCollect,#refreshCollect').removeClass('layui-btn-disabled');
+            }            
         },"json").fail(function(a,b,c){
             if(a.status==403){
                 layer.msg('没有权限');
             }else{
                 layer.msg('系统错误');
             }
-            $('#startCollect,#refreshCollect').removeClass('layui-btn-disabled');
+            $('.layui-btn').removeClass('layui-btn-disabled');
         });
     })
 });

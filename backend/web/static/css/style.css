@@ -26,4 +26,5 @@ a.layui-btn.prev{margin:12px 0;}
 
 /*采集进度*/
 .collect-progress{width:100%;margin: 15px auto 50px;display: none;}
-.collect-progress .subject{text-align: center;line-height: 40px;}
+.collect-progress .subject{text-align: center;font-size: 18px;padding:15px 0;}
+.collect-progress .info{text-align: center;font-size: 16px;padding:15px 0;}

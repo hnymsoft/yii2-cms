@@ -284,7 +284,7 @@ class CollectController extends BaseController
         }
         $list = CollectHtml::find()->select('id,c_id,title,url')->where(['c_id'=>$id,'is_down'=>0])->asArray()->all();
         if(!$list){
-            return ajaxReturnFailure('暂无数据或已入库成功！');
+            return ajaxReturnFailure('暂无要采集的数据或已入库成功！');
         }
         $count = count($list);
         $succ_num = $err_num = 0;
