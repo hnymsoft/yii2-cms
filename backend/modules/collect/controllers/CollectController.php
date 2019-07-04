@@ -203,12 +203,7 @@ class CollectController extends BaseController
             if(isset($val[0])){
                 $arcconfig['content_rules_'.$key] = $val[0];
             }
-            if(isset($val[2]) && in_array($key,['content_rules_content',
-                                                'content_rules_author',
-                                                'content_rules_source',
-                                                'content_rules_click',
-                                                'content_rules_addtime'
-                                            ])){
+            if(isset($val[2]) && in_array($key,['content_rules_content','content_rules_author','content_rules_source','content_rules_click','content_rules_addtime'])){
                 $filter = 'content_rules_'.$key.'_filter';
                 $arcconfig[$filter] = $val[2];
             }
@@ -234,7 +229,6 @@ class CollectController extends BaseController
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
@@ -284,17 +278,18 @@ class CollectController extends BaseController
      */
     public function actionStart($id){
         set_time_limit(0);
+        session_write_close(); //解决多Ajax请求造成session阻塞
         if(!$id){
             return ajaxReturnFailure('参数不能为空');
         }
-        $query = new Collect();
-        $conf = $query->getConf($id);
         $list = CollectHtml::find()->select('id,c_id,title,url')->where(['c_id'=>$id,'is_down'=>0])->asArray()->all();
         if(!$list){
-            return ajaxReturnFailure('暂无数据，请更新种子列表！');
+            return ajaxReturnFailure('暂无数据或已入库成功！');
         }
         $count = count($list);
         $succ_num = $err_num = 0;
+        $query = new Collect();
+        $conf = $query->getConf($id);
         foreach ($list as $key => $val){
             $data = $query->getCollectionData($val['url'],$conf['content'],$conf['options']);
             if($data){
@@ -339,8 +334,7 @@ class CollectController extends BaseController
         if(!$ids){
             return ajaxReturnFailure('参数不能为空');
         }
-        $res = CollectHtml::deleteAll("id in({$ids})");
-        if($res){
+        if(CollectHtml::deleteAll("id in({$ids})")){
             return ajaxReturnSuccess('删除成功');
         }
         return ajaxReturnFailure('删除失败');
@@ -358,7 +352,7 @@ class CollectController extends BaseController
         }
         $res = json_decode(CollectHtml::initCollectList($id),true);
         if($res['status']){
-            return ajaxReturnSuccess('刷新成功');
+            return ajaxReturnSuccess('更新种子网址成功');
         }
         return ajaxReturnFailure($res['message']);
     }
@@ -370,6 +364,7 @@ class CollectController extends BaseController
      */
     public function actionAjaxcollectstatus($id = 0){
         set_time_limit(0);
+        session_write_close(); //解决多Ajax请求造成session阻塞
         if(!$id){
             return ajaxReturnFailure('参数不能为空');
         }
@@ -390,7 +385,6 @@ class CollectController extends BaseController
         if (($model = Collect::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

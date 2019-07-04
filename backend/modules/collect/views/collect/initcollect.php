@@ -135,14 +135,38 @@ layui.config({
             $(_this).removeClass('layui-btn-disabled').find('i').removeClass('layui-anim-rotate layui-anim-loop');
         });
     })
+    
+    //采集进度条显示
+    var t = setInterval(function() {
+      $.ajax({
+            async:true,
+            url:'$collect_status_url',
+            type:"get",
+            dataType:"json",
+            success:function(res){
+                $('.progress').html('完成当前任务的：0%');
+                if(res.data > 0){
+                    $('.progress').html(res.data+'%');    
+                }
+                element.progress('collect', res.data+'%');    
+            },
+            error:function(a,b,c){
+                if(a.status==403){
+                    layer.msg('没有权限');
+                }else{
+                    layer.msg('系统错误');
+                }
+            }
+        });   
+    },1000)
 
     //采集
     $('body').on('click','#startCollect',function() {
         $('#startCollect,#refreshCollect').addClass('layui-btn-disabled');
-        $('.collect-progress').show();     
-              
+        $('.collect-progress').show();              
         $.post('$collect_start_url',function(data,status ,xhr){                       
             if(data.status){
+                clearInterval(t);
                 $('.collect-progress .subject').html(data.message);
             }else{
                 layer.msg(data.message);
@@ -157,26 +181,6 @@ layui.config({
             $('#startCollect,#refreshCollect').removeClass('layui-btn-disabled');
         });
     })
-    
-    var t = setInterval(function() {
-      $.ajax({
-            async:false,
-            url:'$collect_status_url',
-            type:"get",
-            dataType:"json",
-            success:function(res){
-                $('.progress').html(res.data+'%');
-                element.progress('collect', res.data+'%');    
-            },
-            error:function(a,b,c){
-                if(a.status==403){
-                    layer.msg('没有权限');
-                }else{
-                    layer.msg('系统错误');
-                }
-            }
-        });   
-    },3000)
 });
 JS;
 $this->registerJs($js);
