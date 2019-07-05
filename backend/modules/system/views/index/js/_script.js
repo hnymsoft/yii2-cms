@@ -13,6 +13,60 @@ layui.config({
     carousel.render({
         elem: '#count'
         ,width: '100%' //设置容器宽度
+        ,height: '320px'
+        ,interval:5000,
         //,anim: 'updown' //切换动画方式
+    });
+
+    var myChart1 = echarts.init(document.getElementById('echarts_one'));
+    var myChart2 = echarts.init(document.getElementById('echarts_two'));
+    var option1 = '';
+
+    var _this = this;
+    //内容发布统计（周）
+    $.get("<?=\yii\helpers\Url::toRoute(['ajaxarticlecount'])?>",function(res){
+        if(res.status){
+            option1 = {
+                title: {text: '内容发布统计（周）',left:'center',padding:15},
+                tooltip: {trigger: 'axis'},
+                grid: {left: '3%',right: '4%',bottom: '3%',containLabel: true},
+                xAxis: {name:'发布时间',type: 'category',boundaryGap: false,data: res.data.date},
+                yAxis: {name: '发布量',type : 'value'},
+                series: [{name:'数量',type:'line',stack: '数量',data:res.data.count}]
+            };
+            myChart1.setOption(option1);
+        }
+    },"json").fail(function(a,b,c){
+        if(a.status==403){layer.msg('没有权限');}else{layer.msg('系统错误');}
+    });
+
+    //模型发布统计（周）
+    var option2 = '';
+    $.get("<?=\yii\helpers\Url::toRoute(['ajaxmodelcount'])?>",function(res){
+        if(res.status){
+            option2 = {
+                title: {text: '模型发布统计（周）',left:'center',padding:15},
+                tooltip: {trigger: 'axis'},
+                grid: {left: '3%',right: '4%',bottom: '3%',containLabel: true},
+                xAxis: {name:'类型',type: 'category',data: res.data.name,axisTick: {alignWithLabel: true}},
+                yAxis: {name: '发布量',type : 'value'},
+                series: {name:'直接访问',type:'bar',barWidth: '50%',data:res.data.count}
+            };
+            myChart2.setOption(option2);
+        }
+    },"json").fail(function(a,b,c){
+        if(a.status==403){layer.msg('没有权限');}else{layer.msg('系统错误');}
+    });
+
+    //resize监听器
+    window.addEventListener("resize",()=>{
+        myChart1.resize();
+        myChart2.resize();
+    });
+
+    //监听轮播切换事件
+    carousel.on('change(echart)', function(){
+        myChart1.resize();
+        myChart2.resize();
     });
 });

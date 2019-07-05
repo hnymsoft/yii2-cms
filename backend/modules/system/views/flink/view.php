@@ -1,22 +1,16 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '扩展管理','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
+$this->params['breadcrumbs'][] = ['label' => '友链列表','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
+$this->params['breadcrumbs'][] = '编辑';
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Flink */
-
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Flinks', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
-        </div>
-        <div class="layui-card-body">
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">友链编辑</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
             <?= DetailView::widget([
                 'model' => $model,
                 'options' => ['class' => 'layui-table','style'=>'margin-top:0'],

@@ -37,7 +37,7 @@ LayuiAsset::register($this);
                         'options' => ['class'=>'layui-breadcrumb'],
                         'itemTemplate' => '{link}',
                         'activeItemTemplate' => '<a><cite>{link}</cite></a>',
-                        'homeLink' => ['label' => '后台首页','url' => \yii\helpers\Url::toRoute(['/system/index/welcome'])],
+                        'homeLink' => ['label' => '主页','url' => \yii\helpers\Url::toRoute(['/system/index/welcome'])],
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs']:[]
                     ]) ?>
                     <!--面包屑导航 结束-->

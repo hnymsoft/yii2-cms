@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$this->params['breadcrumbs'][] = ['label' => '采集管理','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
 $this->params['breadcrumbs'][] = ['label' => '临时内容列表','url'=>\yii\helpers\Url::toRoute(['collecthtml/index'])];
 $this->params['breadcrumbs'][] = '入库';
 ?>

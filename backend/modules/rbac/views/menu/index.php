@@ -6,7 +6,7 @@ use backend\assets\LayuiAsset;
 use yii\helpers\Url;
 LayuiAsset::register($this); 
 $this->registerJs($this->render('js/index.js'));
-
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = '菜单列表';
 ?>
 

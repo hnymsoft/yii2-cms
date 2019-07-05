@@ -1,4 +1,5 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '系统管理','url'=>\yii\helpers\Url::toRoute(['setting/index'])];
 $this->params['breadcrumbs'][] = ['label' => '模型列表','url'=>\yii\helpers\Url::toRoute(['module/index'])];
 $this->params['breadcrumbs'][] = '添加';
 ?>

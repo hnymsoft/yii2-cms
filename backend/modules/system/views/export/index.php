@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 $this->registerJs($this->render('js/_script.js'));
+$this->params['breadcrumbs'][] = ['label' => '系统管理','url'=>\yii\helpers\Url::toRoute(['setting/index'])];
 $this->params['breadcrumbs'][] = '数据备份';
 ?>
 

@@ -3,6 +3,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 $this->registerJs($this->render('js/index.js'));
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = '管理员列表';
 ?>
 

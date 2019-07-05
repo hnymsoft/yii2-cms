@@ -1,4 +1,5 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '扩展管理','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
 $this->params['breadcrumbs'][] = ['label' => '广告位列表','url'=>\yii\helpers\Url::toRoute(['adposition/index'])];
 $this->params['breadcrumbs'][] = '添加';
 ?>

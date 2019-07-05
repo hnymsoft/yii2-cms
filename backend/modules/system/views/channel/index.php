@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+$this->params['breadcrumbs'][] = ['label' => '系统管理','url'=>\yii\helpers\Url::toRoute(['setting/index'])];
 $this->registerJs($this->render('js/_script.js'));
 $this->params['breadcrumbs'][] = '栏目列表';
 ?>

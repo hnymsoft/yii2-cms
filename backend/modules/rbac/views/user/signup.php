@@ -1,4 +1,5 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = ['label' => '管理员列表','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = '添加';
 ?>

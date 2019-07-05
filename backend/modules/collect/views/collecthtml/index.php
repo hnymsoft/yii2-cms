@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+$this->params['breadcrumbs'][] = ['label' => '采集管理','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
 $this->params['breadcrumbs'][] = '临时内容列表';
 ?>
 <div class="layui-tab layui-tab-brief" id="main-tab">

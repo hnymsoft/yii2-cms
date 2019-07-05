@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+$this->params['breadcrumbs'][] = ['label' => '扩展管理','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
 $this->registerJs($this->render('js/_script.js'));
 $this->params['breadcrumbs'][] = '轮播图列表';
 ?>

@@ -1,4 +1,5 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '会员管理','url'=>\yii\helpers\Url::toRoute(['member/index'])];
 $this->params['breadcrumbs'][] = ['label' => '会员列表','url'=>\yii\helpers\Url::toRoute(['member/index'])];
 $this->params['breadcrumbs'][] = '添加';
 ?>

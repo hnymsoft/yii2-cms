@@ -18,6 +18,7 @@ $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('js/_script.js'));
 $animateIcon = ' <i class="layui-icon"></i>';
 
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = ['label' => '角色分配列表','url'=>\yii\helpers\Url::toRoute(['assignment/index'])];
 $this->params['breadcrumbs'][] = '详情';
 ?>

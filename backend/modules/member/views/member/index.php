@@ -1,8 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
-
 $this->registerJs($this->render('js/_script.js'));
+$this->params['breadcrumbs'][] = ['label' => '会员管理','url'=>\yii\helpers\Url::toRoute(['member/index'])];
 $this->params['breadcrumbs'][] = '会员列表';
 ?>
 

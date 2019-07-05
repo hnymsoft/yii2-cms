@@ -32,6 +32,7 @@ $columns[] =[
         ]
     ];
 
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
 $this->params['breadcrumbs'][] = '角色分配列表';
 ?>
 

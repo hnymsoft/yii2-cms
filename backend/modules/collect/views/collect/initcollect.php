@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-
+$this->params['breadcrumbs'][] = ['label' => '采集管理','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
 $this->params['breadcrumbs'][] = ['label' => '采集规则列表','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
 $this->params['breadcrumbs'][] = '采集';
 ?>

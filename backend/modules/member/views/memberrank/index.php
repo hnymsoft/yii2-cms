@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 $this->registerJs($this->render('js/_script.js'));
+$this->params['breadcrumbs'][] = ['label' => '会员管理','url'=>\yii\helpers\Url::toRoute(['member/index'])];
+$this->params['breadcrumbs'][] = '会员级别列表';
 ?>
 
 <div class="layui-tab layui-tab-brief" id="main-tab">

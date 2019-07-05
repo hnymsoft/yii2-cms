@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 $this->registerJs($this->render('js/_script.js'));
-
+$this->params['breadcrumbs'][] = ['label' => '采集管理','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
 $this->params['breadcrumbs'][] = '采集规则列表';
 ?>
 

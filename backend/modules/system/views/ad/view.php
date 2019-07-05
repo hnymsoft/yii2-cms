@@ -1,5 +1,6 @@
 <?php
 use yii\widgets\DetailView;
+$this->params['breadcrumbs'][] = ['label' => '扩展管理','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
 $this->params['breadcrumbs'][] = ['label' => '广告列表','url'=>\yii\helpers\Url::toRoute(['ad/index'])];
 $this->params['breadcrumbs'][] = '详情';
 ?>

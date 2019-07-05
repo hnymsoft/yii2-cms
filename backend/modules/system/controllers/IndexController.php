@@ -70,7 +70,56 @@ class IndexController extends BaseController
             'arc_audit_count' => $arc_audit_count,
             'gb_count' => $gb_count,
             'gb_audit_count' => $gb_audit_count,
-            'list' => $list
+            'list' => $list,
         ]);
+    }
+
+    /**
+     * 文章发布数量统计
+     * @return string
+     */
+    public function actionAjaxarticlecount(){
+        $sdt = strtotime(date('Y-m-d 00:00:00',strtotime("-1 week +1 day"))); //最近一周
+        $edt = strtotime(date('Y-m-d 23:59:59'));
+        $model = Content::find()
+                ->select(['count(1) AS count,FROM_UNIXTIME(`create_addtime`,"%Y-%m-%d") AS date'])
+                ->andFilterWhere(['BETWEEN','create_addtime',$sdt,$edt])
+                ->groupBy('date')
+                ->asArray()
+                ->all();
+        if(!$model){
+            return ajaxReturnFailure('数据不存在');
+        }
+        $data = [];
+        foreach ($model AS $key => $val){
+            $data['date'][] = $val['date'];
+            $data['count'][] = $val['count'];
+        }
+        return ajaxReturnSuccess('一切正常',$data);
+    }
+
+    /**
+     * 模型发布数量统计
+     * @return string
+     */
+    public function actionAjaxmodelcount(){
+        $model = Module::find()
+            ->alias('m')
+            ->select('COUNT(c.m_id) AS count,m.name')
+            ->leftJoin(Content::tableName().' AS c','c.m_id = m.id')
+            ->where(['m.status'=>1])
+            ->groupBy('c.m_id')
+            ->orderBy('m.id')
+            ->asArray()
+            ->all();
+        if(!$model){
+            return ajaxReturnFailure('数据不存在');
+        }
+        $data = [];
+        foreach ($model AS $key => $val){
+            $data['name'][] = $val['name'];
+            $data['count'][] = $val['count'];
+        }
+        return ajaxReturnSuccess('一切正常',$data);
     }
 }

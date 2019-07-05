@@ -1,4 +1,5 @@
 <?php
+$this->params['breadcrumbs'][] = ['label' => '扩展管理','url'=>\yii\helpers\Url::toRoute(['flink/index'])];
 $this->params['breadcrumbs'][] = ['label' => '留言列表','url'=>\yii\helpers\Url::toRoute(['guestbook/index'])];
 $this->params['breadcrumbs'][] = '回复';
 ?>

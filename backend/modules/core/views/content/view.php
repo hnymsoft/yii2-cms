@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+$this->params['breadcrumbs'][] = ['label' => '内容管理','url'=>\yii\helpers\Url::toRoute(['content/index'])];
 $this->params['breadcrumbs'][] = ['label' => '内容列表','url'=>\yii\helpers\Url::toRoute(['content/index'])];
 $this->params['breadcrumbs'][] = '详情';
 ?>

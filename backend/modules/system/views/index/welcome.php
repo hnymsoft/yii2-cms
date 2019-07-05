@@ -1,5 +1,6 @@
 <?php
 $this->registerJs($this->render('js/_script.js'));
+$this->registerJsFile('@web/plugins/echarts/echarts.min.js',['position'=>\yii\web\View::POS_HEAD])
 ?>
 
 <div class="layui-fluid">
@@ -89,11 +90,10 @@ $this->registerJs($this->render('js/_script.js'));
                     <div class="layui-card">
                         <div class="layui-card-header">数据概览</div>
                         <div class="layui-card-body">
-                            <div id="count" class="layui-carousel layadmin-carousel" data-anim="fade">
+                            <div id="count" class="layui-carousel layadmin-carousel" data-anim="fade" lay-filter="echart">
                                 <div carousel-item>
-                                    <div>1</div>
-                                    <div>2</div>
-                                    <div>3</div>
+                                    <div><div id="echarts_one" style="width:100%;height: 100%;"></div></div>
+                                    <div><div id="echarts_two" style="width:100%;height: 100%;"></div></div>
                                 </div>
                             </div>
                         </div>
