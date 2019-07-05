@@ -20,6 +20,7 @@ layui.config({
 
     var myChart1 = echarts.init(document.getElementById('echarts_one'));
     var myChart2 = echarts.init(document.getElementById('echarts_two'));
+    var myChart3 = echarts.init(document.getElementById('echarts_three'));
     var option1 = '';
 
     var _this = this;
@@ -50,9 +51,27 @@ layui.config({
                 grid: {left: '3%',right: '4%',bottom: '3%',containLabel: true},
                 xAxis: {name:'类型',type: 'category',data: res.data.name,axisTick: {alignWithLabel: true}},
                 yAxis: {name: '发布量',type : 'value'},
-                series: {name:'直接访问',type:'bar',barWidth: '50%',data:res.data.count}
+                series: {name:'数量',type:'bar',barWidth: '50%',data:res.data.count}
             };
             myChart2.setOption(option2);
+        }
+    },"json").fail(function(a,b,c){
+        if(a.status==403){layer.msg('没有权限');}else{layer.msg('系统错误');}
+    });
+
+    //模型发布统计（周）
+    var option3 = '';
+    $.get("<?=\yii\helpers\Url::toRoute(['ajaxusercount'])?>",function(res){
+        if(res.status){
+            option3 = {
+                title: {text: '会员注册统计（周）',left:'center',padding:15},
+                tooltip: {trigger: 'axis'},
+                grid: {left: '3%',right: '4%',bottom: '3%',containLabel: true},
+                xAxis: {name:'日期',type: 'category',data: res.data.date,axisTick: {alignWithLabel: true}},
+                yAxis: {name: '注册量',type : 'value'},
+                series: {name:'数量',type:'bar',barWidth: '50%',data:res.data.count}
+            };
+            myChart3.setOption(option3);
         }
     },"json").fail(function(a,b,c){
         if(a.status==403){layer.msg('没有权限');}else{layer.msg('系统错误');}
@@ -62,11 +81,13 @@ layui.config({
     window.addEventListener("resize",()=>{
         myChart1.resize();
         myChart2.resize();
+        myChart3.resize();
     });
 
     //监听轮播切换事件
     carousel.on('change(echart)', function(){
         myChart1.resize();
         myChart2.resize();
+        myChart3.resize();
     });
 });

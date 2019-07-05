@@ -94,6 +94,7 @@ $this->registerJsFile('@web/plugins/echarts/echarts.min.js',['position'=>\yii\we
                                 <div carousel-item>
                                     <div><div id="echarts_one" style="width:100%;height: 100%;"></div></div>
                                     <div><div id="echarts_two" style="width:100%;height: 100%;"></div></div>
+                                    <div><div id="echarts_three" style="width:100%;height: 100%;"></div></div>
                                 </div>
                             </div>
                         </div>

@@ -79,6 +79,8 @@ class IndexController extends BaseController
      * @return string
      */
     public function actionAjaxarticlecount(){
+        $days = $this->getDays(7);
+
         $sdt = strtotime(date('Y-m-d 00:00:00',strtotime("-1 week +1 day"))); //最近一周
         $edt = strtotime(date('Y-m-d 23:59:59'));
         $model = Content::find()
@@ -90,10 +92,14 @@ class IndexController extends BaseController
         if(!$model){
             return ajaxReturnFailure('数据不存在');
         }
-        $data = [];
-        foreach ($model AS $key => $val){
-            $data['date'][] = $val['date'];
-            $data['count'][] = $val['count'];
+        foreach ($days AS $key => $val){
+            $data['date'][$key] = $val;
+            $data['count'][$key] = 0;
+            foreach ($model AS $key2 => $val2){
+                if($val == $val2['date']){
+                    $data['count'][$key] = $val2['count'];
+                }
+            }
         }
         return ajaxReturnSuccess('一切正常',$data);
     }
@@ -121,5 +127,47 @@ class IndexController extends BaseController
             $data['count'][] = $val['count'];
         }
         return ajaxReturnSuccess('一切正常',$data);
+    }
+
+    /**
+     * 会员注册数量统计
+     * @return string
+     */
+    public function actionAjaxusercount(){
+        $days = $this->getDays(7);
+        $sdt = strtotime(date('Y-m-d 00:00:00',strtotime("-1 week +1 day"))); //最近一周
+        $edt = strtotime(date('Y-m-d 23:59:59'));
+        $model = Member::find()
+            ->select(['count(1) AS count,FROM_UNIXTIME(`created_at`,"%Y-%m-%d") AS date'])
+            ->andFilterWhere(['BETWEEN','created_at',$sdt,$edt])
+            ->groupBy('date')
+            ->asArray()
+            ->all();
+        if(!$model){
+            return ajaxReturnFailure('数据不存在');
+        }
+        foreach ($days AS $key => $val){
+            $data['date'][$key] = $val;
+            $data['count'][$key] = 0;
+            foreach ($model AS $key2 => $val2){
+                if($val == $val2['date']){
+                    $data['count'][$key] = $val2['count'];
+                }
+            }
+        }
+        return ajaxReturnSuccess('一切正常',$data);
+    }
+
+    /**
+     * 获取给定天数的日期
+     * @param int $day
+     * @return array
+     */
+    protected function getDays($day = 1){
+        $day = ($day - 1);
+        for ($i = $day;$i >= 0;$i--){
+            $days[] = date('Y-m-d',strtotime("-{$i} Day"));
+        }
+        return $days;
     }
 }
