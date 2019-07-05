@@ -20,6 +20,8 @@ class BaseController extends Controller
      * @throws \yii\web\BadRequestHttpException
      */
     public function beforeAction($action) {
+        \Yii::$app->params['_path'] = \Yii::$app->controller->module->id.'/'.\Yii::$app->controller->id.'/'.\Yii::$app->controller->action->id;
+
         $currentaction = $action->id;
         $novalidactions = [
             'checkpassword',

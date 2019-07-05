@@ -1,40 +1,38 @@
 <?php
 use yii\helpers\Html;
+
+$this->params['breadcrumbs'][] = ['label' => '采集规则列表','url'=>\yii\helpers\Url::toRoute(['collect/index'])];
+$this->params['breadcrumbs'][] = '采集';
 ?>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" id="main-tab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">采集列表</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <table class="layui-table">
-                            <thead><tr><td colspan="2">采集信息</td></tr></thead>
-                            <tbody>
-                                <tr><td width="10%">节点名称</td><td id="subject">--</td></tr>
-                                <tr><td width="10%">种子网址数</td><td id="num">--</td></tr>
-                            </tbody>
-                        </table>
-                        <div class="search-box" style="text-align: center">
-                            <div class="layui-inline btn-group">
-                                <?= Html::button('开始采集网页',['class'=>'layui-btn','id'=>'startCollect','style'=>'display:none'])?>
-                                <?= Html::button('<i class="layui-icon layui-icon-refresh-3 layui-anim"></i>更新种子网址',['class'=>'layui-btn layui-btn-primary','id'=>'refreshCollect'])?>
-                            </div>
-                        </div>
-                        <div class="collect-progress">
-                            <div class="subject layui-text">完成当前任务总进度：</div>
-                            <div class="layui-progress layui-progress-big" lay-showPercent="true" lay-filter="collect">
-                                <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
-                            </div>
-                            <div class="info layui-text"></div>
-                        </div>
-                        <div class="collect-list">
-                            <table class="layui-hide" id="collect_list" lay-filter="collect"></table>
-                        </div>
-                    </div>
+
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">采集</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+            <table class="layui-table">
+                <thead><tr><td colspan="2">采集信息</td></tr></thead>
+                <tbody>
+                    <tr><td width="10%">节点名称</td><td id="subject">--</td></tr>
+                    <tr><td width="10%">种子网址数</td><td id="num">--</td></tr>
+                </tbody>
+            </table>
+            <div class="search-box" style="text-align: center">
+                <div class="layui-inline btn-group">
+                    <?= Html::button('开始采集网页',['class'=>'layui-btn','id'=>'startCollect','style'=>'display:none'])?>
+                    <?= Html::button('<i class="layui-icon layui-icon-refresh-3 layui-anim"></i>更新种子网址',['class'=>'layui-btn layui-btn-primary','id'=>'refreshCollect'])?>
                 </div>
+            </div>
+            <div class="collect-progress">
+                <div class="subject layui-text">完成当前任务总进度：</div>
+                <div class="layui-progress layui-progress-big" lay-showPercent="true" lay-filter="collect">
+                    <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+                </div>
+                <div class="info layui-text"></div>
+            </div>
+            <div class="collect-list">
+                <table class="layui-hide" id="collect_list" lay-filter="collect"></table>
             </div>
         </div>
     </div>

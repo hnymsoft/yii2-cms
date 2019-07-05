@@ -17,14 +17,17 @@ $opts = Json::htmlEncode([
 $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('js/_script.js'));
 $animateIcon = ' <i class="layui-icon"></i>';
+
+$this->params['breadcrumbs'][] = ['label' => '角色分配列表','url'=>\yii\helpers\Url::toRoute(['assignment/index'])];
+$this->params['breadcrumbs'][] = '详情';
 ?>
 
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
-        </div>
-        <div class="layui-card-body">
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">角色分配列表</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
             <div class="layui-row layui-col-space10">
                 <div class="layui-col-md5">
                     <div class="layui-form layui-form-item">

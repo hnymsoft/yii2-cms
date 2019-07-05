@@ -1,12 +1,13 @@
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
-        </div>
-        <div class="layui-card-body">
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>添加规则</legend>
-            </fieldset>
+<?php
+$this->params['breadcrumbs'][] = ['label' => '规则列表','url'=>\yii\helpers\Url::toRoute(['rule/index'])];
+$this->params['breadcrumbs'][] = '添加';
+?>
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">规则添加</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
             <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>

@@ -39,7 +39,7 @@ use yii\helpers\Inflector;
 class Module extends \yii\base\Module
 {
 
-    public $layout = 'main';
+    //public $layout = 'main';
 
     /**
      * @inheritdoc
@@ -53,7 +53,10 @@ class Module extends \yii\base\Module
      * @var string Main layout using for module. Default to layout of parent module.
      * Its used when `layout` set to 'left-menu', 'right-menu' or 'top-menu'.
      */
-    public $mainLayout = '@rbac/views/layouts/main.php';
+    //public $mainLayout = '@rbac/views/layouts/main.php';
+
+    public $layout = '@backend/views/layouts/main-index2';
+
     /**
      * @var array
      * @see [[menus]]

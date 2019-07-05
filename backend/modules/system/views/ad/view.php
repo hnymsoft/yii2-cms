@@ -1,13 +1,15 @@
 <?php
 use yii\widgets\DetailView;
+$this->params['breadcrumbs'][] = ['label' => '广告列表','url'=>\yii\helpers\Url::toRoute(['ad/index'])];
+$this->params['breadcrumbs'][] = '详情';
 ?>
 
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
-        </div>
-        <div class="layui-card-body">
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">广告详情</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
             <?= DetailView::widget([
                 'model' => $model,
                 'options' => ['class' => 'layui-table','style'=>'margin-top:0'],
@@ -23,13 +25,13 @@ use yii\widgets\DetailView;
                     [
                         'label' => '媒体类型',
                         'value' => function($model){
-                             if($model->media_type == 1){
-                                 return '文字';
-                             }elseif ($model->media_type == 2){
-                                 return '代码';
-                             }elseif ($model->media_type == 0){
-                                 return '图片';
-                             }
+                            if($model->media_type == 1){
+                                return '文字';
+                            }elseif ($model->media_type == 2){
+                                return '代码';
+                            }elseif ($model->media_type == 0){
+                                return '图片';
+                            }
                         }
                     ],
                     'start_time:date',
@@ -63,7 +65,6 @@ use yii\widgets\DetailView;
                     ]
                 ],
             ]) ?>
-            </div>
         </div>
     </div>
 </div>

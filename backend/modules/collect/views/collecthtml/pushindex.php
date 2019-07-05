@@ -1,44 +1,41 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$this->params['breadcrumbs'][] = ['label' => '临时内容列表','url'=>\yii\helpers\Url::toRoute(['collecthtml/index'])];
+$this->params['breadcrumbs'][] = '入库';
 ?>
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" id="main-tab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">临时内容入库</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                    <div class="form-box-dialog">
-                        <?php $form = ActiveForm::begin([
-                            'id' => 'item-form',
-                            'options' => ['class' => 'layui-form layui-text'],
-                            'fieldConfig' => [
-                                'options' => ['class' => 'layui-form-item'],
-                                'labelOptions' => ['class' => 'layui-form-label','align'=>'right','style'=>'width:100px'],
-                                'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div>{hint}{error}',
-                            ],
-                        ]); ?>
 
-                        <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name'))->label('默认入库栏目') ?>
-                        <?= $form->field($model,'seconds')->textInput(['type'=>'number','class'=>'layui-input'])->hint('单位：（秒）为减轻服务器压力，每循环10条数据暂停N秒 例：3 代表“3秒”')?>
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">临时内容入库</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+        <div class="form-box-dialog">
+            <?php $form = ActiveForm::begin([
+                'id' => 'item-form',
+                'options' => ['class' => 'layui-form layui-text'],
+                'fieldConfig' => [
+                    'options' => ['class' => 'layui-form-item'],
+                    'labelOptions' => ['class' => 'layui-form-label','align'=>'right','style'=>'width:100px'],
+                    'template' => '{label}<div class="layui-input-inline" style="width: 30%">{input}</div>{hint}{error}',
+                ],
+            ]); ?>
 
-                        <div class='layui-form-item'>
-                            <div class="layui-form-label" style="width: 100px;"></div>
-                            <div class="layui-input-block" style="margin-left: 120px;">
-                                <?= Html::button('<i class="layui-icon layui-icon-refresh-3 layui-anim"></i>开始入库', ['class' => 'layui-btn','id'=>'push']) ?>
-                            </div>
-                        </div>
-                        <?php ActiveForm::end(); ?>
-                    </div>
+            <?= $form->field($model, 'p_id')->dropDownList(\yii\helpers\ArrayHelper::map($channelDropdown,'id','name'))->label('默认入库栏目') ?>
+            <?= $form->field($model,'seconds')->textInput(['type'=>'number','class'=>'layui-input'])->hint('单位：（秒）为减轻服务器压力，每循环10条数据暂停N秒 例：3 代表“3秒”')?>
+
+            <div class='layui-form-item'>
+                <div class="layui-form-label" style="width: 100px;"></div>
+                <div class="layui-input-block" style="margin-left: 120px;">
+                    <?= Html::button('<i class="layui-icon layui-icon-refresh-3 layui-anim"></i>开始入库', ['class' => 'layui-btn','id'=>'push']) ?>
                 </div>
             </div>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
+
 
 <?php
 $push_url = \yii\helpers\Url::toRoute(['storage','c_id'=>$c_id]);
