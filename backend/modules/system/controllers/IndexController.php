@@ -22,13 +22,11 @@ class IndexController extends BaseController
     {
         //模型
         $model = Module::find()->select('id,name')->where(['status'=>1])->limit(8)->asArray()->all();
-        if($model){
-            foreach ($model as $key => $val){
-                $model[$key]['count'] = 0;
-                $count = Content::find()->where(['m_id'=>$val['id']])->count();
-                if($count){
-                    $model[$key]['count'] = $count;
-                }
+        foreach ($model as $key => $val){
+            $model[$key]['count'] = 0;
+            $count = Content::find()->where(['m_id'=>$val['id']])->count();
+            if($count){
+                $model[$key]['count'] = $count;
             }
         }
 
