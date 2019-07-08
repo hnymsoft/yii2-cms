@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\YiiAsset;
 use backend\assets\LayuiAsset;
-
+LayuiAsset::addCss($this, "@web/static/css/rbac.css");
 LayuiAsset::register($this); 
 AnimateAsset::register($this);
 YiiAsset::register($this);

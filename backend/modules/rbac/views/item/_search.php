@@ -4,9 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\assets\AppAsset;
 use common\models\ArticleGroup;
-/* @var $this yii\web\View */
-/* @var $model common\models\searchs\ArticleSearch */
-/* @var $form yii\widgets\ActiveForm */
+
 AppAsset::register($this);
 ?>
 <div class="search-box">

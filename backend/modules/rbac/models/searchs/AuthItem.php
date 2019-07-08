@@ -46,7 +46,7 @@ class AuthItem extends Model
             'type' => '类型',
             'description' => '描述',
             'ruleName' => '规则名称',
-            'data' => '图标',
+            'data' => '内容',
         ];
     }
 

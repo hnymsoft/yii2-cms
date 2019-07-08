@@ -13,20 +13,25 @@ YiiAsset::register($this);
 $opts = Json::htmlEncode([
     'items' => $model->getItems(),
 ]);
+
 $this->registerJs("var _opts = {$opts};");
 $this->registerJs($this->render('js/_script.js'));
 $animateIcon = ' <i class="layui-icon"></i>';
+
+$this->params['breadcrumbs'][] = ['label' => '权限管理','url'=>\yii\helpers\Url::toRoute(['user/index'])];
+$this->params['breadcrumbs'][] = ['label' => '角色（权限）列表','url'=>\yii\helpers\Url::toRoute(['role/index'])];
+$this->params['breadcrumbs'][] = '授权';
 ?>
 
-<div class="layui-fluid">
-    <div class="layui-card">
-        <div class="layui-card-header">
-            <a href="<?=Yii::$app->request->referrer?>" class="layui-btn layui-btn-primary layui-btn-sm">返回上一页</a>
-        </div>
-        <div class="layui-card-body">
+<div class="layui-tab layui-tab-brief" id="main-tab">
+    <ul class="layui-tab-title">
+        <li class="layui-this">会员级别编辑</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
             <?=DetailView::widget([
                 'model' => $model,
-                'options' => ['class' => 'layui-table'],
+                'options' => ['class' => 'layui-table','style'=>'margin-bottom:30px;'],
                 'attributes' => [
                     'name',
                     'description:ntext',
@@ -35,11 +40,7 @@ $animateIcon = ' <i class="layui-icon"></i>';
                 ],
                 'template' => '<tr><th style="width:8%">{label}</th><td>{value}</td></tr>',
             ]);?>
-        </div>
-    </div>
 
-    <div class="layui-card" style="display: <?=Yii::$app->controller->id == 'permission'?'none':'block'?>">
-        <div class="layui-card-body">
             <div class="layui-row">
                 <div class="layui-col-md5">
                     <div class="layui-form layui-form-item">
@@ -80,5 +81,4 @@ $animateIcon = ' <i class="layui-icon"></i>';
             </div>
         </div>
     </div>
-
 </div>

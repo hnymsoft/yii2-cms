@@ -118,7 +118,7 @@ class AuthItem extends Model
             'type' => '类型',
             'description' => '描述',
             'ruleName' => '规则名称',
-            'data' => '图标',
+            'data' => '内容',
         ];
     }
 
@@ -247,18 +247,36 @@ class AuthItem extends Model
     {
         $manager = Configs::authManager();
         $available = [];
+//        if ($this->type == Item::TYPE_ROLE) {
+//            foreach (array_keys($manager->getRoles()) as $name) {
+//                $available[$name] = 'role';
+//            }
+//        }
+//        foreach (array_keys($manager->getPermissions()) as $name) {
+//            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
+//        }
+//
+//        $assigned = [];
+//        foreach ($manager->getChildren($this->_item->name) as $item) {
+//            $assigned[$item->name] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
+//            unset($available[$item->name]);
+//        }
+
+        //2019-07-08修改
         if ($this->type == Item::TYPE_ROLE) {
-            foreach (array_keys($manager->getRoles()) as $name) {
-                $available[$name] = 'role';
+            foreach ($manager->getRoles() as $key => $val) {
+                $available[$val->name][] = 'role';
+                $available[$val->name][] = $val->description;
             }
         }
-        foreach (array_keys($manager->getPermissions()) as $name) {
-            $available[$name] = $name[0] == '/' ? 'route' : 'permission';
+        foreach ($manager->getPermissions() as $key => $val) {
+            $available[$val->name][] = $val->name[0] == '/' ? 'route' : 'permission';
+            $available[$val->name][] = $val->description;
         }
-
         $assigned = [];
         foreach ($manager->getChildren($this->_item->name) as $item) {
-            $assigned[$item->name] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
+            $assigned[$item->name][] = $item->type == 1 ? 'role' : ($item->name[0] == '/' ? 'route' : 'permission');
+            $assigned[$item->name][] = $item->description;
             unset($available[$item->name]);
         }
         unset($available[$this->name]);
