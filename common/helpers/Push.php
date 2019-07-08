@@ -7,10 +7,11 @@ use JPush\Client as JPush;
 use JPush\Config;
 
 /**
- * 三益宝手机端推送
- * @author gzh
+ * 极光推送
+ * Class Push
+ * @package common\helpers
  */
-class Sybpush extends Component {
+class Push extends Component {
 
     public $jPush;
     public $push;
@@ -27,7 +28,7 @@ class Sybpush extends Component {
         $this->appKey = trim($jpush['appKey']);
         $this->masterSecret = trim($jpush['masterSecret']);
 
-        $this->jPush = new JPush($this->appKey, $this->masterSecret);
+        $this->jPush = new Push($this->appKey, $this->masterSecret);
         $this->push = $this->jPush->push();
         $this->device = $this->jPush->device();
     }
@@ -60,12 +61,8 @@ class Sybpush extends Component {
     /**
      * 发送信息至极光平台
      * @param array $data
-     * message string 发送主体内容
-     * alias string|array 接收人手机号 可以是字符串也可以是数组 如果是字符串的话 需要用竖线（|）分割
-     * platForm  string  all| android | ios  如果全退则用all 
-     * title string 推送标题 
-     * @return type
-     * @throws Exception
+     * @return bool|type
+     * @throws \Exception
      */
     public function send($data = array()) {
         if (!$data) {
@@ -90,7 +87,7 @@ class Sybpush extends Component {
         if (isset($data['title']) && !empty($data['title'])) {
             $title = $data['title'];
         } else {
-            $title = "三益宝借款端提示信息：";
+            $title = "提示信息：";
         }
         $extras = $data['extras'];
         if (!array_key_exists("msg_type", $extras)) {
@@ -123,7 +120,7 @@ class Sybpush extends Component {
     }
 
     /**
-     * 格式化数据 为跟三益宝平台保持一致
+     * 格式化数据
      * @param type $response
      * @return type
      * @throws APIRequestException
